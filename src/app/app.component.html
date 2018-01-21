@@ -27,9 +27,9 @@
               <option>Female</option>
             </select>
             <label for="inputHeight">Height: </label>
-            <input type="text" class="form-control" id="inputHeight" name="height" [(ngModel)]="model.height" placeholder="height...">
+            <input type="number" class="form-control" id="inputHeight" name="height" [(ngModel)]="model.height" placeholder="height...">
             <label for="inputWeight">Weight: </label>
-            <input type="text" class="form-control" id="inputWeight" name="weight" [(ngModel)]="model.weight" placeholder="weight...">
+            <input type="number" class="form-control" id="inputWeight" name="weight" [(ngModel)]="model.weight" placeholder="weight...">
             <label for="inputHand">Weapon hand: </label>
             <select id="inputHand" class="form-control" name="weaponHand" [(ngModel)]="model.weaponHand">
               <option>Right</option>
@@ -40,8 +40,8 @@
         </div>
         <div class="row" style="margin-left:10px; margin-right:10px">
           <div class="form-group col-md-12">
-              <label for="inputBackground">Background: </label>
-              <textarea class="form-control" id="inputBackground" rows="20" name="background" [(ngModel)]="model.background"></textarea>
+            <label for="inputBackground">Background: </label>
+            <textarea class="form-control" id="inputBackground" rows="20" name="background" [(ngModel)]="model.background"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
         </div>
@@ -49,13 +49,32 @@
     </ng-template>
   </ngb-tab>
   <ngb-tab title="Skills">
-    <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
-      <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
-        beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
-        PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
-        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard
-        ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente
-        accusamus tattooed echo park.</p>
+    <ng-template ngbTabContent>
+      <form (ngSubmit)="onSubmit()">
+        <div class="row" style="margin-left:10px">
+          <div class="col-md-3">
+              <table class="table">
+                  <thead>
+                    <th>Skill</th>
+                    <th>Level</th>
+                    <th>Skillvalue</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Agility</td>
+                      <td><input type="number"></td>
+                      <td><input type="number"></td>
+                    </tr>
+                    <tr>
+                        <td>Battle maneuver</td>
+                        <td><input type="number"></td>
+                        <td><input type="number"></td>
+                      </tr>
+                  </tbody>
+                </table>
+          </div>
+        </div>
+      </form>
     </ng-template>
   </ngb-tab>
   <ngb-tab title="Items">
