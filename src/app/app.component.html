@@ -1,1 +1,72 @@
-hello world!
+<ngb-tabset>
+  <ngb-tab title="General">
+    <ng-template ngbTabContent>
+      <form (ngSubmit)="onSubmit()">
+        <div class="row" style="margin-left:10px">
+          <div class="form-group col-md-3">
+            <label for="inputName">Name: </label>
+            <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="model.name" placeholder="name...">
+            <label for="inputRace">Race: </label>
+            <select id="inputRace" class="form-control" name="race" [(ngModel)]="model.race">
+              <option>Human</option>
+              <option>Elf</option>
+              <option>Dwarf</option>
+              <option>Half-troll</option>
+              <option>Half-elf</option>
+              <option>Dwarf-troll</option>
+            </select>
+            <label for="inputCulture">Culture: </label>
+            <input type="text" class="form-control" id="inputCulture" name="culture" [(ngModel)]="model.culture" placeholder="culture...">
+            <label for="inputReligion">Religion: </label>
+            <input type="text" class="form-control" id="inputReligion" name="religion" [(ngModel)]="model.religion" placeholder="religion...">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="inputGender">Gender: </label>
+            <select id="inputGender" class="form-control" name="gender" [(ngModel)]="model.gender">
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+            <label for="inputHeight">Height: </label>
+            <input type="text" class="form-control" id="inputHeight" name="height" [(ngModel)]="model.height" placeholder="height...">
+            <label for="inputWeight">Weight: </label>
+            <input type="text" class="form-control" id="inputWeight" name="weight" [(ngModel)]="model.weight" placeholder="weight...">
+            <label for="inputHand">Weapon hand: </label>
+            <select id="inputHand" class="form-control" name="weaponHand" [(ngModel)]="model.weaponHand">
+              <option>Right</option>
+              <option>Left</option>
+              <option>Dual</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-left:10px; margin-right:10px">
+          <div class="form-group col-md-12">
+              <label for="inputBackground">Background: </label>
+              <textarea class="form-control" id="inputBackground" rows="20" name="background" [(ngModel)]="model.background"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Skills">
+    <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+      <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
+        beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+        PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
+        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard
+        ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente
+        accusamus tattooed echo park.</p>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Items">
+    <ng-template ngbTabContent>
+      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi. Donec
+        egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio. Duis pharetra
+        et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut ipsum
+        vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod
+        facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient montes,
+        nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel tellus
+        pulvinar feugiat.</p>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
