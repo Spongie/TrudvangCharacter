@@ -53,25 +53,64 @@
       <form (ngSubmit)="onSubmit()">
         <div class="row" style="margin-left:10px">
           <div class="col-md-3">
-              <table class="table">
-                  <thead>
-                    <th>Skill</th>
-                    <th>Level</th>
-                    <th>Skillvalue</th>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Agility</td>
-                      <td><input type="number"></td>
-                      <td><input type="number"></td>
-                    </tr>
-                    <tr>
-                        <td>Battle maneuver</td>
-                        <td><input type="number"></td>
-                        <td><input type="number"></td>
-                      </tr>
-                  </tbody>
-                </table>
+            <table class="table">
+              <thead>
+                <th>Skill</th>
+                <th>Level</th>
+                <th>Skillvalue</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4">Agility</td>
+                  <td>
+                    <input type="number">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:15px"></td>
+                  <td colspan="2">Battle maneuver</td>
+                  <td>
+                    <input type="number">
+                  </td>
+                  <td>
+                    <input type="number">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:15px"></td>
+                  <td style="width:15px"></td>
+                  <td style="align-self: left">Combat movement</td>
+                  <td>
+                    <input type="number">
+                  </td>
+                  <td>
+                    <input type="number">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:15px"></td>
+                  <td style="width:15px"></td>
+                  <td style="align-self: left">Evade</td>
+                  <td>
+                    <input type="number">
+                  </td>
+                  <td>
+                    <input type="number">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:15px"></td>
+                  <td style="width:15px"></td>
+                  <td style="align-self: left">Iron clad</td>
+                  <td>
+                    <input type="number">
+                  </td>
+                  <td>
+                    <input type="number">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </form>

@@ -1,3 +1,5 @@
+import { Skill } from "./skills";
+
 export class TrudvangCharacter {
     name: string;    
     race: string;
@@ -8,4 +10,8 @@ export class TrudvangCharacter {
     weight: number;
     weaponHand: string;
     background: string;
+    skills: Array<Skill>
+    
+    constructor() {
+    }
 }
