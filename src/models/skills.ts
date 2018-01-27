@@ -1,6 +1,6 @@
 export class Skill {
 
-    constructor(public name: string, public lvl: number, public disciplines: Array<Discipline>) {
+    constructor(public name: string, public level: number, public disciplines: Array<Discipline>) {
 
     }
 
@@ -12,7 +12,8 @@ export class Skill {
 }
 
 export class SkillGenerator {
-    public generateBaseSkills() {
+
+    public generateAgilityTree() {
         let agility = new Skill('Agility', 1, []);
         agility.disciplines = [
             new Discipline('Battle maneuver', 0, 0, agility, []),
@@ -38,6 +39,10 @@ export class SkillGenerator {
             new Specialization('Riding', 0, 0, agility.disciplines[2]),
         ];
 
+        return agility;
+    }
+
+    public generateCareTree() {
         let care = new Skill('Care', 1, []);
 
         care.disciplines = [
@@ -70,7 +75,11 @@ export class SkillGenerator {
             new Specialization('Peasant', 0, 0, care.disciplines[3]),
             new Specialization('Trader', 0, 0, care.disciplines[3]),
         ];
+        
+        return care;
+    }
 
+    public genereateEntertainmentTree() {
         let entertainment = new Skill('Entertainment', 1, []);
         entertainment.disciplines = [
             new Discipline('Gambling', 0, 0, entertainment, []),
@@ -94,6 +103,10 @@ export class SkillGenerator {
             new Specialization('Playwright', 0, 0, entertainment.disciplines[2])
         ];
 
+        return entertainment;
+    }
+
+    public genereateFaithTree() {
         let faith = new Skill('Faith', 1, []);
         faith.disciplines = [
             new Discipline('Divine power', 0, 0, faith, []),
@@ -122,6 +135,12 @@ export class SkillGenerator {
             new Specialization('Thuul forging', 0, 0, faith.disciplines[2])
         ];
 
+        
+
+        return faith;
+    }
+
+    public generateFightingTree() {
         let fighting = new Skill('Fighting', 1, []);
         fighting.disciplines = [
             new Discipline('Armed fighting', 0, 0, fighting, []),
@@ -152,6 +171,10 @@ export class SkillGenerator {
             new Specialization('Wrestling', 0, 0, fighting.disciplines[2])
         ];   
 
+        return fighting;
+    }
+
+    public generateShadowArtsTree() {
         let shadowArts = new Skill('Shadow arts', 1, []);
 
         shadowArts.disciplines = [
@@ -174,6 +197,10 @@ export class SkillGenerator {
             new Specialization('Theif signs', 0, 0, shadowArts.disciplines[1])
         ];
 
+        return shadowArts;
+    }
+
+    public generateVitnerCraftTree() {
         let vitnerCraft = new Skill('Vitner craft', 1, []);
 
         vitnerCraft.disciplines = [
@@ -202,6 +229,10 @@ export class SkillGenerator {
             new Specialization('Vyrding', 0, 0, vitnerCraft.disciplines[2])
         ];
 
+        return vitnerCraft;
+    }
+
+    public generateWildernessTree() {
         let wilderness = new Skill('Wilderness', 1, []);
 
         wilderness.disciplines = [
@@ -250,6 +281,10 @@ export class SkillGenerator {
             new Specialization('Terrain experience (plains)', 0, 0, wilderness.disciplines[4])
         ];
 
+        return wilderness;
+    }
+
+    public generateKnowledgeTree() {
         let knowledge = new Skill('Knowledge', 1, []);
         
         knowledge.disciplines = [
@@ -319,15 +354,17 @@ export class SkillGenerator {
         knowledge.disciplines[3].specialities = [
             new Specialization('Insight', 0, 0, knowledge.disciplines[3])
         ];
+
+        return knowledge;
     }
 }
 
 export class Discipline {
-    constructor(public name: string, public lvl: number, public sv: number, public parent: Skill, public specialities: Array<Specialization>) {
+    constructor(public name: string, public level: number, public sv: number, public parent: Skill, public specialities: Array<Specialization>) {
     }
 
     public updateSv() {
-        this.sv = this.parent.lvl + this.lvl;
+        this.sv = this.parent.level + this.level;
         this.specialities.forEach((specialitie) => {
             specialitie.updateSv();
         });
@@ -335,10 +372,10 @@ export class Discipline {
 }
 
 export class Specialization {
-    constructor(public name: string, public lvl: number, public sv: number, public parent: Discipline) {
+    constructor(public name: string, public level: number, public sv: number, public parent: Discipline) {
     }
 
     public updateSv() {
-        this.sv = this.parent.lvl + (this.lvl * 2);
+        this.sv = this.parent.sv + (this.level * 2);
     }
 }
