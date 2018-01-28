@@ -1,3 +1,15 @@
+<ng-template #addXpPopup let-c="close">
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmitModal(addExpForm)" #addExpForm="ngForm">
+      <div class="form-group">
+        <label for="inputAddExp">XP: </label>
+        <input type="number" id="inputAddExp" ngModel name="inputAddExp">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-danger" (click)="c('closing')">Close</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
 <ngb-tabset>
   <ngb-tab title="General">
     <ng-template ngbTabContent>
@@ -36,6 +48,13 @@
               <option>Left</option>
               <option>Dual</option>
             </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputAvailableXp">Available Xp: </label>
+            <input type="number" class="form-control" id="inputAvailableXp" name="availableXp" [(ngModel)]="model.availableXp" readonly>
+            <label for="inputAvailableXp">Used Xp: </label>
+            <input type="number" class="form-control" id="inputAvailableXp" name="availableXp" [(ngModel)]="model.usedXp" readonly>
+            <button type="button" style="margin-top: 5px" class="btn btn-success" (click)="open(addXpPopup)">Reward Xp</button>
           </div>
         </div>
         <div class="row" style="margin-left:10px; margin-right:10px">

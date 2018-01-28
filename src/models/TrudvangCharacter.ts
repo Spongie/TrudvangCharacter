@@ -19,6 +19,8 @@ export class TrudvangCharacter {
     fighting: Skill;
     faith: Skill;
     wilderness: Skill;
+    availableXp: number;
+    usedXp: number;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
@@ -31,7 +33,10 @@ export class TrudvangCharacter {
         this.fighting = skillGenerator.generateFightingTree();
         this.faith = skillGenerator.genereateFaithTree();
         this.wilderness = skillGenerator.generateWildernessTree();
-
+        
+        this.availableXp = 0;
+        this.usedXp = 0;
+        
         this.recalculateSkills();
     }
 
