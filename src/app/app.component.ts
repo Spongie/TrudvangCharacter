@@ -17,4 +17,8 @@ export class AppComponent {
   onSubmit() {
     console.log(this.model);
   }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
 }

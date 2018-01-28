@@ -244,16 +244,12 @@ export class SkillGenerator {
         ];
 
         wilderness.disciplines[0].specialities = [
-            new Specialization('City knowledge', 0, 0, wilderness.disciplines[0]),
-            new Specialization('Land knowledge', 0, 0, wilderness.disciplines[0]),
-            new Specialization('Sea knowledge', 0, 0, wilderness.disciplines[0]),
             new Specialization('Orienteering & cartography', 0, 0, wilderness.disciplines[0])
         ];
 
         wilderness.disciplines[1].specialities = [
             new Specialization('Carve & butcher', 0, 0, wilderness.disciplines[1]),
             new Specialization('Hunting & fishing', 0, 0, wilderness.disciplines[1]),
-            new Specialization('Species hunter', 0, 0, wilderness.disciplines[1]),
             new Specialization('Tracker', 0, 0, wilderness.disciplines[1]),
             new Specialization('Wilderness signs', 0, 0, wilderness.disciplines[1])
         ];
@@ -273,12 +269,7 @@ export class SkillGenerator {
         wilderness.disciplines[4].specialities = [
             new Specialization('Camper', 0, 0, wilderness.disciplines[4]),
             new Specialization('Pathwalker', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Weathered', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Terrain experience (mountains)', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Terrain experience (forest)', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Terrain experience (sea)', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Terrain experience (snow & cold)', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Terrain experience (plains)', 0, 0, wilderness.disciplines[4])
+            new Specialization('Weathered', 0, 0, wilderness.disciplines[4])
         ];
 
         return wilderness;
@@ -299,56 +290,11 @@ export class SkillGenerator {
             new Specialization('Spirit lore', 0, 0, knowledge.disciplines[0])
         ];
 
-        knowledge.disciplines[1].specialities = [
-            new Specialization('Customs & law (Stormlanders)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Customs & law (Mittlanders)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Customs & law (Viranns)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Customs & law (Wildfolk)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Customs & law (Dwarves)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Customs & law (Elves)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Lore & legends (Stormlanders)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Lore & legends (Mittlanders)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Lore & legends (Viranns)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Lore & legends (Wildfolk)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Lore & legends (Dwarves)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Lore & legends (Elves)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Religion (Stormlanders)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Religion (Mittlanders)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Religion (Viranns)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Religion (Wildfolk)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Religion (Dwarves)', 0, 0, knowledge.disciplines[1]),
-            new Specialization('Religion (Elves)', 0, 0, knowledge.disciplines[1])
-        ];
-
         knowledge.disciplines[2].specialities = [
             new Specialization('Bribery', 0, 0, knowledge.disciplines[2]),
             new Specialization('Calculate', 0, 0, knowledge.disciplines[2]),
             new Specialization('Mother tongue', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Silver tongue', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Eika)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Futhark)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Rona)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Vrok)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Estiatic)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Wild vrok)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Thronelandic)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Bastjumal)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Ancient vrok)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Forneika)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Ancient rona)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Foreign tongue (Dragerthian)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Eika)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Futhark)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Rona)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Vrok)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Estiatic)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Wild vrok)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Thronelandic)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Bastjumal)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Ancient vrok)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Forneika)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Ancient rona)', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Reading & writing (Dragerthian)', 0, 0, knowledge.disciplines[2])
+            new Specialization('Silver tongue', 0, 0, knowledge.disciplines[2])
         ];
 
         knowledge.disciplines[3].specialities = [

@@ -18,6 +18,7 @@ export class TrudvangCharacter {
     shadowArts: Skill;
     fighting: Skill;
     faith: Skill;
+    wilderness: Skill;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
@@ -29,6 +30,7 @@ export class TrudvangCharacter {
         this.shadowArts = skillGenerator.generateShadowArtsTree();
         this.fighting = skillGenerator.generateFightingTree();
         this.faith = skillGenerator.genereateFaithTree();
+        this.wilderness = skillGenerator.generateWildernessTree();
 
         this.recalculateSkills();
     }
@@ -44,29 +46,187 @@ export class TrudvangCharacter {
         this.shadowArts.updateSv();
     }
 
-    addForeignTongue() {
-        let value = (<HTMLInputElement>document.getElementById('inputForeignTongue')).value;
+    isValueValid(value) {
+        return value.trim() !== '';
+    }
 
-        if (value.trim() !== '') {
+    addForeignTongue() {
+        let input = (<HTMLInputElement>document.getElementById('inputForeignTongue'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
             let language = this.knowledge.disciplines.find((discipline) => {
                 return discipline.name === 'Language';
             });
 
-            language.specialities.push(new Specialization(value, 0, 0, language));
+            language.specialities.push(new Specialization('Foreign tongue (' + value + ')', 0, 0, language));
             language.updateSv();
+            input.value = '';
         }
     }
 
-    addCultureKnowledge() {
-        let value = (<HTMLInputElement>document.getElementById('inputCultureKnowledge')).value;
+    addMotherTongue() {
+        let input = (<HTMLInputElement>document.getElementById('inputMotherTongue'));
+        let value = input.value;
 
-        if (value.trim() !== '') {
+        if (this.isValueValid(value)) {
+            let language = this.knowledge.disciplines.find((discipline) => {
+                return discipline.name === 'Language';
+            });
+
+            language.specialities.push(new Specialization('Mother tongue (' + value + ')', 0, 0, language));
+            language.updateSv();
+            input.value = '';
+        }
+    }
+
+    addReadingWriting() {
+        let input = (<HTMLInputElement>document.getElementById('inputReadingWriting'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let language = this.knowledge.disciplines.find((discipline) => {
+                return discipline.name === 'Language';
+            });
+
+            language.specialities.push(new Specialization('Reading & writing (' + value + ')', 0, 0, language));
+            language.updateSv();
+            input.value = '';
+        }
+    }
+
+    addCustomsLaw() {
+        let input = (<HTMLInputElement>document.getElementById('inputCustomsLaw'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
             let cultureKnowledge = this.knowledge.disciplines.find((discipline) => {
                 return discipline.name === 'Culture knowledge';
             });
 
-            cultureKnowledge.specialities.push(new Specialization(value, 0, 0, cultureKnowledge));
+            cultureKnowledge.specialities.push(new Specialization('Customs & law (' + value + ')', 0, 0, cultureKnowledge));
             cultureKnowledge.updateSv();
+            input.value = '';
+        }
+    }
+
+    addLoreLegends() {
+        let input = (<HTMLInputElement>document.getElementById('inputLoreLegends'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let cultureKnowledge = this.knowledge.disciplines.find((discipline) => {
+                return discipline.name === 'Culture knowledge';
+            });
+
+            cultureKnowledge.specialities.push(new Specialization('Lore & legends (' + value + ')', 0, 0, cultureKnowledge));
+            cultureKnowledge.updateSv();
+            input.value = '';
+        }
+    }
+
+    addReligion() {
+        let input = (<HTMLInputElement>document.getElementById('inputReligion'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let cultureKnowledge = this.knowledge.disciplines.find((discipline) => {
+                return discipline.name === 'Culture knowledge';
+            });
+
+            cultureKnowledge.specialities.push(new Specialization('Religion (' + value + ')', 0, 0, cultureKnowledge));
+            cultureKnowledge.updateSv();
+            input.value = '';
+        }
+    }
+
+    addInsight() {
+        let input = (<HTMLInputElement>document.getElementById('inputInsight'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let insight = this.knowledge.disciplines.find((discipline) => {
+                return discipline.name === 'Learning';
+            });
+
+            insight.specialities.push(new Specialization('Insight (' + value + ')', 0, 0, insight));
+            insight.updateSv();
+            input.value = '';
+        }
+    }
+
+    addCityKnowledge() {
+        let input = (<HTMLInputElement>document.getElementById('inputCityKnowledge'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let insight = this.wilderness.disciplines.find((discipline) => {
+                return discipline.name === 'Geography';
+            });
+
+            insight.specialities.push(new Specialization('City knowledge (' + value + ')', 0, 0, insight));
+            insight.updateSv();
+            input.value = '';
+        }
+    }
+
+    addLandKnowledge() {
+        let input= (<HTMLInputElement>document.getElementById('inputLandKnowledge'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let insight = this.wilderness.disciplines.find((discipline) => {
+                return discipline.name === 'Geography';
+            });
+
+            insight.specialities.push(new Specialization('Land knowledge (' + value + ')', 0, 0, insight));
+            insight.updateSv();
+            input.value = '';
+        }
+    }
+
+    addSeaKnowledge() {
+        let input = (<HTMLInputElement>document.getElementById('inputSeaKnowledge'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let insight = this.wilderness.disciplines.find((discipline) => {
+                return discipline.name === 'Geography';
+            });
+
+            insight.specialities.push(new Specialization('Sea knowledge (' + value + ')', 0, 0, insight));
+            insight.updateSv();
+            input.value = '';
+        }
+    }
+
+    addSpeciesHunterKnowledge() {
+        let input = (<HTMLInputElement>document.getElementById('inputSpeciesHunterKnowledge'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let insight = this.wilderness.disciplines.find((discipline) => {
+                return discipline.name === 'Hunting experience';
+            });
+
+            insight.specialities.push(new Specialization('Species hunter (' + value + ')', 0, 0, insight));
+            insight.updateSv();
+            input.value = '';
+        }
+    }
+
+    addTerrainExperience() {
+        let input = (<HTMLInputElement>document.getElementById('inputTerrainExperienceKnowledge'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let insight = this.wilderness.disciplines.find((discipline) => {
+                return discipline.name === 'Survival';
+            });
+
+            insight.specialities.push(new Specialization('Terrain experience (' + value + ')', 0, 0, insight));
+            insight.updateSv();
+            input.value = '';
         }
     }
 }
