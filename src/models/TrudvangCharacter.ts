@@ -1,4 +1,7 @@
-import { Skill, SkillGenerator, Specialization } from "./skills";
+import { Skill } from "./skill";
+import { CharacterStats } from "./stats";
+import { SkillGenerator } from "./skillGenerator";
+import { Specialization } from "./Specialization";
 
 export class TrudvangCharacter {
     name: string;    
@@ -21,6 +24,8 @@ export class TrudvangCharacter {
     wilderness: Skill;
     availableXp: number;
     usedXp: number;
+    stats: CharacterStats;
+    baseXp: number;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
@@ -33,11 +38,36 @@ export class TrudvangCharacter {
         this.fighting = skillGenerator.generateFightingTree();
         this.faith = skillGenerator.genereateFaithTree();
         this.wilderness = skillGenerator.generateWildernessTree();
-        
+        this.baseXp = 350;
+
         this.availableXp = 0;
         this.usedXp = 0;
+
+        this.stats = new CharacterStats(0,0,0,0,0,0,0);
         
         this.recalculateSkills();
+        this.recalculateAvailableXp();
+    }
+
+    recalculateAvailableXp() {
+        this.availableXp = this.baseXp;
+        this.availableXp += -15 * this.stats.charisma;
+        this.availableXp += -15 * this.stats.constitution;
+        this.availableXp += -15 * this.stats.dexterity;
+        this.availableXp += -15 * this.stats.intelligence;
+        this.availableXp += -15 * this.stats.perception;
+        this.availableXp += -15 * this.stats.psyche;
+        this.availableXp += -15 * this.stats.strength;
+
+        this.availableXp -= this.agility.calculateTotalCost(this.stats);
+        this.availableXp -= this.care.calculateTotalCost(this.stats);
+        this.availableXp -= this.knowledge.calculateTotalCost(this.stats);
+        this.availableXp -= this.wilderness.calculateTotalCost(this.stats);
+        this.availableXp -= this.shadowArts.calculateTotalCost(this.stats);
+        this.availableXp -= this.vitnerCraft.calculateTotalCost(this.stats);
+        this.availableXp -= this.faith.calculateTotalCost(this.stats);
+        this.availableXp -= this.fighting.calculateTotalCost(this.stats);
+        this.availableXp -= this.entertainment.calculateTotalCost(this.stats);
     }
 
     recalculateSkills() {
@@ -49,6 +79,7 @@ export class TrudvangCharacter {
         this.fighting.updateSv();
         this.vitnerCraft.updateSv();
         this.shadowArts.updateSv();
+        this.recalculateAvailableXp();
     }
 
     isValueValid(value) {

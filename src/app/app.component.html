@@ -53,9 +53,25 @@
             <label for="inputAvailableXp">Available Xp: </label>
             <input type="number" class="form-control" id="inputAvailableXp" name="availableXp" [(ngModel)]="model.availableXp" readonly>
             <label for="inputAvailableXp">Used Xp: </label>
-            <input type="number" class="form-control" id="inputAvailableXp" name="availableXp" [(ngModel)]="model.usedXp" readonly>
+            <input type="number" class="form-control" id="inputAvailableXp" name="usedXp" [(ngModel)]="model.usedXp" readonly>
             <button type="button" style="margin-top: 5px" class="btn btn-success" (click)="open(addXpPopup)">Reward Xp</button>
           </div>
+        </div>
+        <div class="form-group col-md-12" style="margin-left:10px">
+          <label for="inputCharisma" style="margin-right: 5px">Charisma: </label>
+          <input type="number" id="inputCharisma" style="margin-right: 5px" max="4" min="-4" (ngModelChange)="model.recalculateAvailableXp()" [(ngModel)]="model.stats.charisma" name="inputCharisma" >
+          <label for="inputConstitution" style="margin-right: 5px">Constitution: </label>
+          <input type="number" id="inputConstitution" style="margin-right: 5px"  max="4" min="-4" [(ngModel)]="model.stats.constitution" name="inputConstitution" (ngModelChange)="model.recalculateAvailableXp()">
+          <label for="inputDexterity" style="margin-right: 5px">Dexterity: </label>
+          <input type="number" id="inputDexterity" style="margin-right: 5px"  max="4" min="-4" [(ngModel)]="model.stats.dexterity" name="inputDexterity" (ngModelChange)="model.recalculateAvailableXp()">
+          <label for="inputIntelligence" style="margin-right: 5px">Intelligence: </label>
+          <input type="number" id="inputIntelligence" style="margin-right: 5px"  max="4" min="-4" [(ngModel)]="model.stats.intelligence" name="inputIntelligence" (ngModelChange)="model.recalculateAvailableXp()">
+          <label for="inputPerception" style="margin-right: 5px">Perception: </label>
+          <input type="number" id="inputPerception" style="margin-right: 5px"  max="4" min="-4" [(ngModel)]="model.stats.perception" name="inputPerception" (ngModelChange)="model.recalculateAvailableXp()">
+          <label for="inputPsyche" style="margin-right: 5px">Psyche: </label>
+          <input type="number" id="inputPsyche" style="margin-right: 5px"  max="4" min="-4" [(ngModel)]="model.stats.psyche" name="inputPsyche" (ngModelChange)="model.recalculateAvailableXp()">
+          <label for="inputStrength" style="margin-right: 5px">Strength: </label>
+          <input type="number" id="inputStrength" style="margin-right: 5px"  max="4" min="-4" [(ngModel)]="model.stats.strength" name="inputStrength" (ngModelChange)="model.recalculateAvailableXp()">
         </div>
         <div class="row" style="margin-left:10px; margin-right:10px">
           <div class="form-group col-md-12">
@@ -63,6 +79,15 @@
             <textarea class="form-control" id="inputBackground" rows="20" name="background" [(ngModel)]="model.background"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Combat">
+    <ng-template ngbTabContent>
+      <form>
+        <div class="row">
+
         </div>
       </form>
     </ng-template>

@@ -1,15 +1,6 @@
-export class Skill {
-
-    constructor(public name: string, public level: number, public disciplines: Array<Discipline>) {
-
-    }
-
-    updateSv() {
-        this.disciplines.forEach((disipline) => {
-            disipline.updateSv();
-        });
-    }
-}
+import { Skill } from "./skill";
+import { Discipline } from "./discipline";
+import { Specialization } from "./Specialization";
 
 export class SkillGenerator {
 
@@ -302,26 +293,5 @@ export class SkillGenerator {
         ];
 
         return knowledge;
-    }
-}
-
-export class Discipline {
-    constructor(public name: string, public level: number, public sv: number, public parent: Skill, public specialities: Array<Specialization>) {
-    }
-
-    public updateSv() {
-        this.sv = this.parent.level + this.level;
-        this.specialities.forEach((specialitie) => {
-            specialitie.updateSv();
-        });
-    }
-}
-
-export class Specialization {
-    constructor(public name: string, public level: number, public sv: number, public parent: Discipline) {
-    }
-
-    public updateSv() {
-        this.sv = this.parent.sv + (this.level * 2);
     }
 }
