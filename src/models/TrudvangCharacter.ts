@@ -2,6 +2,7 @@ import { Skill } from "./skill";
 import { CharacterStats } from "./stats";
 import { SkillGenerator } from "./skillGenerator";
 import { Specialization } from "./Specialization";
+import { Fighting } from "./disicplines/fighting";
 
 export class TrudvangCharacter {
     name: string;    
@@ -19,7 +20,7 @@ export class TrudvangCharacter {
     knowledge: Skill;
     vitnerCraft: Skill;
     shadowArts: Skill;
-    fighting: Skill;
+    fighting: Fighting;
     faith: Skill;
     wilderness: Skill;
     availableXp: number;
@@ -27,6 +28,23 @@ export class TrudvangCharacter {
     stats: CharacterStats;
     baseXp: number;
     readonly freeSkillsCost: number;
+
+    freeCombatPoints: number;
+    attackParriesPoints: number;
+    combatActionsPoints: number;
+
+    unarmedPoints: number;
+    brawlingPoints: number;
+    wrestlingPoints: number;
+
+    armedPoints: number;
+    bowsSlingsPoints: number;
+    crossbowPoints: number;
+    lightWeaponPoints: number;
+    heavyWeaponPoints: number;
+    shieldBearerPoints: number;
+    throwingWeaponPoints: number;
+    twoHandedPoints: number;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
@@ -49,6 +67,7 @@ export class TrudvangCharacter {
         
         this.recalculateSkills();
         this.recalculateAvailableXp();
+        this.recalculateCombatPoints();
     }
 
     recalculateAvailableXp() {
@@ -71,6 +90,8 @@ export class TrudvangCharacter {
         this.availableXp -= this.fighting.calculateTotalCost(this.stats);
         this.availableXp -= this.entertainment.calculateTotalCost(this.stats);
         this.availableXp += this.freeSkillsCost;
+
+        this.recalculateCombatPoints();
     }
 
     recalculateSkills() {
@@ -83,6 +104,23 @@ export class TrudvangCharacter {
         this.vitnerCraft.updateSv();
         this.shadowArts.updateSv();
         this.recalculateAvailableXp();
+    }
+
+    recalculateCombatPoints() {
+        this.freeCombatPoints = this.fighting.calculateFreeCombatPoints();
+        this.attackParriesPoints = this.fighting.calculateAttackParries();
+        this.combatActionsPoints = this.fighting.calculateCombatActions();
+        this.unarmedPoints = this.fighting.calculateUnarmedFighting();
+        this.brawlingPoints = this.fighting.calculateBrawling();
+        this.wrestlingPoints = this.fighting.calculateWrestling();
+        this.armedPoints = this.fighting.calculateArmedFighting();
+        this.bowsSlingsPoints = this.fighting.calculateBowsAndSlings();
+        this.crossbowPoints = this.fighting.calculateCrossbow();
+        this.lightWeaponPoints = this.fighting.calculateLightWeapons();
+        this.heavyWeaponPoints = this.fighting.calculateHeavyWeapons();
+        this.shieldBearerPoints = this.fighting.calculateShieldBearer();
+        this.throwingWeaponPoints = this.fighting.calculateThrowingWeapons();
+        this.twoHandedPoints = this.fighting.calculateTwoHanded();
     }
 
     isValueValid(value) {

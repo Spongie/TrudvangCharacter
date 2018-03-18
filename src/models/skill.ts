@@ -26,7 +26,7 @@ export class Skill {
         return skillCost + disciplineCost;
     }
 
-    private calculateSkillCost(level:number) {
+    protected calculateSkillCost(level:number) {
         if (level === 1) {
             return 0;
         }

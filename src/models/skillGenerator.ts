@@ -1,6 +1,7 @@
 import { Skill } from "./skill";
 import { Discipline } from "./discipline";
 import { Specialization } from "./Specialization";
+import { Fighting } from "./disicplines/fighting";
 
 export class SkillGenerator {
 
@@ -132,7 +133,7 @@ export class SkillGenerator {
     }
 
     public generateFightingTree() {
-        let fighting = new Skill('Fighting', 1, []);
+        let fighting = new Fighting('Fighting', 1, []);
         fighting.disciplines = [
             new Discipline('Armed fighting', 0, 0, fighting, []),
             new Discipline('Battle experience', 0, 0, fighting, []),
