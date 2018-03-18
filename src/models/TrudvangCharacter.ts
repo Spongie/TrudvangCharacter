@@ -46,6 +46,11 @@ export class TrudvangCharacter {
     throwingWeaponPoints: number;
     twoHandedPoints: number;
 
+    maximumBodyPoints: number;
+    naturalHealing: number;
+    currentBodyPoints: number;
+    currentFear: number;
+
     constructor() {
         let skillGenerator = new SkillGenerator();
         this.freeSkillsCost = 56;
@@ -68,6 +73,14 @@ export class TrudvangCharacter {
         this.recalculateSkills();
         this.recalculateAvailableXp();
         this.recalculateCombatPoints();
+        this.recalculateBodyAndFear();
+    }
+
+    recalculateBodyAndFear() {
+        this.naturalHealing = 1 * this.stats.constitution > 0 ? this.stats.constitution : 1;
+        this.maximumBodyPoints = this.stats.strength + this.getRaceBaseBodyPoints();
+        this.currentBodyPoints = this.maximumBodyPoints;
+        this.currentFear = 0;
     }
 
     recalculateAvailableXp() {
@@ -92,6 +105,7 @@ export class TrudvangCharacter {
         this.availableXp += this.freeSkillsCost;
 
         this.recalculateCombatPoints();
+        this.recalculateBodyAndFear();
     }
 
     recalculateSkills() {
@@ -304,6 +318,25 @@ export class TrudvangCharacter {
             insight.specialities.push(new Specialization('Terrain experience (' + value + ')', 0, 0, insight));
             insight.updateSv();
             input.value = '';
+        }
+    }
+
+    private getRaceBaseBodyPoints() {
+        switch (this.race){
+            case 'Human':
+                return 32;
+            case 'Elf':
+                return 30;
+            case 'Dwarf (Buratja)':
+                return 28;
+            case 'Dwarf (Borjornikka)':
+                return 30;
+            case 'Half-troll':
+                return 30;
+            case 'Half-elf':
+                return 30;
+            case 'Dwarf-troll':
+                return 34;
         }
     }
 }

@@ -22,7 +22,8 @@
             <select id="inputRace" class="form-control" name="race" [(ngModel)]="model.race">
               <option>Human</option>
               <option>Elf</option>
-              <option>Dwarf</option>
+              <option>Dwarf (Buratja)</option>
+              <option>Dwarf (Borjornikka)</option>
               <option>Half-troll</option>
               <option>Half-elf</option>
               <option>Dwarf-troll</option>
@@ -105,7 +106,7 @@
               <li class="list-group-item">Two-Handed Weapons</li>
             </ul>
           </div>
-          <div class="col-md-10">
+          <div class="col-md-2">
             <ul class="list-group">
               <li class="list-group-item">{{model.freeCombatPoints}}</li>
               <li class="list-group-item">{{model.attackParriesPoints}}</li>
@@ -121,6 +122,27 @@
               <li class="list-group-item">{{model.shieldBearerPoints}}</li>
               <li class="list-group-item">{{model.throwingWeaponPoints}}</li>
               <li class="list-group-item">{{model.twoHandedPoints}}</li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-group">
+              <li class="list-group-item">Body points</li>
+              <li class="list-group-item">Natural healing</li>
+              <li class="list-group-item">Fear</li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-group">
+              <li class="list-group-item">{{model.maximumBodyPoints}}</li>
+              <li class="list-group-item">{{model.naturalHealing}}</li>
+              <li class="list-group-item">{{model.currentFear}}</li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-group">
+              <li class="list-group-item"><input type="number" id="currentBodyPoints" max={{model.maximumBodyPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentBodyPoints" name="currentBodyPoints" (ngModelChange)="model.recalculateAvailableXp()"></li>
+              <li class="list-group-item">{{model.naturalHealing}}</li>
+              <li class="list-group-item"><input type="number" id="inputcurrentFear" max="50" min="0" style="margin-right: 5px" [(ngModel)]="model.currentFear" name="currentFear" (ngModelChange)="model.recalculateAvailableXp()"></li>
             </ul>
           </div>
         </div>
