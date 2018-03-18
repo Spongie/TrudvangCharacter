@@ -271,8 +271,8 @@ export class SkillGenerator {
         
         knowledge.disciplines = [
             new Discipline('Race knowledge', 0, 0, knowledge, []),
-            new Discipline('Culture knowledge', 0, 0, knowledge, []),
-            new Discipline('Language', 0, 0, knowledge, []),
+            new Discipline('Culture knowledge', 1, 0, knowledge, []),
+            new Discipline('Language', 1, 0, knowledge, []),
             new Discipline('Learning', 0, 0, knowledge, [])
         ];
 
@@ -284,7 +284,7 @@ export class SkillGenerator {
         knowledge.disciplines[2].specialities = [
             new Specialization('Bribery', 0, 0, knowledge.disciplines[2]),
             new Specialization('Calculate', 0, 0, knowledge.disciplines[2]),
-            new Specialization('Mother tongue', 0, 0, knowledge.disciplines[2]),
+            new Specialization('Mother tongue', 3, 0, knowledge.disciplines[2]),
             new Specialization('Silver tongue', 0, 0, knowledge.disciplines[2])
         ];
 

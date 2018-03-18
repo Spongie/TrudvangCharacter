@@ -26,9 +26,11 @@ export class TrudvangCharacter {
     usedXp: number;
     stats: CharacterStats;
     baseXp: number;
+    readonly freeSkillsCost: number;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
+        this.freeSkillsCost = 56;
         this.agility = skillGenerator.generateAgilityTree();
         this.care = skillGenerator.generateCareTree();
         this.entertainment = skillGenerator.genereateEntertainmentTree();
@@ -68,6 +70,7 @@ export class TrudvangCharacter {
         this.availableXp -= this.faith.calculateTotalCost(this.stats);
         this.availableXp -= this.fighting.calculateTotalCost(this.stats);
         this.availableXp -= this.entertainment.calculateTotalCost(this.stats);
+        this.availableXp += this.freeSkillsCost;
     }
 
     recalculateSkills() {
