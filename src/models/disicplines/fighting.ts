@@ -1,10 +1,11 @@
 import { Discipline } from "../discipline";
 import { Skill } from "../skill";
+import { TrudvangCharacter } from "../TrudvangCharacter";
 
 export class Fighting extends Skill {
 
-    constructor(name: string, level: number, disciplines: Array<Discipline>) {
-        super(name, level, disciplines);
+    constructor(public owner: TrudvangCharacter, name: string, level: number, disciplines: Array<Discipline>) {
+        super(owner, name, level, disciplines);
     }
 
     readonly BattleExperience = 'Battle experience';

@@ -17,6 +17,6 @@ export class Specialization {
             return 0;
         }
         
-        return (level * 7) + modifier + this.calculateSpecializationCost(level - 1, modifier);
+        return (level * 7) + (-modifier) + this.calculateSpecializationCost(level - 1, modifier);
     }
 }

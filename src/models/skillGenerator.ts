@@ -3,11 +3,13 @@ import { Discipline } from "./discipline";
 import { Specialization } from "./Specialization";
 import { Fighting } from "./disicplines/fighting";
 import { SkillWithModifier } from "./disicplines/SkillWithModifier";
+import { PsycheSpecialization } from "./specialities/psycheSpecialization";
+import { TrudvangCharacter } from "./TrudvangCharacter";
 
 export class SkillGenerator {
 
-    public generateAgilityTree() {
-        let agility = new SkillWithModifier('Agility', 1, []);
+    public generateAgilityTree(player: TrudvangCharacter) {
+        let agility = new SkillWithModifier(player, 'Agility', 1, []);
         agility.disciplines = [
             new Discipline('Battle maneuver', 0, 0, agility, []),
             new Discipline('Body control', 0, 0, agility, []),
@@ -35,8 +37,8 @@ export class SkillGenerator {
         return agility;
     }
 
-    public generateCareTree() {
-        let care = new Skill('Care', 1, []);
+    public generateCareTree(player: TrudvangCharacter) {
+        let care = new Skill(player, 'Care', 1, []);
 
         care.disciplines = [
             new Discipline('Handicraft', 0, 0, care, []),
@@ -72,8 +74,8 @@ export class SkillGenerator {
         return care;
     }
 
-    public genereateEntertainmentTree() {
-        let entertainment = new Skill('Entertainment', 1, []);
+    public genereateEntertainmentTree(player: TrudvangCharacter) {
+        let entertainment = new Skill(player, 'Entertainment', 1, []);
         entertainment.disciplines = [
             new Discipline('Gambling', 0, 0, entertainment, []),
             new Discipline('Music & dancing', 0, 0, entertainment, []),
@@ -99,8 +101,8 @@ export class SkillGenerator {
         return entertainment;
     }
 
-    public genereateFaithTree() {
-        let faith = new SkillWithModifier('Faith', 1, []);
+    public genereateFaithTree(player: TrudvangCharacter) {
+        let faith = new SkillWithModifier(player, 'Faith', 1, []);
 
         faith.disciplines = [
             new Discipline('Divine power', 0, 0, faith, []),
@@ -134,8 +136,8 @@ export class SkillGenerator {
         return faith;
     }
 
-    public generateFightingTree() {
-        let fighting = new Fighting('Fighting', 1, []);
+    public generateFightingTree(player: TrudvangCharacter) {
+        let fighting = new Fighting(player, 'Fighting', 1, []);
         fighting.disciplines = [
             new Discipline('Armed fighting', 0, 0, fighting, []),
             new Discipline('Battle experience', 0, 0, fighting, []),
@@ -168,8 +170,8 @@ export class SkillGenerator {
         return fighting;
     }
 
-    public generateShadowArtsTree() {
-        let shadowArts = new Skill('Shadow arts', 1, []);
+    public generateShadowArtsTree(player: TrudvangCharacter) {
+        let shadowArts = new Skill(player, 'Shadow arts', 1, []);
 
         shadowArts.disciplines = [
             new Discipline('Shadowing', 0, 0, shadowArts, []),
@@ -194,8 +196,8 @@ export class SkillGenerator {
         return shadowArts;
     }
 
-    public generateVitnerCraftTree() {
-        let vitnerCraft = new SkillWithModifier('Vitner craft', 1, []);
+    public generateVitnerCraftTree(player: TrudvangCharacter) {
+        let vitnerCraft = new SkillWithModifier(player, 'Vitner craft', 1, []);
 
         vitnerCraft.disciplines = [
             new Discipline('Call of vitner', 0, 0, vitnerCraft, []),
@@ -226,8 +228,8 @@ export class SkillGenerator {
         return vitnerCraft;
     }
 
-    public generateWildernessTree() {
-        let wilderness = new Skill('Wilderness', 1, []);
+    public generateWildernessTree(player: TrudvangCharacter) {
+        let wilderness = new Skill(player, 'Wilderness', 1, []);
 
         wilderness.disciplines = [
             new Discipline('Geography', 1, 0, wilderness, []),
@@ -263,15 +265,15 @@ export class SkillGenerator {
 
         wilderness.disciplines[4].specialities = [
             new Specialization('Camper', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Pathwalker', 0, 0, wilderness.disciplines[4]),
-            new Specialization('Weathered', 0, 0, wilderness.disciplines[4])
+            new PsycheSpecialization('Pathwalker', 0, 0, wilderness.disciplines[4]),
+            new PsycheSpecialization('Weathered', 0, 0, wilderness.disciplines[4])
         ];
 
         return wilderness;
     }
 
-    public generateKnowledgeTree() {
-        let knowledge = new SkillWithModifier('Knowledge', 1, []);
+    public generateKnowledgeTree(player: TrudvangCharacter) {
+        let knowledge = new SkillWithModifier(player, 'Knowledge', 1, []);
         
         knowledge.disciplines = [
             new Discipline('Race knowledge', 0, 0, knowledge, []),

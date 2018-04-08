@@ -4,6 +4,7 @@ import { SkillGenerator } from "./skillGenerator";
 import { Specialization } from "./Specialization";
 import { Fighting } from "./disicplines/fighting";
 import { SkillWithModifier } from "./disicplines/SkillWithModifier";
+import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 
 export class TrudvangCharacter {
     name: string;    
@@ -58,15 +59,15 @@ export class TrudvangCharacter {
         let skillGenerator = new SkillGenerator();
         this.freeKnowledgeSkillsCost = 56;
         this.freeWildernessSkillsCost = 14;
-        this.agility = skillGenerator.generateAgilityTree();
-        this.care = skillGenerator.generateCareTree();
-        this.entertainment = skillGenerator.genereateEntertainmentTree();
-        this.knowledge = skillGenerator.generateKnowledgeTree();
-        this.vitnerCraft = skillGenerator.generateVitnerCraftTree();
-        this.shadowArts = skillGenerator.generateShadowArtsTree();
-        this.fighting = skillGenerator.generateFightingTree();
-        this.faith = skillGenerator.genereateFaithTree();
-        this.wilderness = skillGenerator.generateWildernessTree();
+        this.agility = skillGenerator.generateAgilityTree(this);
+        this.care = skillGenerator.generateCareTree(this);
+        this.entertainment = skillGenerator.genereateEntertainmentTree(this);
+        this.knowledge = skillGenerator.generateKnowledgeTree(this);
+        this.vitnerCraft = skillGenerator.generateVitnerCraftTree(this);
+        this.shadowArts = skillGenerator.generateShadowArtsTree(this);
+        this.fighting = skillGenerator.generateFightingTree(this);
+        this.faith = skillGenerator.genereateFaithTree(this);
+        this.wilderness = skillGenerator.generateWildernessTree(this);
         this.baseXp = 350;
 
         this.availableXp = 0;
@@ -109,6 +110,8 @@ export class TrudvangCharacter {
 
         this.availableXp += this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
         this.availableXp += this.freeWildernessSkillsCost;
+
+        console.log("Available exp: " + this.availableXp);
 
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();
@@ -322,7 +325,7 @@ export class TrudvangCharacter {
                 return discipline.name === 'Survival';
             });
 
-            insight.specialities.push(new Specialization('Terrain experience (' + value + ')', 0, 0, insight));
+            insight.specialities.push(new PsycheSpecialization('Terrain experience (' + value + ')', 0, 0, insight));
             insight.updateSv();
             input.value = '';
         }
