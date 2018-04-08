@@ -6,6 +6,7 @@ import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 import { TrudvangCharacter } from "./TrudvangCharacter";
 import { TradesmanDiscipline } from "./disicplines/tradesmanDiscipline";
+import { PerceptionSpecialization } from "./specialities/perceptionSpecialization";
 
 export class SkillGenerator {
 
@@ -60,7 +61,7 @@ export class SkillGenerator {
         ];
 
         care.disciplines[2].specialities = [
-            new Specialization('Extract & potions', 0, 0, care.disciplines[2]),
+            new PerceptionSpecialization('Extracts & potions', 0, 0, care.disciplines[2]),
             new Specialization('First aid & nursing', 0, 0, care.disciplines[2]),
         ];
 
@@ -182,7 +183,7 @@ export class SkillGenerator {
         shadowArts.disciplines[0].specialities = [
             new Specialization('Walking in shadows', 0, 0, shadowArts.disciplines[0]),
             new Specialization('Sneak attack', 0, 0, shadowArts.disciplines[0]),
-            new Specialization('Finding & spotting', 0, 0, shadowArts.disciplines[0]),
+            new PerceptionSpecialization('Finding & spotting', 0, 0, shadowArts.disciplines[0]),
             new Specialization('Camouflage & hiding', 0, 0, shadowArts.disciplines[0])
         ];
 
@@ -191,7 +192,7 @@ export class SkillGenerator {
             new Specialization('Locks & traps', 0, 0, shadowArts.disciplines[1]),
             new Specialization('Stealing', 0, 0, shadowArts.disciplines[1]),
             new Specialization('Shadow world', 0, 0, shadowArts.disciplines[1]),
-            new Specialization('Theif signs', 0, 0, shadowArts.disciplines[1])
+            new PerceptionSpecialization('Theif signs', 0, 0, shadowArts.disciplines[1])
         ];
 
         return shadowArts;
@@ -242,14 +243,14 @@ export class SkillGenerator {
 
         wilderness.disciplines[0].specialities = [
             new Specialization('Land knowledge', 1, 0, wilderness.disciplines[0]),
-            new Specialization('Orienteering & cartography', 0, 0, wilderness.disciplines[0])
+            new PerceptionSpecialization('Orienteering & cartography', 0, 0, wilderness.disciplines[0])
         ];
 
         wilderness.disciplines[1].specialities = [
             new Specialization('Carve & butcher', 0, 0, wilderness.disciplines[1]),
             new Specialization('Hunting & fishing', 0, 0, wilderness.disciplines[1]),
-            new Specialization('Tracker', 0, 0, wilderness.disciplines[1]),
-            new Specialization('Wilderness signs', 0, 0, wilderness.disciplines[1])
+            new PerceptionSpecialization('Tracker', 0, 0, wilderness.disciplines[1]),
+            new PerceptionSpecialization('Wilderness signs', 0, 0, wilderness.disciplines[1])
         ];
 
         wilderness.disciplines[2].specialities = [
@@ -260,7 +261,7 @@ export class SkillGenerator {
         ];
 
         wilderness.disciplines[3].specialities = [
-            new Specialization('Navigation', 0, 0, wilderness.disciplines[3]),
+            new PerceptionSpecialization('Navigation', 0, 0, wilderness.disciplines[3]),
             new Specialization('Seaman', 0, 0, wilderness.disciplines[3])
         ];
 
