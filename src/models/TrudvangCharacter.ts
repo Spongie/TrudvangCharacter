@@ -15,7 +15,7 @@ export class TrudvangCharacter {
     weight: number;
     weaponHand: string;
     background: string;
-    agility: Skill;
+    agility: SkillWithModifier;
     care: Skill;
     entertainment: Skill;
     knowledge: SkillWithModifier;
@@ -97,7 +97,7 @@ export class TrudvangCharacter {
         this.availableXp += -15 * this.stats.psyche;
         this.availableXp += -15 * this.stats.strength;
 
-        this.availableXp -= this.agility.calculateTotalCost();
+        this.availableXp -= this.agility.calculateTotalCostWithModifier(this.stats.dexterity);
         this.availableXp -= this.care.calculateTotalCost();
         this.availableXp -= this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence);
         this.availableXp -= this.wilderness.calculateTotalCost();

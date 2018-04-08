@@ -7,7 +7,7 @@ import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 export class SkillGenerator {
 
     public generateAgilityTree() {
-        let agility = new Skill('Agility', 1, []);
+        let agility = new SkillWithModifier('Agility', 1, []);
         agility.disciplines = [
             new Discipline('Battle maneuver', 0, 0, agility, []),
             new Discipline('Body control', 0, 0, agility, []),
