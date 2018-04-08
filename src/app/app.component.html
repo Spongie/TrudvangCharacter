@@ -19,7 +19,7 @@
             <label for="inputName">Name: </label>
             <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="model.name" placeholder="name...">
             <label for="inputRace">Race: </label>
-            <select id="inputRace" class="form-control" name="race" [(ngModel)]="model.race">
+            <select id="inputRace" class="form-control" name="race" [(ngModel)]="model.race" (ngModelChange)="model.recalculateAvailableXp()">
               <option>Human</option>
               <option>Elf</option>
               <option>Dwarf (Buratja)</option>

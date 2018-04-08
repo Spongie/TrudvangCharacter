@@ -117,6 +117,7 @@ export class TrudvangCharacter {
         this.fighting.updateSv();
         this.vitnerCraft.updateSv();
         this.shadowArts.updateSv();
+        this.wilderness.updateSv();
         this.recalculateAvailableXp();
     }
 
