@@ -5,6 +5,9 @@ import { Specialization } from "./Specialization";
 import { Fighting } from "./disicplines/fighting";
 import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 import { PsycheSpecialization } from "./specialities/psycheSpecialization";
+import { Weapon } from "./weapon";
+import { Armore } from "./armor";
+import { Item } from "./item";
 
 export class TrudvangCharacter {
     name: string;    
@@ -58,6 +61,10 @@ export class TrudvangCharacter {
     movement: number;
     persistance: number;
 
+    weapons: Array<Weapon>
+    armors: Array<Armore>
+    items: Array<Item>
+
     constructor() {
         let skillGenerator = new SkillGenerator();
         this.freeKnowledgeSkillsCost = 56;
@@ -77,11 +84,56 @@ export class TrudvangCharacter {
         this.usedXp = 0;
 
         this.stats = new CharacterStats(0,0,0,0,0,0,0);
+        this.weapons = new Array<Weapon>();
+        this.armors = new Array<Armore>();
+        this.items = new Array<Item>();
+
+        let v = new Weapon();
+        v.type = 'Two handed club';
+        v.breakValue = 50;
+        v.pv = 6;
+        v.longRange = '2-3m';
+        v.shortRange = "0-1m";
+        v.extra = 'Nothing';
+        v.damage = "1d10 OR8";
+        v.initiativeModifier = -5;
+        v.weaponActions = 2;
+
+        this.weapons.push(v);
+
+        let a = new Armore();
+        a.type = "Metal armor";
+        a.heft = 1;
+        a.initiativeModifier = -2;
+        a.breakValue = 3;
+        a.pv = 2;
+        a.extra = 'Nothing';
+
+        this.armors.push(a);
+
+        let i = new Item();
+        i.description = 'Very sharp';
+        i.quantity = 23;
+        i.type = 'Arrow'
+
+        this.items.push(i);
         
         this.recalculateSkills();
         this.recalculateAvailableXp();
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();
+    }
+
+    addItem() {
+        this.items.push(new Item());
+    }
+
+    addWeapon() {
+        this.weapons.push(new Weapon());
+    }
+
+    addArmor() {
+        this.armors.push(new Armore());
     }
 
     recalculateBodyAndFear() {
