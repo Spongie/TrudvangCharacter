@@ -55,6 +55,8 @@ export class TrudvangCharacter {
     currentBodyPoints: number;
     currentFear: number;
     raud: number;
+    movement: number;
+    persistance: number;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
@@ -84,7 +86,7 @@ export class TrudvangCharacter {
 
     recalculateBodyAndFear() {
         this.naturalHealing = 1 * this.stats.constitution > 0 ? this.stats.constitution : 1;
-        this.maximumBodyPoints = this.stats.strength + this.getRaceBaseBodyPoints();
+        this.maximumBodyPoints = this.stats.constitution + this.getRaceBaseBodyPoints();
         this.currentBodyPoints = this.maximumBodyPoints;
         this.currentFear = 0;
     }
@@ -114,6 +116,9 @@ export class TrudvangCharacter {
 
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();
+
+        this.movement = 10 + this.stats.dexterity;
+        this.persistance = 10 + this.stats.psyche;
     }
 
     recalculateSkills() {
