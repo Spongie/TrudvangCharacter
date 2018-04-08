@@ -54,6 +54,7 @@ export class TrudvangCharacter {
     naturalHealing: number;
     currentBodyPoints: number;
     currentFear: number;
+    raud: number;
 
     constructor() {
         let skillGenerator = new SkillGenerator();
@@ -164,6 +165,16 @@ export class TrudvangCharacter {
             language.updateSv();
             input.value = '';
         }
+    }
+
+    rollRaud() {
+        let roll = Math.floor((Math.random() * 6) + 1) + this.stats.charisma;
+
+        if (roll < 0) {
+            roll = 0;
+        }
+
+        this.raud = roll;
     }
 
     addMotherTongue() {

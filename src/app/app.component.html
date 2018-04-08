@@ -50,12 +50,17 @@
               <option>Dual</option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-2">
             <label for="inputAvailableXp">Available Xp: </label>
             <input type="number" class="form-control" id="inputAvailableXp" name="availableXp" [(ngModel)]="model.availableXp" readonly>
             <label for="inputAvailableXp">Used Xp: </label>
             <input type="number" class="form-control" id="inputAvailableXp" name="usedXp" [(ngModel)]="model.usedXp" readonly>
             <button type="button" style="margin-top: 5px" class="btn btn-success" (click)="open(addXpPopup)">Reward Xp</button>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputRaud">Raud:</label>
+            <input type="number" class="form-control" id="inputRaud" name="raud" [(ngModel)]="model.raud" readonly>
+            <button type="button" class="btn btn-success" style="margin-top: 5px" readonly (click)="model.rollRaud()">Roll Raud</button>
           </div>
         </div>
         <div class="form-group col-md-12" style="margin-left:10px">
