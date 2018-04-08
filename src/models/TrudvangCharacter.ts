@@ -18,7 +18,7 @@ export class TrudvangCharacter {
     background: string;
     agility: SkillWithModifier;
     care: Skill;
-    entertainment: Skill;
+    entertainment: SkillWithModifier;
     knowledge: SkillWithModifier;
     vitnerCraft: SkillWithModifier;
     shadowArts: Skill;
@@ -106,7 +106,7 @@ export class TrudvangCharacter {
         this.availableXp -= this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence);
         this.availableXp -= this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
         this.availableXp -= this.fighting.calculateTotalCost();
-        this.availableXp -= this.entertainment.calculateTotalCost();
+        this.availableXp -= this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
 
         this.availableXp += this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
         this.availableXp += this.freeWildernessSkillsCost;

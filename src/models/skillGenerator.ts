@@ -5,6 +5,7 @@ import { Fighting } from "./disicplines/fighting";
 import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 import { TrudvangCharacter } from "./TrudvangCharacter";
+import { TradesmanDiscipline } from "./disicplines/tradesmanDiscipline";
 
 export class SkillGenerator {
 
@@ -44,7 +45,7 @@ export class SkillGenerator {
             new Discipline('Handicraft', 0, 0, care, []),
             new Discipline('Handler', 0, 0, care, []),
             new Discipline('Healing & drugs', 0, 0, care, []),
-            new Discipline('Tradesman', 0, 0, care, [])
+            new TradesmanDiscipline(0, 0, care, [])
         ];
 
         care.disciplines[0].specialities = [
@@ -75,7 +76,7 @@ export class SkillGenerator {
     }
 
     public genereateEntertainmentTree(player: TrudvangCharacter) {
-        let entertainment = new Skill(player, 'Entertainment', 1, []);
+        let entertainment = new SkillWithModifier(player, 'Entertainment', 1, []);
         entertainment.disciplines = [
             new Discipline('Gambling', 0, 0, entertainment, []),
             new Discipline('Music & dancing', 0, 0, entertainment, []),
