@@ -112,8 +112,6 @@ export class TrudvangCharacter {
         this.availableXp += this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
         this.availableXp += this.freeWildernessSkillsCost;
 
-        console.log("Available exp: " + this.availableXp);
-
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();
     }
