@@ -93,7 +93,7 @@ export class Fighting extends Skill {
         return points + (this.getWrestling().level * 2 );
     }
 
-    private getBattleExperience() {
+    getBattleExperience() {
         return this.disciplines.find(discipline => {
             return discipline.name === this.BattleExperience;
         });

@@ -60,6 +60,7 @@ export class TrudvangCharacter {
     raud: number;
     movement: number;
     persistance: number;
+    initiative: number;
 
     weapons: Array<Weapon>
     armors: Array<Armore>
@@ -87,36 +88,6 @@ export class TrudvangCharacter {
         this.weapons = new Array<Weapon>();
         this.armors = new Array<Armore>();
         this.items = new Array<Item>();
-
-        let v = new Weapon();
-        v.type = 'Two handed club';
-        v.breakValue = 50;
-        v.pv = 6;
-        v.longRange = '2-3m';
-        v.shortRange = "0-1m";
-        v.extra = 'Nothing';
-        v.damage = "1d10 OR8";
-        v.initiativeModifier = -5;
-        v.weaponActions = 2;
-
-        this.weapons.push(v);
-
-        let a = new Armore();
-        a.type = "Metal armor";
-        a.heft = 1;
-        a.initiativeModifier = -2;
-        a.breakValue = 3;
-        a.pv = 2;
-        a.extra = 'Nothing';
-
-        this.armors.push(a);
-
-        let i = new Item();
-        i.description = 'Very sharp';
-        i.quantity = 23;
-        i.type = 'Arrow'
-
-        this.items.push(i);
         
         this.recalculateSkills();
         this.recalculateAvailableXp();
@@ -138,7 +109,7 @@ export class TrudvangCharacter {
 
     recalculateBodyAndFear() {
         this.naturalHealing = 1 * this.stats.constitution > 0 ? this.stats.constitution : 1;
-        this.maximumBodyPoints = this.stats.constitution + this.getRaceBaseBodyPoints();
+        this.maximumBodyPoints = this.stats.strength + this.stats.constitution + this.getRaceBaseBodyPoints();
         this.currentBodyPoints = this.maximumBodyPoints;
         this.currentFear = 0;
     }
@@ -168,9 +139,20 @@ export class TrudvangCharacter {
 
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();
+        this.calculateInitiative();
 
         this.movement = 10 + this.stats.dexterity;
         this.persistance = 10 + this.stats.psyche;
+    }
+
+    calculateInitiative() {
+        let battleExperience = this.fighting.getBattleExperience();
+
+        let combatReactions = battleExperience.specialities.find(speciality => {
+            return speciality.name === "Combat reaction";
+        });
+
+        this.initiative = this.stats.dexterity + battleExperience.level + (combatReactions.level * 2);
     }
 
     recalculateSkills() {
