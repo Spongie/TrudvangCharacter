@@ -4,9 +4,11 @@ import { Discipline } from "./discipline";
 export class Skill {
 
     costTable: Array<number>;
+    public modifier: number;
 
     constructor(public name: string, public level: number, public disciplines: Array<Discipline>) {
         this.costTable = [7, 14, 21, 28, 35];
+        this.modifier = 0;
     }
 
     updateSv() {
@@ -15,12 +17,12 @@ export class Skill {
         });
     }
 
-    calculateTotalCost(stats: CharacterStats) {
+    calculateTotalCost() {
         let skillCost = this.calculateSkillCost(this.level);
         let disciplineCost = 0;
 
         for(let discipline of this.disciplines) {
-            disciplineCost += discipline.calculateCost();
+            disciplineCost += discipline.calculateCost(this.modifier);
         }
 
         return skillCost + disciplineCost;

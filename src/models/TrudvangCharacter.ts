@@ -3,6 +3,7 @@ import { CharacterStats } from "./stats";
 import { SkillGenerator } from "./skillGenerator";
 import { Specialization } from "./Specialization";
 import { Fighting } from "./disicplines/fighting";
+import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 
 export class TrudvangCharacter {
     name: string;    
@@ -17,17 +18,19 @@ export class TrudvangCharacter {
     agility: Skill;
     care: Skill;
     entertainment: Skill;
-    knowledge: Skill;
-    vitnerCraft: Skill;
+    knowledge: SkillWithModifier;
+    vitnerCraft: SkillWithModifier;
     shadowArts: Skill;
     fighting: Fighting;
-    faith: Skill;
+    faith: SkillWithModifier;
     wilderness: Skill;
     availableXp: number;
     usedXp: number;
     stats: CharacterStats;
     baseXp: number;
-    readonly freeSkillsCost: number;
+
+    readonly freeKnowledgeSkillsCost: number;
+    readonly freeWildernessSkillsCost: number;
 
     freeCombatPoints: number;
     attackParriesPoints: number;
@@ -53,7 +56,8 @@ export class TrudvangCharacter {
 
     constructor() {
         let skillGenerator = new SkillGenerator();
-        this.freeSkillsCost = 56;
+        this.freeKnowledgeSkillsCost = 56;
+        this.freeWildernessSkillsCost = 14;
         this.agility = skillGenerator.generateAgilityTree();
         this.care = skillGenerator.generateCareTree();
         this.entertainment = skillGenerator.genereateEntertainmentTree();
@@ -93,16 +97,18 @@ export class TrudvangCharacter {
         this.availableXp += -15 * this.stats.psyche;
         this.availableXp += -15 * this.stats.strength;
 
-        this.availableXp -= this.agility.calculateTotalCost(this.stats);
-        this.availableXp -= this.care.calculateTotalCost(this.stats);
-        this.availableXp -= this.knowledge.calculateTotalCost(this.stats);
-        this.availableXp -= this.wilderness.calculateTotalCost(this.stats);
-        this.availableXp -= this.shadowArts.calculateTotalCost(this.stats);
-        this.availableXp -= this.vitnerCraft.calculateTotalCost(this.stats);
-        this.availableXp -= this.faith.calculateTotalCost(this.stats);
-        this.availableXp -= this.fighting.calculateTotalCost(this.stats);
-        this.availableXp -= this.entertainment.calculateTotalCost(this.stats);
-        this.availableXp += this.freeSkillsCost;
+        this.availableXp -= this.agility.calculateTotalCost();
+        this.availableXp -= this.care.calculateTotalCost();
+        this.availableXp -= this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence);
+        this.availableXp -= this.wilderness.calculateTotalCost();
+        this.availableXp -= this.shadowArts.calculateTotalCost();
+        this.availableXp -= this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence);
+        this.availableXp -= this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
+        this.availableXp -= this.fighting.calculateTotalCost();
+        this.availableXp -= this.entertainment.calculateTotalCost();
+
+        this.availableXp += this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
+        this.availableXp += this.freeWildernessSkillsCost;
 
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();

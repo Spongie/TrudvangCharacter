@@ -2,6 +2,7 @@ import { Skill } from "./skill";
 import { Discipline } from "./discipline";
 import { Specialization } from "./Specialization";
 import { Fighting } from "./disicplines/fighting";
+import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 
 export class SkillGenerator {
 
@@ -99,7 +100,8 @@ export class SkillGenerator {
     }
 
     public genereateFaithTree() {
-        let faith = new Skill('Faith', 1, []);
+        let faith = new SkillWithModifier('Faith', 1, []);
+
         faith.disciplines = [
             new Discipline('Divine power', 0, 0, faith, []),
             new Discipline('God focus', 0, 0, faith, []),
@@ -193,7 +195,7 @@ export class SkillGenerator {
     }
 
     public generateVitnerCraftTree() {
-        let vitnerCraft = new Skill('Vitner craft', 1, []);
+        let vitnerCraft = new SkillWithModifier('Vitner craft', 1, []);
 
         vitnerCraft.disciplines = [
             new Discipline('Call of vitner', 0, 0, vitnerCraft, []),
@@ -228,7 +230,7 @@ export class SkillGenerator {
         let wilderness = new Skill('Wilderness', 1, []);
 
         wilderness.disciplines = [
-            new Discipline('Geography', 0, 0, wilderness, []),
+            new Discipline('Geography', 1, 0, wilderness, []),
             new Discipline('Hunting experience', 0, 0, wilderness, []),
             new Discipline('Nature knowledge', 0, 0, wilderness, []),
             new Discipline('Seafarer', 0, 0, wilderness, []),
@@ -236,6 +238,7 @@ export class SkillGenerator {
         ];
 
         wilderness.disciplines[0].specialities = [
+            new Specialization('Land knowledge', 1, 0, wilderness.disciplines[0]),
             new Specialization('Orienteering & cartography', 0, 0, wilderness.disciplines[0])
         ];
 
@@ -268,7 +271,7 @@ export class SkillGenerator {
     }
 
     public generateKnowledgeTree() {
-        let knowledge = new Skill('Knowledge', 1, []);
+        let knowledge = new SkillWithModifier('Knowledge', 1, []);
         
         knowledge.disciplines = [
             new Discipline('Race knowledge', 0, 0, knowledge, []),

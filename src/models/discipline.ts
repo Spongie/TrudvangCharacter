@@ -12,22 +12,22 @@ export class Discipline {
         });
     }
 
-    calculateCost() {
-        let disciplineCost = this.calculateDisciplineCost(this.level);;
+    calculateCost(modifier: number) {
+        let disciplineCost = this.calculateDisciplineCost(this.level, modifier);
         let specialitiesCost = 0;
 
         for (let specialitie of this.specialities) {
-            specialitiesCost += specialitie.calculateCost();
+            specialitiesCost += specialitie.calculateCost(modifier);
         }
 
         return disciplineCost + specialitiesCost;
     }
 
-    private calculateDisciplineCost(level:number) {
+    private calculateDisciplineCost(level:number, modifier: number) {
         if (level === 0) {
             return 0;
         }
         
-        return (level * 7) + this.calculateDisciplineCost(level - 1);
+        return (level * 7) + modifier + this.calculateDisciplineCost(level - 1, modifier);
     }
 }
