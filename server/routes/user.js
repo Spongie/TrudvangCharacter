@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const UserModel = require('../models/user');
 
+router.use(function(req, res, next) {
+  console.log('Requst to the user API');
+  next();
+});
+
 router.post('/register', async (req, res) => {
     let user = new UserModel({
       userName: req.body.userName,
@@ -11,7 +16,7 @@ router.post('/register', async (req, res) => {
 
     try {
       let result = await user.save();
-      return res.send(result);
+      return res.send(JSON.stringify(user));
     } catch(error) {
       return next(error);
     }
@@ -23,22 +28,26 @@ router.post('/register', async (req, res) => {
         res.send("Registered");
       }
     });
-  });
+});
   
 router.post('/login', (req, res) => {
   UserModel.findOne({userName: req.body.userName}, "userName password", (err, docs) => {
+    if (docs === null) {
+      return res.status(401).send("Bad login");
+    }
+
     docs.comparePassword(req.body.password, function(error, isMatch) {
       if (error) {
         throw error;
       }
 
       if (isMatch) {
-        res.send("LOGIN OK!");
+        return res.send(JSON.stringify(docs));
       } else {
-        res.send("BAD LOGIN");
+        return res.status(401).send("Bad login");
       }
     });
-  })
+  });
 });
 
 router.get('/users', async (req, res) => {
@@ -49,4 +58,4 @@ router.get('/users', async (req, res) => {
 });
 
 
-  module.exports = router;
+module.exports = router;

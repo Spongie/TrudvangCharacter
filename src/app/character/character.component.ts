@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TrudvangCharacter } from '../../models/TrudvangCharacter';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from '../../services/userService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-character',
@@ -10,9 +12,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class CharacterComponent implements OnInit {
 
   ngOnInit(): void {
-    
+    if (!this.userService.isAuthenticated()) {
+      this._router.navigate(['login']);
+    }
   }
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private userService: UserService, private _router: Router) {
     this.model = new TrudvangCharacter();
   }
 

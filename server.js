@@ -21,8 +21,10 @@ app.options('*', cors());
 app.use(cors());
 
 // Set our api routes
-app.use('/api/user', userService);
 app.use('/api', api);
+
+app.use('/api/user', userService);
+
 
 var mongoDB = 'mongodb://127.0.0.1/trudvang';
 mongoose.connect(mongoDB);

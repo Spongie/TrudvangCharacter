@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'character', component: CharacterComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ]
 
