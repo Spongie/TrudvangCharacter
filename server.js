@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 // Get our API routes
 const userService = require('./server/routes/user');
+const characterService = require('./server/routes/character');
 const api = require('./server/routes/api');
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(cors());
 
 // Set our api routes
 app.use('/api', api);
-
+app.use('/api/character', characterService);
 app.use('/api/user', userService);
 
 

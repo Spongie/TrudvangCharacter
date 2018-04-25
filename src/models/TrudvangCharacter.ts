@@ -10,6 +10,7 @@ import { Armore } from "./armor";
 import { Item } from "./item";
 
 export class TrudvangCharacter {
+    _id: string;
     name: string;    
     race: string;
     culture: string;

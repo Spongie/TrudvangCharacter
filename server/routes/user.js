@@ -3,11 +3,6 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const UserModel = require('../models/user');
 
-router.use(function(req, res, next) {
-  console.log('Requst to the user API');
-  next();
-});
-
 router.post('/register', async (req, res) => {
     let user = new UserModel({
       userName: req.body.userName,
