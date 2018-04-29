@@ -7,7 +7,7 @@ import { HttpUtil } from "./httpUtil";
 
 
 @Injectable()
-export class UserService extends BaseService{
+export class UserService extends BaseService {
 
     User: User;
 

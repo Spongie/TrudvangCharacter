@@ -52,7 +52,8 @@ let characterSchema = new Schema({
     initiative: Number,
     weapons: Object,
     armors: Object,
-    items: Object
+    items: Object,
+    OwnerId: String
 });
 
 let Character = mongoose.model('Character', characterSchema);

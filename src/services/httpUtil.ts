@@ -15,5 +15,6 @@ export class HttpUtil {
     static addUserHeaders(user: User) {
         this.headers.append('username', user.userName);
         this.headers.append('authkey', user._id);
+        this.headers.append('password', user.password);
     }
 }

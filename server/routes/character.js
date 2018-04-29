@@ -2,9 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const CharacterModel = require('../models/character');
+const RequestValidator = require('./requestValidator');
 
 router.use(function(req, res, next) {
-  console.log('Requst to the character API');
+  if (!RequestValidator.validateRequest(req, res)) {
+      return res.status(401).send("Bad request");
+  }
   next();
 });
 
