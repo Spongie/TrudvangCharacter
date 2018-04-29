@@ -30,6 +30,7 @@ export class TrudvangCharacter {
     faith: SkillWithModifier;
     wilderness: Skill;
     availableXp: number;
+    extraXp: number;
     usedXp: number;
     stats: CharacterStats;
     baseXp: number;
@@ -63,14 +64,22 @@ export class TrudvangCharacter {
     persistance: number;
     initiative: number;
 
-    weapons: Array<Weapon>
-    armors: Array<Armore>
-    items: Array<Item>
+    weapons: Array<Weapon>;
+    armors: Array<Armore>;
+    items: Array<Item>;
+    ownerId: String;
 
     constructor() {
-        let skillGenerator = new SkillGenerator();
+        this.name = 'New character'
+        
         this.freeKnowledgeSkillsCost = 56;
         this.freeWildernessSkillsCost = 14;
+
+        this.init();
+    }
+
+    private init() {
+        let skillGenerator = new SkillGenerator();
         this.agility = skillGenerator.generateAgilityTree(this);
         this.care = skillGenerator.generateCareTree(this);
         this.entertainment = skillGenerator.genereateEntertainmentTree(this);
@@ -88,12 +97,99 @@ export class TrudvangCharacter {
         this.stats = new CharacterStats(0,0,0,0,0,0,0);
         this.weapons = new Array<Weapon>();
         this.armors = new Array<Armore>();
-        this.items = new Array<Item>();
-        
+        this.items = new Array<Item>();        
+    }
+
+    doFullRecalc() {
         this.recalculateSkills();
         this.recalculateAvailableXp();
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();
+        this.calculateInitiative();
+    }
+
+    copyFrom(character: TrudvangCharacter) {
+        this.init();
+
+        //do retard copy...
+        this._id = character._id;
+        this.name = character.name;
+        this.race = character.race;
+        this.culture = character.culture;
+        this.religion = character.religion;
+        this.gender = character.gender;
+        this.height = character.height;
+        this.weight = character.weight;
+        this.weaponHand = character.weaponHand;
+        this.background = character.background;
+
+        this.stats.charisma = character.stats.charisma;
+        this.stats.strength = character.stats.strength;
+        this.stats.psyche = character.stats.psyche;
+        this.stats.perception = character.stats.perception;
+        this.stats.intelligence = character.stats.intelligence;
+        this.stats.constitution = character.stats.constitution;
+        this.stats.dexterity = character.stats.dexterity;
+
+        this.raud = character.raud;
+        this.extraXp = character.extraXp;
+        this.usedXp = character.usedXp;
+
+        character.weapons.forEach((weapon) => {
+            this.weapons.push(weapon);
+        });
+
+        character.armors.forEach((armor) => {
+            this.armors.push(armor);
+        });
+
+        character.items.forEach((item) => {
+            this.items.push(item);
+        });
+
+        this.resetSkill(this.agility, character.agility);
+        this.resetSkill(this.care, character.care);
+        this.resetSkill(this.fighting, character.fighting);
+        this.resetSkill(this.faith, character.faith);
+        this.resetSkill(this.shadowArts, character.shadowArts);
+        this.resetSkill(this.vitnerCraft, character.vitnerCraft);
+        this.resetSkill(this.entertainment, character.entertainment);
+        this.resetSkill(this.knowledge, character.knowledge);
+        this.resetSkill(this.wilderness, character.wilderness);
+        
+        this.updateSkillOwners(this);
+        this.doFullRecalc();
+    }
+
+    resetSkill(skill:Skill, newSkill:Skill) {
+        skill.level = newSkill.level;
+        skill.modifier = newSkill.modifier;
+
+        skill.disciplines.forEach((discipline) => {
+            let newDisc = newSkill.disciplines.find(disc => {
+                return disc.name === discipline.name;
+            });
+            discipline.level = newDisc.level;
+
+            discipline.specialities.forEach((speciality) => {
+                let newSpec = newDisc.specialities.find(disc => {
+                    return disc.name === speciality.name;
+                });
+                speciality.level = newSpec.level;
+            });
+        });
+    }
+
+    updateSkillOwners(owner) {
+        this.agility.setOwner(owner);
+        this.care.setOwner(owner);
+        this.entertainment.setOwner(owner);
+        this.knowledge.setOwner(owner);
+        this.vitnerCraft.setOwner(owner);
+        this.shadowArts.setOwner(owner);
+        this.fighting.setOwner(owner);
+        this.faith.setOwner(owner);
+        this.wilderness.setOwner(owner);
     }
 
     addItem() {
@@ -116,6 +212,10 @@ export class TrudvangCharacter {
     }
 
     recalculateAvailableXp() {
+        if (this.extraXp === undefined || this.extraXp === null) {
+            this.extraXp = 0;
+        }
+        
         this.availableXp = this.baseXp;
         this.availableXp += -15 * this.stats.charisma;
         this.availableXp += -15 * this.stats.constitution;
@@ -125,18 +225,24 @@ export class TrudvangCharacter {
         this.availableXp += -15 * this.stats.psyche;
         this.availableXp += -15 * this.stats.strength;
 
-        this.availableXp -= this.agility.calculateTotalCostWithModifier(this.stats.dexterity);
-        this.availableXp -= this.care.calculateTotalCost();
-        this.availableXp -= this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence);
-        this.availableXp -= this.wilderness.calculateTotalCost();
-        this.availableXp -= this.shadowArts.calculateTotalCost();
-        this.availableXp -= this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence);
-        this.availableXp -= this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
-        this.availableXp -= this.fighting.calculateTotalCost();
-        this.availableXp -= this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
+        let totalXp = 0;
+        totalXp += this.agility.calculateTotalCostWithModifier(this.stats.dexterity);
+        totalXp += this.care.calculateTotalCost();
+        totalXp += this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence);
+        totalXp += this.wilderness.calculateTotalCost();
+        totalXp += this.shadowArts.calculateTotalCost();
+        totalXp += this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence);
+        totalXp += this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
+        totalXp += this.fighting.calculateTotalCost();
+        totalXp += this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
+        
+        totalXp -= this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
+        totalXp -= this.freeWildernessSkillsCost;
+        
+        totalXp += this.extraXp;
 
-        this.availableXp += this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
-        this.availableXp += this.freeWildernessSkillsCost;
+        this.usedXp = totalXp;
+        this.availableXp -= this.usedXp;
 
         this.recalculateCombatPoints();
         this.recalculateBodyAndFear();

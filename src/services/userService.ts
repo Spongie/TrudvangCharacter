@@ -33,7 +33,7 @@ export class UserService extends BaseService {
     private doLogin(user:User) {
         this.User = user;
         HttpUtil.addUserHeaders(user);
-        this._router.navigate(['character']);
+        this._router.navigate(['characters']);
     }
 
     isAuthenticated() {

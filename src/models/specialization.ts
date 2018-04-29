@@ -4,6 +4,10 @@ export class Specialization {
     constructor(public name: string, public level: number, public sv: number, public parent: Discipline) {
     }
 
+    updateParent(parent) {
+        this.parent = parent;
+    }
+
     public updateSv() {
         this.sv = this.parent.sv + (this.level * 2);
     }

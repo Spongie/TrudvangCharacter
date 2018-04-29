@@ -12,6 +12,21 @@ export class Skill {
         this.modifier = 0;
     }
 
+    public copyFrom(other : Skill) {
+        Object.assign(this, other);
+    }
+
+    setOwner(owner) {
+        this.owner = owner;
+        this.disciplines.forEach((disipline) => {
+            if (owner === null) {
+                disipline.updateParent(owner);
+            } else {
+                disipline.updateParent(this);
+            }
+        });
+    }
+
     updateSv() {
         this.disciplines.forEach((disipline) => {
             disipline.updateSv();

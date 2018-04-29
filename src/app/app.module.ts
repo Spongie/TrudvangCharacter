@@ -5,17 +5,21 @@ import { FormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
 import { UserService } from '../services/userService';
+import { CharacterService } from '../services/characterService';
 import { LoginComponent } from './login/login.component';
 import { CharacterComponent } from './character/character.component';
 import { HttpModule, Http } from '@angular/http';
 import { RegisterComponent } from './register/register.component';
 import { RouterModule, Routes } from '@angular/router';
+import { CharacterListComponent } from './character-list/character-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'character', component: CharacterComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: 'characters', component: CharacterListComponent },
+  { path: 'characters/character/:id', component: CharacterComponent },
+  { path: '', redirectTo: '/characters', pathMatch: 'full' }
 ]
 
 @NgModule({
@@ -23,17 +27,20 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     CharacterComponent,
-    RegisterComponent
+    RegisterComponent,
+    CharacterListComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
+    HttpClientModule,
     NgbModule.forRoot(),
     FormsModule,
     HttpModule
   ],
   providers: [
-    UserService
+    UserService,
+    CharacterService
   ],
   bootstrap: [AppComponent]
 })

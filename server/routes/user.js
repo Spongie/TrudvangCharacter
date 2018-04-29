@@ -15,14 +15,6 @@ router.post('/register', async (req, res) => {
     } catch(error) {
       return next(error);
     }
-
-    user.save(function(error, document) {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send("Registered");
-      }
-    });
 });
   
 router.post('/login', (req, res) => {

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TrudvangCharacter } from '../../models/TrudvangCharacter';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../services/userService';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CharacterService } from '../../services/characterService';
 
 @Component({
   selector: 'app-character',
@@ -10,20 +11,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./character.component.css']
 })
 export class CharacterComponent implements OnInit {
+  model: TrudvangCharacter;
+
+  constructor(private modalService: NgbModal, private userService: UserService, private _router: Router, private CharacterService: CharacterService,
+    private route: ActivatedRoute
+   ) {
+      this.model = new TrudvangCharacter();
+  }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.CharacterService.getCharacter(params['id']).then(data => {
+        let tempCharacter = data as TrudvangCharacter;
+        this.model.copyFrom(tempCharacter);
+      });
+    });
+
     if (!this.userService.isAuthenticated()) {
       this._router.navigate(['login']);
     }
   }
-  constructor(private modalService: NgbModal, private userService: UserService, private _router: Router) {
-    this.model = new TrudvangCharacter();
-  }
-
-  model: TrudvangCharacter;
 
   onSubmit() {
-    console.log(this.model);
+    this.model.updateSkillOwners(null);
+    this.CharacterService.updateCharacter(this.model);
+    this.model.updateSkillOwners(this.model);
   }
 
   scrollToTop() {

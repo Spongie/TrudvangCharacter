@@ -25,13 +25,36 @@ router.post('/save', async (req, res) => {
     });
 });
 
+router.put('/create', async (req, res) => {
+    let character = new CharacterModel(req.body);
+
+    try {
+        let result = await character.save();
+        res.send(result);
+    } catch (e) {
+        res.status(500).send(JSON.stringify(e));
+    }
+});
+
 router.get('/find/:id', async (req, res) => {
     CharacterModel.findById(req.params.id, (err, character) => {
         res.send(character);
     });
 });
 
-router.get('/all', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
+    CharacterModel.findByIdAndRemove(req.params.id, {}, (err) => {
+
+    });
+});
+
+router.get('/all/:id', async (req, res) => {
+    CharacterModel.find({ownerId: req.params.id}, "", function(err, docs) {
+        res.send(docs);
+      });
+});
+
+router.get('/everything/', async (req, res) => {
     CharacterModel.find({}, "", function(err, docs) {
         res.send(docs);
       });
