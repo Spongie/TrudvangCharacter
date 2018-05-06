@@ -253,11 +253,6 @@ export class TrudvangCharacter {
 
         let damage = this.maximumBodyPoints - this.currentBodyPoints;
 
-        console.log(this.lightlyInjured);
-        console.log(this.injured);
-        console.log(this.seriouslyInjured);
-        console.log(this.criticallyInjured);
-
         if (damage === 0) {
             this.currentInjury = "Perfectly healthy";
         } else if (damage <= this.lightlyInjured) {
