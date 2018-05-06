@@ -37,6 +37,7 @@ export class UserService extends BaseService {
     }
 
     isAuthenticated() {
+        this.User = HttpUtil.readCookie();
         return this.User !== undefined;
     }
 }
