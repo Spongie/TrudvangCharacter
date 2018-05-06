@@ -25,4 +25,9 @@ export class LoginComponent implements OnInit {
   async onSubmit() {
     await this.userService.loginUser(this.user);
   }
+
+  gotoRegister() {
+    console.log('goto register');
+    this._router.navigate(['register']);
+  }
 }
