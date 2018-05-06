@@ -11,22 +11,22 @@ export class CharacterService {
   }
 
   async updateCharacter(character: TrudvangCharacter) {
-    await this._http.post('http://localhost:3000/api/character/save', character).toPromise();
+    await this._http.post(BaseService.baseApiUrl + 'character/save', character).toPromise();
   }
 
   async getCharacter(id: String) {
-    return await this._http.get('http://localhost:3000/api/character/find/' + id).toPromise();
+    return await this._http.get(BaseService.baseApiUrl + 'character/find/' + id).toPromise();
   }
 
   async deleteCharacter(characterId : String) {
-    await this._http.delete('http://localhost:3000/api/character/delete/' + characterId).toPromise();
+    await this._http.delete(BaseService.baseApiUrl + 'character/delete/' + characterId).toPromise();
   }
 
   async createCharacter(character: TrudvangCharacter) {
-    await this._http.put('http://localhost:3000/api/character/create/', character).toPromise();
+    await this._http.put(BaseService.baseApiUrl + 'character/create/', character).toPromise();
   }
 
   async getCharacters(userId: String) {
-      return await this._http.get<TrudvangCharacter[]>('http://localhost:3000/api/character/all/' + userId, {responseType: 'json'}).toPromise();
+      return await this._http.get<TrudvangCharacter[]>(BaseService.baseApiUrl + 'character/all/' + userId, {responseType: 'json'}).toPromise();
   }
 }

@@ -42,12 +42,12 @@ export class CharacterListComponent implements OnInit {
   }
 
   //This randomly does not update so i will not allow delete yet
-  async deleteCharacter(characterId : String) {
+  async deleteCharacter(characterId: String) {
     await this.characterService.deleteCharacter(characterId);
     await this.updateCharacters();
   }
 
-  goToCharacter(characterId:String) {
+  goToCharacter(characterId: String) {
     this._router.navigate(['/character', characterId]);
   }
 }

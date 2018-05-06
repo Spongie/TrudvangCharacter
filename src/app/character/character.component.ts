@@ -15,8 +15,8 @@ export class CharacterComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private userService: UserService, private _router: Router, private CharacterService: CharacterService,
     private route: ActivatedRoute
-   ) {
-      this.model = new TrudvangCharacter();
+  ) {
+    this.model = new TrudvangCharacter();
   }
 
   ngOnInit(): void {
