@@ -11,7 +11,7 @@ import { Item } from "./item";
 
 export class TrudvangCharacter {
     _id: string;
-    name: string;    
+    name: string;
     race: string;
     culture: string;
     religion: string;
@@ -69,9 +69,15 @@ export class TrudvangCharacter {
     items: Array<Item>;
     ownerId: String;
 
+    lightlyInjured: number;
+    injured: number;
+    seriouslyInjured: number;
+    criticallyInjured: number;
+    currentInjury: string;
+
     constructor() {
         this.name = 'New character'
-        
+
         this.freeKnowledgeSkillsCost = 56;
         this.freeWildernessSkillsCost = 14;
 
@@ -94,10 +100,10 @@ export class TrudvangCharacter {
         this.availableXp = 0;
         this.usedXp = 0;
 
-        this.stats = new CharacterStats(0,0,0,0,0,0,0);
+        this.stats = new CharacterStats(0, 0, 0, 0, 0, 0, 0);
         this.weapons = new Array<Weapon>();
         this.armors = new Array<Armore>();
-        this.items = new Array<Item>();        
+        this.items = new Array<Item>();
     }
 
     doFullRecalc() {
@@ -122,6 +128,11 @@ export class TrudvangCharacter {
         this.weight = character.weight;
         this.weaponHand = character.weaponHand;
         this.background = character.background;
+
+        this.maximumBodyPoints = character.maximumBodyPoints;
+        this.currentBodyPoints = character.currentBodyPoints;
+        this.currentFear = character.currentFear;
+        this.naturalHealing = character.naturalHealing;
 
         this.stats.charisma = character.stats.charisma;
         this.stats.strength = character.stats.strength;
@@ -156,12 +167,12 @@ export class TrudvangCharacter {
         this.resetSkill(this.entertainment, character.entertainment);
         this.resetSkill(this.knowledge, character.knowledge);
         this.resetSkill(this.wilderness, character.wilderness);
-        
+
         this.updateSkillOwners(this);
         this.doFullRecalc();
     }
 
-    resetSkill(skill:Skill, newSkill:Skill) {
+    resetSkill(skill: Skill, newSkill: Skill) {
         skill.level = newSkill.level;
         skill.modifier = newSkill.modifier;
 
@@ -204,18 +215,67 @@ export class TrudvangCharacter {
         this.armors.push(new Armore());
     }
 
+    private roundInjury(value: number, level: number) {
+        let damageString = value.toString();
+
+        if (damageString.endsWith('.25')) {
+            if (level === 1) {
+                return value + 0.75;
+            } else {
+                return value - 0.25;
+            }
+        } else if (damageString.endsWith('.5')) {
+            if (level <= 2) {
+                return value + 0.5;
+            } else {
+                return value - 0.5;
+            }
+        } else if (damageString.endsWith('.75')) {
+            if (level <= 3) {
+                return value + 0.25;
+            } else {
+                return value - 0.75;
+            }
+        }
+
+        return value;
+    }
+
     recalculateBodyAndFear() {
         this.naturalHealing = 1 * this.stats.constitution > 0 ? this.stats.constitution : 1;
         this.maximumBodyPoints = this.stats.strength + this.stats.constitution + this.getRaceBaseBodyPoints();
-        this.currentBodyPoints = this.maximumBodyPoints;
         this.currentFear = 0;
+
+        this.lightlyInjured = this.roundInjury(this.maximumBodyPoints / 4, 1);
+        this.injured = this.roundInjury((this.maximumBodyPoints / 4) * 2, 2);
+        this.seriouslyInjured = this.roundInjury((this.maximumBodyPoints / 4) * 3, 3);
+        this.criticallyInjured = this.roundInjury((this.maximumBodyPoints / 4) * 4, 4);
+
+        let damage = this.maximumBodyPoints - this.currentBodyPoints;
+
+        console.log(this.lightlyInjured);
+        console.log(this.injured);
+        console.log(this.seriouslyInjured);
+        console.log(this.criticallyInjured);
+
+        if (damage === 0) {
+            this.currentInjury = "Perfectly healthy";
+        } else if (damage <= this.lightlyInjured) {
+            this.currentInjury = "Lightly injured: 0";
+        } else if (damage <= this.injured) {
+            this.currentInjury = "Injured: -1";
+        } else if (damage <= this.seriouslyInjured) {
+            this.currentInjury = "Seriously injured: -3";
+        } else if (damage <= this.criticallyInjured) {
+            this.currentInjury = "Critically injured: -7";
+        }
     }
 
     recalculateAvailableXp() {
         if (this.extraXp === undefined || this.extraXp === null) {
             this.extraXp = 0;
         }
-        
+
         this.availableXp = this.baseXp;
         this.availableXp += -15 * this.stats.charisma;
         this.availableXp += -15 * this.stats.constitution;
@@ -235,7 +295,7 @@ export class TrudvangCharacter {
         totalXp += this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
         totalXp += this.fighting.calculateTotalCost();
         totalXp += this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
-        
+
         totalXp -= this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
         totalXp -= this.freeWildernessSkillsCost;
 
@@ -426,7 +486,7 @@ export class TrudvangCharacter {
     }
 
     addLandKnowledge() {
-        let input= (<HTMLInputElement>document.getElementById('inputLandKnowledge'));
+        let input = (<HTMLInputElement>document.getElementById('inputLandKnowledge'));
         let value = input.value;
 
         if (this.isValueValid(value)) {
@@ -486,7 +546,7 @@ export class TrudvangCharacter {
     }
 
     private getRaceBaseBodyPoints() {
-        switch (this.race){
+        switch (this.race) {
             case 'Human':
                 return 32;
             case 'Elf':
