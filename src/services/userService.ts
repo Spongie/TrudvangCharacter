@@ -15,13 +15,13 @@ export class UserService extends BaseService {
     }
 
     async registerUser(user:User) {
-        const response = await this.sendPostRequest('user/register/', user);
+        const response = await this.sendPostRequest('/api/user/register/', user);
         this.doLogin(response.json());
     }
 
     async loginUser(user:User) {
         try {
-            const response = await this.sendPostRequest('user/login/', user);
+            const response = await this.sendPostRequest('/api/user/login/', user);
             this.doLogin(response.json());
         }
         catch (error) {

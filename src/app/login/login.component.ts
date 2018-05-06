@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   gotoRegister() {
-    console.log('goto register');
     this._router.navigate(['register']);
   }
 }
