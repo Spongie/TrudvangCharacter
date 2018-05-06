@@ -176,7 +176,7 @@
               <tr>
                 <td colspan="3">Agility</td>
                 <td>
-                  <input max="10" type="number" [(ngModel)]="model.agility.level" (ngModelChange)="model.recalculateSkills()" name="agilityLevel">
+                  <input min="1" max="10" type="number" [(ngModel)]="model.agility.level" (ngModelChange)="model.recalculateSkills()" name="agilityLevel">
                 </td>
                 <td>
                 </td>
@@ -186,7 +186,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input min="0" max="5" type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -197,7 +197,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input min="0" max="5" type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -218,7 +218,7 @@
               <tr>
                 <td colspan="3">Care</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.care.level" (ngModelChange)="model.recalculateSkills()" name="careLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.care.level" (ngModelChange)="model.recalculateSkills()" name="careLevel">
                 </td>
                 <td>
                 </td>
@@ -228,7 +228,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -239,7 +239,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -260,7 +260,7 @@
               <tr>
                 <td colspan="3">Fighting</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.fighting.level" (ngModelChange)="model.recalculateSkills()" name="fightingLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.fighting.level" (ngModelChange)="model.recalculateSkills()" name="fightingLevel">
                 </td>
                 <td>
                 </td>
@@ -270,7 +270,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -281,7 +281,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -302,7 +302,7 @@
               <tr>
                 <td colspan="3">Faith</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.faith.level" (ngModelChange)="model.recalculateSkills()" name="faithLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.faith.level" (ngModelChange)="model.recalculateSkills()" name="faithLevel">
                 </td>
                 <td>
                 </td>
@@ -312,7 +312,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -323,7 +323,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -344,7 +344,7 @@
               <tr>
                 <td colspan="3">Shadow arts</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.shadowArts.level" (ngModelChange)="model.recalculateSkills()" name="shadowArtsLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.shadowArts.level" (ngModelChange)="model.recalculateSkills()" name="shadowArtsLevel">
                 </td>
                 <td>
                 </td>
@@ -354,7 +354,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -365,7 +365,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -386,7 +386,7 @@
               <tr>
                 <td colspan="3">Vitner craft</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.vitnerCraft.level" (ngModelChange)="model.recalculateSkills()" name="vitnerCraftLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.vitnerCraft.level" (ngModelChange)="model.recalculateSkills()" name="vitnerCraftLevel">
                 </td>
                 <td>
                 </td>
@@ -396,7 +396,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -407,7 +407,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -428,7 +428,7 @@
               <tr>
                 <td colspan="3">Entertainment</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.entertainment.level" (ngModelChange)="model.recalculateSkills()" name="entertainmentLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.entertainment.level" (ngModelChange)="model.recalculateSkills()" name="entertainmentLevel">
                 </td>
                 <td>
                 </td>
@@ -438,7 +438,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -449,7 +449,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -470,7 +470,7 @@
               <tr>
                 <td colspan="3">Knowledge</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.knowledge.level" (ngModelChange)="model.recalculateSkills()" name="knowledgeLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.knowledge.level" (ngModelChange)="model.recalculateSkills()" name="knowledgeLevel">
                 </td>
                 <td>
                 </td>
@@ -480,7 +480,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -491,7 +491,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">
@@ -512,7 +512,7 @@
               <tr>
                 <td colspan="3">Wilderness</td>
                 <td>
-                  <input type="number" max="10" [(ngModel)]="model.wilderness.level" (ngModelChange)="model.recalculateSkills()" name="wildernessLevel">
+                  <input type="number" min="1" max="10" [(ngModel)]="model.wilderness.level" (ngModelChange)="model.recalculateSkills()" name="wildernessLevel">
                 </td>
                 <td>
                 </td>
@@ -522,7 +522,7 @@
                   <td style="width:15px"></td>
                   <td colspan="2">{{discipline.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="discipline.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="discipline.sv" [ngModelOptions]="{standalone: true}">
@@ -533,7 +533,7 @@
                   <td style="width:15px"></td>
                   <td style="align-self: left">{{speciality.name}}</td>
                   <td>
-                    <input type="number" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
+                    <input type="number" min="0" max="5" [(ngModel)]="speciality.level" [ngModelOptions]="{standalone: true}" (ngModelChange)="model.recalculateSkills()">
                   </td>
                   <td>
                     <input type="number" readonly [(ngModel)]="speciality.sv" [ngModelOptions]="{standalone: true}">

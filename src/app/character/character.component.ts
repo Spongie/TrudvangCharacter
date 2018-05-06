@@ -51,7 +51,8 @@ export class CharacterComponent implements OnInit {
   }
 
   onSubmitModal(form) {
-    this.model.availableXp += form.value.inputAddExp;
+    this.model.extraXp += form.value.inputAddExp;
+    this.model.recalculateAvailableXp();
   }
 
 }
