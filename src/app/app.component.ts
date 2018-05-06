@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TrudvangCharacter } from '../models/TrudvangCharacter';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { HttpUtil } from '../services/httpUtil';
+import { UserService } from '../services/userService';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +11,10 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class AppComponent {
 
+  constructor(private userService: UserService) {
+  }
+
+  logout() {
+    this.userService.logout();
+  }
 }

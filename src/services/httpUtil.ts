@@ -17,10 +17,7 @@ export class HttpUtil {
         this.headers.append('username', user.userName);
         this.headers.append('authkey', user._id);
         this.headers.append('password', user.password);
-
-        let oneYear = 31536000 ;
-
-        document.cookie = "auth=" + JSON.stringify(user) + ";max-age=" + oneYear; 
+        this.writeAuthCookie(user, false);
     }
 
     static readCookie() : User {
@@ -33,5 +30,15 @@ export class HttpUtil {
                 return JSON.parse(value);       
             }
         }
+    }
+
+    private static writeAuthCookie(user: User, logout:boolean) {
+        let oneYear = 31536000;
+        let expireAge = logout ? ";expires=Thu, 01 Jan 1970 00:00:01 GMT" : ";max-age=" + oneYear;
+        document.cookie = "auth=" + JSON.stringify(user) + expireAge; 
+    }
+
+    static logout(user:User) {
+        this.writeAuthCookie(user, true);
     }
 }

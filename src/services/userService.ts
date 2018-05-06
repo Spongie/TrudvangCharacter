@@ -8,7 +8,6 @@ import { HttpUtil } from "./httpUtil";
 
 @Injectable()
 export class UserService extends BaseService {
-
     User: User;
 
     constructor(private _http: Http, private _router: Router) {
@@ -40,5 +39,10 @@ export class UserService extends BaseService {
         this.User = HttpUtil.readCookie();
         console.log(this.User);
         return this.User !== undefined;
+    }
+
+    logout(): any {
+        HttpUtil.logout(this.User);
+        this._router.navigate(['login']);
     }
 }
