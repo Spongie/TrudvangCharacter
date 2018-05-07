@@ -33,6 +33,7 @@
 npm-debug.log
 testem.log
 /typings
+ngrok.exe
 
 # e2e
 /e2e/*.js
