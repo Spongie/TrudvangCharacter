@@ -64,6 +64,7 @@ export class TrudvangCharacter {
     movement: number;
     persistance: number;
     initiative: number;
+    currentFearModifier: string;
 
     weapons: Array<Weapon>;
     armors: Array<Armore>;
@@ -274,6 +275,18 @@ export class TrudvangCharacter {
             this.currentInjury = "Seriously injured: -3";
         } else if (damage <= this.criticallyInjured) {
             this.currentInjury = "Critically injured: -7";
+        }
+
+        if (this.currentFear <= 10) {
+            this.currentFearModifier = "Not scared";
+        } else if (this.currentFear <= 20) {
+            this.currentFearModifier = "Slightly scared (-1 dice)";
+        } else if (this.currentFear <= 30) {
+            this.currentFearModifier = "Scared (-3 dice)";
+        } else if (this.currentFear <= 40) {
+            this.currentFearModifier = "You think you are dying scared (-5 dice)";
+        } else {
+            this.currentFearModifier = "Holy shit scared (-7 dice)";
         }
     }
 
