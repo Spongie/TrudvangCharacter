@@ -39,7 +39,7 @@ export class Fighting extends Skill {
     }
 
     calculateArmedFighting() {
-        let points = this.calculateFreeCombatPoints();
+        let points = this.calculateFreeCombatPoints() + this.getAttackParries().level * 2;
         return points + this.getArmedFighting().level;
     }
 
@@ -79,7 +79,7 @@ export class Fighting extends Skill {
     }
 
     calculateBrawling() {
-        let points = this.calculateUnarmedFighting();
+        let points = this.calculateUnarmedFighting() + this.getAttackParries().level * 2;
         return points + (this.getBrawling().level * 2 );
     }
 
