@@ -297,7 +297,6 @@ export class SkillGenerator {
         ];
 
         knowledge.disciplines[3].specialities = [
-            new Specialization('Insight', 0, 0, knowledge.disciplines[3])
         ];
 
         return knowledge;

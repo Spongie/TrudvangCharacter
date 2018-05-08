@@ -139,7 +139,7 @@
             <ul class="list-group">
               <li class="list-group-item">Body points</li>
               <li class="list-group-item">Natural healing</li>
-              <li class="list-group-item">Fear</li>
+              <li class="list-group-item">Fear modifier</li>
               <li class="list-group-item">Injury</li>
             </ul>
           </div>
@@ -147,7 +147,7 @@
             <ul class="list-group">
               <li class="list-group-item">{{model.maximumBodyPoints}}</li>
               <li class="list-group-item">{{model.naturalHealing}}</li>
-              <li class="list-group-item">{{model.currentFear}}</li>
+              <li class="list-group-item">{{model.fearResist}}</li>
               <li class="list-group-item">{{model.currentInjury}}</li>
             </ul>
           </div>
@@ -614,6 +614,16 @@
               <label for="inputTerrainExperienceKnowledge">Terrain experience</label>
               <input type="text" id="inputTerrainExperienceKnowledge" style="width:100%; margin-bottom:5px">
               <button type="button" style="margin-bottom: 5px" class="btn btn-success" (click)="model.addTerrainExperience()">Add Terrain experience</button>
+            </div>
+            <div>
+              <label for="inputNewVitnerTablet">Vitner tablet</label>
+              <input type="text" id="inputNewVitnerTablet" style="width:100%; margin-bottom:5px">
+              <button type="button" style="margin-bottom: 5px" class="btn btn-success" (click)="model.addVitnerTablet()">Add Vitner tablet</button>
+            </div>
+            <div>
+              <label for="inputNewHolyTablet">Holy tablet</label>
+              <input type="text" id="inputNewHolyTablet" style="width:100%; margin-bottom:5px">
+              <button type="button" style="margin-bottom: 5px" class="btn btn-success" (click)="model.addHolyTablet()">Add Holy tablet</button>
             </div>
           </div>
         </div>

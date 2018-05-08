@@ -54,7 +54,8 @@ let characterSchema = new Schema({
     armors: Object,
     items: Object,
     ownerId: String,
-    extraXp: Number
+    extraXp: Number,
+    fearResist: Number
 });
 
 let Character = mongoose.model('Character', characterSchema);

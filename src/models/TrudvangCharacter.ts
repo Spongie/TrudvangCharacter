@@ -55,6 +55,7 @@ export class TrudvangCharacter {
     throwingWeaponPoints: number;
     twoHandedPoints: number;
 
+    fearResist: number;
     maximumBodyPoints: number;
     naturalHealing: number;
     currentBodyPoints: number;
@@ -80,6 +81,7 @@ export class TrudvangCharacter {
 
         this.freeKnowledgeSkillsCost = 56;
         this.freeWildernessSkillsCost = 14;
+        this.currentFear = 0;
 
         this.init();
     }
@@ -142,6 +144,9 @@ export class TrudvangCharacter {
         this.stats.constitution = character.stats.constitution;
         this.stats.dexterity = character.stats.dexterity;
 
+        this.currentFear = character.currentFear;
+        this.fearResist = character.fearResist;
+
         this.raud = character.raud;
         this.extraXp = character.extraXp;
         this.usedXp = character.usedXp;
@@ -176,17 +181,23 @@ export class TrudvangCharacter {
         skill.level = newSkill.level;
         skill.modifier = newSkill.modifier;
 
-        skill.disciplines.forEach((discipline) => {
-            let newDisc = newSkill.disciplines.find(disc => {
-                return disc.name === discipline.name;
+        newSkill.disciplines.forEach((newdiscipline) => {
+            let oldDisc = skill.disciplines.find(disc => {
+                return disc.name === newdiscipline.name;
             });
-            discipline.level = newDisc.level;
+            oldDisc.level = newdiscipline.level;
 
-            discipline.specialities.forEach((speciality) => {
-                let newSpec = newDisc.specialities.find(disc => {
-                    return disc.name === speciality.name;
+            newdiscipline.specialities.forEach((newSpeciality) => {
+                let oldSpec = oldDisc.specialities.find(disc => {
+                    return disc.name === newSpeciality.name;
                 });
-                speciality.level = newSpec.level;
+
+                if (oldSpec !== undefined) {
+                    oldSpec.level = newSpeciality.level;
+                } else {
+                    let speciality = new Specialization(newSpeciality.name, newSpeciality.level, newSpeciality.sv, oldDisc);
+                    oldDisc.specialities.push(speciality);
+                }
             });
         });
     }
@@ -244,7 +255,7 @@ export class TrudvangCharacter {
     recalculateBodyAndFear() {
         this.naturalHealing = 1 * this.stats.constitution > 0 ? this.stats.constitution : 1;
         this.maximumBodyPoints = this.stats.strength + this.stats.constitution + this.getRaceBaseBodyPoints();
-        this.currentFear = 0;
+        this.fearResist = -this.stats.psyche;
 
         this.lightlyInjured = this.roundInjury(this.maximumBodyPoints / 4, 1);
         this.injured = this.roundInjury((this.maximumBodyPoints / 4) * 2, 2);
@@ -303,7 +314,7 @@ export class TrudvangCharacter {
         this.calculateInitiative();
 
         this.movement = 10 + this.stats.dexterity;
-        this.persistance = 10 + this.stats.psyche;
+        this.persistance = 10 + this.stats.psyche + this.wilderness.level;
     }
 
     calculateInitiative() {
@@ -455,12 +466,12 @@ export class TrudvangCharacter {
         let value = input.value;
 
         if (this.isValueValid(value)) {
-            let insight = this.knowledge.disciplines.find((discipline) => {
+            let learning = this.knowledge.disciplines.find((discipline) => {
                 return discipline.name === 'Learning';
             });
 
-            insight.specialities.push(new Specialization('Insight (' + value + ')', 0, 0, insight));
-            insight.updateSv();
+            learning.specialities.push(new Specialization('Insight (' + value + ')', 0, 0, learning));
+            learning.updateSv();
             input.value = '';
         }
     }
@@ -470,12 +481,12 @@ export class TrudvangCharacter {
         let value = input.value;
 
         if (this.isValueValid(value)) {
-            let insight = this.wilderness.disciplines.find((discipline) => {
+            let geography = this.wilderness.disciplines.find((discipline) => {
                 return discipline.name === 'Geography';
             });
 
-            insight.specialities.push(new Specialization('City knowledge (' + value + ')', 0, 0, insight));
-            insight.updateSv();
+            geography.specialities.push(new Specialization('City knowledge (' + value + ')', 0, 0, geography));
+            geography.updateSv();
             input.value = '';
         }
     }
@@ -485,12 +496,12 @@ export class TrudvangCharacter {
         let value = input.value;
 
         if (this.isValueValid(value)) {
-            let insight = this.wilderness.disciplines.find((discipline) => {
+            let geography = this.wilderness.disciplines.find((discipline) => {
                 return discipline.name === 'Geography';
             });
 
-            insight.specialities.push(new Specialization('Land knowledge (' + value + ')', 0, 0, insight));
-            insight.updateSv();
+            geography.specialities.push(new Specialization('Land knowledge (' + value + ')', 0, 0, geography));
+            geography.updateSv();
             input.value = '';
         }
     }
@@ -500,12 +511,12 @@ export class TrudvangCharacter {
         let value = input.value;
 
         if (this.isValueValid(value)) {
-            let insight = this.wilderness.disciplines.find((discipline) => {
+            let geography = this.wilderness.disciplines.find((discipline) => {
                 return discipline.name === 'Geography';
             });
 
-            insight.specialities.push(new Specialization('Sea knowledge (' + value + ')', 0, 0, insight));
-            insight.updateSv();
+            geography.specialities.push(new Specialization('Sea knowledge (' + value + ')', 0, 0, geography));
+            geography.updateSv();
             input.value = '';
         }
     }
@@ -515,12 +526,12 @@ export class TrudvangCharacter {
         let value = input.value;
 
         if (this.isValueValid(value)) {
-            let insight = this.wilderness.disciplines.find((discipline) => {
+            let huntingExperience = this.wilderness.disciplines.find((discipline) => {
                 return discipline.name === 'Hunting experience';
             });
 
-            insight.specialities.push(new Specialization('Species hunter (' + value + ')', 0, 0, insight));
-            insight.updateSv();
+            huntingExperience.specialities.push(new Specialization('Species hunter (' + value + ')', 0, 0, huntingExperience));
+            huntingExperience.updateSv();
             input.value = '';
         }
     }
@@ -530,12 +541,42 @@ export class TrudvangCharacter {
         let value = input.value;
 
         if (this.isValueValid(value)) {
-            let insight = this.wilderness.disciplines.find((discipline) => {
+            let survival = this.wilderness.disciplines.find((discipline) => {
                 return discipline.name === 'Survival';
             });
 
-            insight.specialities.push(new PsycheSpecialization('Terrain experience (' + value + ')', 0, 0, insight));
-            insight.updateSv();
+            survival.specialities.push(new PsycheSpecialization('Terrain experience (' + value + ')', 0, 0, survival));
+            survival.updateSv();
+            input.value = '';
+        }
+    }
+
+    addVitnerTablet() {
+        let input = (<HTMLInputElement>document.getElementById('inputNewVitnerTablet'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let vitnerShaping = this.vitnerCraft.disciplines.find((discipline) => {
+                return discipline.name === 'Vitner shaping';
+            });
+
+            vitnerShaping.specialities.push(new PsycheSpecialization('Vitner tablet (' + value + ')', 0, 0, vitnerShaping));
+            vitnerShaping.updateSv();
+            input.value = '';
+        }
+    }
+
+    addHolyTablet() {
+        let input = (<HTMLInputElement>document.getElementById('inputNewHolyTablet'));
+        let value = input.value;
+
+        if (this.isValueValid(value)) {
+            let invoke = this.faith.disciplines.find((discipline) => {
+                return discipline.name === 'Invoke';
+            });
+
+            invoke.specialities.push(new PsycheSpecialization('Holy tablet (' + value + ')', 0, 0, invoke));
+            invoke.updateSv();
             input.value = '';
         }
     }
