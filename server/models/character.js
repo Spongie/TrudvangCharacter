@@ -55,7 +55,11 @@ let characterSchema = new Schema({
     items: Object,
     ownerId: String,
     extraXp: Number,
-    fearResist: Number
+    fearResist: Number,
+    maxVitnerPoints: Number,
+    currentVitnerPoints: Number,
+    maxHolyPoints: Number,
+    currentHolyPoints: Number
 });
 
 let Character = mongoose.model('Character', characterSchema);

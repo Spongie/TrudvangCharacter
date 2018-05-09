@@ -77,6 +77,11 @@ export class TrudvangCharacter {
     criticallyInjured: number;
     currentInjury: string;
 
+    maxVitnerPoints: number;
+    currentVitnerPoints: number;
+    maxHolyPoints: number;
+    currentHolyPoints: number;
+
     constructor() {
         this.name = 'New character'
 
@@ -102,8 +107,7 @@ export class TrudvangCharacter {
 
         this.availableXp = 0;
         this.usedXp = 0;
-
-        this.stats = new CharacterStats(0, 0, 0, 0, 0, 0, 0);
+        
         this.weapons = new Array<Weapon>();
         this.armors = new Array<Armore>();
         this.items = new Array<Item>();
@@ -118,39 +122,8 @@ export class TrudvangCharacter {
     }
 
     copyFrom(character: TrudvangCharacter) {
+        Object.assign(this, character);
         this.init();
-
-        //do retard copy...
-        this._id = character._id;
-        this.name = character.name;
-        this.race = character.race;
-        this.culture = character.culture;
-        this.religion = character.religion;
-        this.gender = character.gender;
-        this.height = character.height;
-        this.weight = character.weight;
-        this.weaponHand = character.weaponHand;
-        this.background = character.background;
-
-        this.maximumBodyPoints = character.maximumBodyPoints;
-        this.currentBodyPoints = character.currentBodyPoints;
-        this.currentFear = character.currentFear;
-        this.naturalHealing = character.naturalHealing;
-
-        this.stats.charisma = character.stats.charisma;
-        this.stats.strength = character.stats.strength;
-        this.stats.psyche = character.stats.psyche;
-        this.stats.perception = character.stats.perception;
-        this.stats.intelligence = character.stats.intelligence;
-        this.stats.constitution = character.stats.constitution;
-        this.stats.dexterity = character.stats.dexterity;
-
-        this.currentFear = character.currentFear;
-        this.fearResist = character.fearResist;
-
-        this.raud = character.raud;
-        this.extraXp = character.extraXp;
-        this.usedXp = character.usedXp;
 
         character.weapons.forEach((weapon) => {
             this.weapons.push(weapon);
@@ -328,6 +301,38 @@ export class TrudvangCharacter {
 
         this.movement = 10 + this.stats.dexterity;
         this.persistance = 10 + this.stats.psyche + this.wilderness.level;
+
+        this.maxVitnerPoints = this.vitnerCraft.level;
+        let callOfVitner = this.vitnerCraft.disciplines.find((discipline) => {
+            return discipline.name === 'Call of vitner';
+        });
+
+        this.maxVitnerPoints += callOfVitner.level * 5;
+        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
+            return speciality.name === 'Hwitalja';
+        }).level * 10;
+        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
+            return speciality.name === 'Darkhwitalja';
+        }).level * 20;
+        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
+            return speciality.name === 'Vaagritalja';
+        }).level * 15;
+        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
+            return speciality.name === 'Vitner habit';
+        }).level * 10;
+
+        this.maxHolyPoints = this.faith.level;
+        let divinePower = this.faith.disciplines.find((discipline) => {
+            return discipline.name === 'Divine power';
+        });
+        this.maxHolyPoints += divinePower.level * 3;
+
+        this.maxHolyPoints += divinePower.specialities.find((speciality) => {
+            return speciality.name === 'Faithful';
+        }).level * 7;
+        this.maxHolyPoints += divinePower.specialities.find((speciality) => {
+            return speciality.name === 'Powerful';
+        }).level * 7;
     }
 
     calculateInitiative() {
