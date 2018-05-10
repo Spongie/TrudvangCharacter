@@ -8,6 +8,7 @@ import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 import { Weapon } from "./weapon";
 import { Armore } from "./armor";
 import { Item } from "./item";
+import { User } from "./user";
 
 export class TrudvangCharacter {
     _id: string;
@@ -81,6 +82,7 @@ export class TrudvangCharacter {
     currentVitnerPoints: number;
     maxHolyPoints: number;
     currentHolyPoints: number;
+    sharedWith: Array<string>;
 
     constructor() {
         this.name = 'New character'
@@ -88,7 +90,7 @@ export class TrudvangCharacter {
         this.freeKnowledgeSkillsCost = 56;
         this.freeWildernessSkillsCost = 14;
         this.currentFear = 0;
-
+        this.stats = new CharacterStats(0,0,0,0,0,0,0);
         this.init();
     }
 
@@ -107,7 +109,7 @@ export class TrudvangCharacter {
 
         this.availableXp = 0;
         this.usedXp = 0;
-        
+
         this.weapons = new Array<Weapon>();
         this.armors = new Array<Armore>();
         this.items = new Array<Item>();
@@ -123,6 +125,9 @@ export class TrudvangCharacter {
 
     copyFrom(character: TrudvangCharacter) {
         Object.assign(this, character);
+
+        this.stats = new CharacterStats(character.stats.charisma, character.stats.constitution, character.stats.dexterity, character.stats.intelligence,
+            character.stats.perception, character.stats.psyche, character.stats.strength);
         this.init();
 
         character.weapons.forEach((weapon) => {
@@ -269,6 +274,7 @@ export class TrudvangCharacter {
         }
 
         this.availableXp = this.baseXp;
+        
         this.availableXp += -15 * this.stats.charisma;
         this.availableXp += -15 * this.stats.constitution;
         this.availableXp += -15 * this.stats.dexterity;
@@ -392,6 +398,15 @@ export class TrudvangCharacter {
             language.updateSv();
             input.value = '';
         }
+    }
+
+    startSharing(user: User) {
+        this.sharedWith.push(user.userName);
+    }
+
+    stopSharing(user: User) {
+        let index = this.sharedWith.indexOf(user.userName);
+        this.sharedWith.splice(index, 1);
     }
 
     rollRaud() {

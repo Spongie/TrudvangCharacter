@@ -97,7 +97,7 @@
             <label for="inputBackground">Background: </label>
             <textarea class="form-control" id="inputBackground" rows="20" name="background" [(ngModel)]="model.background"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button *ngIf="canUpdate" type="submit" class="btn btn-primary">Save</button>
         </div>
       </form>
     </ng-template>
@@ -184,16 +184,16 @@
                   <td style="width: 30%">Vitner points</td>
                   <td style="width: 30%">{{model.maxVitnerPoints}}</td>
                   <td>
-                    <input type="number" id="inputCurrentVitner" max={{model.maxVitnerPoints}} min="0" style="margin-right: 5px"
-                      [(ngModel)]="model.currentVitnerPoints" name="currentVitner" (ngModelChange)="model.recalculateAvailableXp()">
+                    <input type="number" id="inputCurrentVitner" max={{model.maxVitnerPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentVitnerPoints"
+                      name="currentVitner" (ngModelChange)="model.recalculateAvailableXp()">
                   </td>
                 </tr>
                 <tr>
                   <td style="width: 30%">Divine power</td>
                   <td style="width: 30%">{{model.maxHolyPoints}}</td>
                   <td>
-                    <input type="number" id="inputcurrentHolyPoints" max={{model.maxHolyPoints}} min="0" style="margin-right: 5px"
-                      [(ngModel)]="model.currentHolyPoints" name="currentHolyPoints" (ngModelChange)="model.recalculateAvailableXp()">
+                    <input type="number" id="inputcurrentHolyPoints" max={{model.maxHolyPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentHolyPoints"
+                      name="currentHolyPoints" (ngModelChange)="model.recalculateAvailableXp()">
                   </td>
                 </tr>
               </tbody>
@@ -781,6 +781,36 @@
               </tr>
             </table>
             <button type="button" (click)="model.addItem()" class="btn btn-success">Add Item</button>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Sharing">
+    <ng-template ngbTabContent>
+      <form (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <h2>Shared with</h2>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let user of model.sharedWith">
+                <p>{{user}}</p>
+                <button type="button" class="btn btn-danger" (click)="model.stopSharing(user)">Stop sharing</button>
+              </li>
+            </ul>
+          </div>
+          <div class="form-group col-md-8">
+            <h2>Share with</h2>
+            <div>
+                <input id="inputSearchUser" class="form-control" type="text" placeholder="Search user...">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let user of searchedUsers">
+                  <p>{{user.userName}}</p>
+                  <button type="button" class="btn btn-success" (click)="model.startSharing(user)">Start sharing</button>
+                </li>
+              </ul>
           </div>
         </div>
       </form>

@@ -35,6 +35,7 @@ export class HttpUtil {
     private static writeAuthCookie(user: User, logout:boolean) {
         let oneYear = 31536000;
         let expireAge = logout ? ";expires=Thu, 01 Jan 1970 00:00:01 GMT" : ";max-age=" + oneYear;
+        console.log(expireAge);
         document.cookie = "auth=" + JSON.stringify(user) + expireAge; 
     }
 

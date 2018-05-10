@@ -29,6 +29,11 @@ export class UserService extends BaseService {
         }
     }
 
+    async findUsers(user: User) {
+        const response = await this.sendPostRequest('/api/user/search', user);
+        return response.json();
+    }
+
     private doLogin(user:User) {
         this.User = user;
         HttpUtil.addUserHeaders(user);

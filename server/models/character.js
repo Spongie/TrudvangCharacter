@@ -59,7 +59,8 @@ let characterSchema = new Schema({
     maxVitnerPoints: Number,
     currentVitnerPoints: Number,
     maxHolyPoints: Number,
-    currentHolyPoints: Number
+    currentHolyPoints: Number,
+    sharedWith: [String]
 });
 
 let Character = mongoose.model('Character', characterSchema);

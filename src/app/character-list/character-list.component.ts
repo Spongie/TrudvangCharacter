@@ -13,10 +13,12 @@ import { NgZone } from '@angular/core';
 export class CharacterListComponent implements OnInit {
 
   characters: TrudvangCharacter[];
+  sharedCharacters: TrudvangCharacter[];
 
   constructor(private userService: UserService, private _router: Router, private characterService: CharacterService) {
     if (userService.isAuthenticated()) {
       this.updateCharacters();
+      this.updateSharedCharacters();
     }
   }
 
@@ -32,6 +34,16 @@ export class CharacterListComponent implements OnInit {
     });
   }
 
+  async updateSharedCharacters() {
+    try {
+      await this.characterService.getSharedCharacters(this.userService.User.userName).then(data => {
+        this.sharedCharacters = data;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async createCharacter() {
     let character = new TrudvangCharacter();
     character.ownerId = this.userService.User._id;
@@ -42,12 +54,12 @@ export class CharacterListComponent implements OnInit {
   }
 
   //This randomly does not update so i will not allow delete yet
-  async deleteCharacter(characterId: String) {
+  async deleteCharacter(characterId: string) {
     await this.characterService.deleteCharacter(characterId);
     await this.updateCharacters();
   }
 
-  goToCharacter(characterId: String) {
+  goToCharacter(characterId: string) {
     this._router.navigate(['/character', characterId]);
   }
 }

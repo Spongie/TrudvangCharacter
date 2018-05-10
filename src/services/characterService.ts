@@ -14,11 +14,11 @@ export class CharacterService {
     await this._http.post('/api/character/save', character).toPromise();
   }
 
-  async getCharacter(id: String) {
+  async getCharacter(id: string) {
     return await this._http.get('/api/character/find/' + id).toPromise();
   }
 
-  async deleteCharacter(characterId : String) {
+  async deleteCharacter(characterId : string) {
     await this._http.delete('/api/character/delete/' + characterId).toPromise();
   }
 
@@ -26,7 +26,11 @@ export class CharacterService {
     await this._http.put('/api/character/create/', character).toPromise();
   }
 
-  async getCharacters(userId: String) {
+  async getCharacters(userId: string) {
       return await this._http.get<TrudvangCharacter[]>('/api/character/all/' + userId, {responseType: 'json'}).toPromise();
+  }
+
+  async getSharedCharacters(userName: string) {
+    return await this._http.get<TrudvangCharacter[]>('/api/character/shared/' + userName, {responseType: 'json'}).toPromise();
   }
 }

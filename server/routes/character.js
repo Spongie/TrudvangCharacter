@@ -25,6 +25,12 @@ router.post('/save', async (req, res) => {
     });
 });
 
+router.get('/shared/:userName', async (req, res) => {
+    CharacterModel.find({sharedWith: req.params.userName}, "", (err, docs) => {
+        res.send(docs);
+    });
+});
+
 router.put('/create', async (req, res) => {
     let character = new CharacterModel(req.body);
 

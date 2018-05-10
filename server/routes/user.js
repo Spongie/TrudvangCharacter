@@ -16,6 +16,16 @@ router.post('/register', async (req, res) => {
       return next(error);
     }
 });
+
+router.post('/search', (req, res) => {
+  UserModel.find({userName: new RegExp(req.body.userName, "i")}, "userName", (err, docs) => {
+    if (docs === null) {
+      return res.send("");
+    }
+
+    return res.send(JSON.stringify(docs));
+  })
+});
   
 router.post('/login', (req, res) => {
   UserModel.findOne({userName: req.body.userName}, "userName password", (err, docs) => {
