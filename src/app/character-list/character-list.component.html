@@ -3,8 +3,10 @@
     <h2>My characters</h2>
     <ul class="list-group" *ngFor="let character of characters">
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-           <a [routerLink]="['character', character._id]">{{character.name}}</a>     
+        <div style="width: 100%">
+           <a [routerLink]="['character', character._id]">{{character.name}}</a> 
+           <button class="btn btn-danger" type="button" (click)="deleteCharacter(character._id)"
+            style="position: absolute; right: 10px; bottom: 5px">Delete</button>    
         </div>
       </li>
     </ul>

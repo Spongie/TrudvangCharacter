@@ -53,10 +53,10 @@ export class CharacterListComponent implements OnInit {
     await this.updateCharacters();
   }
 
-  //This randomly does not update so i will not allow delete yet
-  async deleteCharacter(characterId: string) {
-    await this.characterService.deleteCharacter(characterId);
-    await this.updateCharacters();
+  //If this is async it will not work becuase this is amazing
+  deleteCharacter(characterId: string) {
+    this.characterService.deleteCharacter(characterId);
+    this.updateCharacters();
   }
 
   goToCharacter(characterId: string) {
