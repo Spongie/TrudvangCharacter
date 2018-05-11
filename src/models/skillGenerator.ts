@@ -1,6 +1,6 @@
 import { Skill } from "./skill";
 import { Discipline } from "./discipline";
-import { Specialization } from "./Specialization";
+import { Specialization } from "./specialization";
 import { Fighting } from "./disicplines/fighting";
 import { SkillWithModifier } from "./disicplines/SkillWithModifier";
 import { PsycheSpecialization } from "./specialities/psycheSpecialization";

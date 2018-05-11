@@ -1,7 +1,7 @@
 import { Discipline } from "../discipline";
 import { TrudvangCharacter } from "../TrudvangCharacter";
 import { Skill } from "../skill";
-import { Specialization } from "../Specialization";
+import { Specialization } from "../specialization";
 
 export class TradesmanDiscipline extends Discipline {
     

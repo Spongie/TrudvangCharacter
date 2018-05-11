@@ -1,4 +1,4 @@
-import { Specialization } from "../Specialization";
+import { Specialization } from "../specialization";
 
 export class PerceptionSpecialization extends Specialization {
 

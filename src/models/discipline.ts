@@ -1,4 +1,4 @@
-import { Specialization } from "./Specialization";
+import { Specialization } from "./specialization";
 import { Skill } from "./skill";
 
 export class Discipline {
