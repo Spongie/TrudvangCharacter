@@ -2,7 +2,7 @@ import { Skill } from "./skill";
 import { Discipline } from "./discipline";
 import { Specialization } from "./specialization";
 import { Fighting } from "./disicplines/fighting";
-import { SkillWithModifier } from "./disicplines/SkillWithModifier";
+import { SkillWithModifier } from "./disicplines/skillWithModifier";
 import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 import { TrudvangCharacter } from "./TrudvangCharacter";
 import { TradesmanDiscipline } from "./disicplines/tradesmanDiscipline";

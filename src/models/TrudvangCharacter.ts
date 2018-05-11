@@ -3,7 +3,7 @@ import { CharacterStats } from "./stats";
 import { SkillGenerator } from "./skillGenerator";
 import { Specialization } from "./specialization";
 import { Fighting } from "./disicplines/fighting";
-import { SkillWithModifier } from "./disicplines/SkillWithModifier";
+import { SkillWithModifier } from "./disicplines/skillWithModifier";
 import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 import { Weapon } from "./weapon";
 import { Armore } from "./armor";
