@@ -13,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CharacterListComponent } from './character-list/character-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SpellsTabComponent } from './spells-tab/spells-tab.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
     LoginComponent,
     CharacterComponent,
     RegisterComponent,
-    CharacterListComponent
+    CharacterListComponent,
+    SpellsTabComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

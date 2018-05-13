@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>Spells</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let spell of model.spells">
+        <td style="width: 15%">
+          <input type="text" [ngModelOptions]="{standalone: true}" style="width: 100%" [(ngModel)]="spell.Name">
+        </td>
+        <td>
+          <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="spell.Description" style="width: 100%">
+        </td>
+        <td style="width: 5%">
+          <button type="button" (click)="model.removeSpell(spell)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </table>
+    <button type="button" (click)="model.addSpell()" style="margin: 5px" class="btn btn-success">Add Spell</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Passive effects</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>Name</th>
+        <th>Max Vitner</th>
+        <th>Max Divine</th>
+        <th>Natural Healing</th>
+        <th>ExtraCP</th>
+        <th>Initiative</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let effect of model.effects">
+        <td>
+          <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.Name" style="width: 100%">
+        </td>
+        <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.MaxVitner" style="width: 100%">
+        </td>
+        <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.MaxDivine" style="width: 100%">
+        </td>
+        <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.NaturalHealing" style="width: 100%">
+        </td>
+        <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.ExtraCP" style="width: 100%">
+        </td>
+        <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.Initiative" style="width: 100%">
+        </td>
+        <td>
+            <button type="button" (click)="model.removeEffect(effect)" class="btn btn-danger">Delete</button>
+          </td>
+      </tr>
+    </table>
+    <button type="button" (click)="model.addEffect()" style="margin: 5px" class="btn btn-success">Add Effect</button>
+  </div>
+</div>
