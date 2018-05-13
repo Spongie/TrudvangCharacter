@@ -57,7 +57,9 @@ let characterSchema = new Schema({
     maxHolyPoints: Number,
     currentHolyPoints: Number,
     sharedWith: [String],
-    hasRolledRaud: Boolean
+    hasRolledRaud: Boolean,
+    spells: Object,
+    effects: Object
 });
 
 let Character = mongoose.model('Character', characterSchema);

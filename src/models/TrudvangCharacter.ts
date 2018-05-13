@@ -9,664 +9,862 @@ import { Weapon } from "./weapon";
 import { Armore } from "./armor";
 import { Item } from "./item";
 import { User } from "./user";
+import { Spell } from "./spell";
+import { Effect } from "./effect";
 
 export class TrudvangCharacter {
-    _id: string;
-    name: string;
-    race: string;
-    culture: string;
-    religion: string;
-    gender: string;
-    height: number;
-    weight: number;
-    weaponHand: string;
-    background: string;
-    agility: SkillWithModifier;
-    care: Skill;
-    entertainment: SkillWithModifier;
-    knowledge: SkillWithModifier;
-    vitnerCraft: SkillWithModifier;
-    shadowArts: Skill;
-    fighting: Fighting;
-    faith: SkillWithModifier;
-    wilderness: Skill;
-    availableXp: number;
-    extraXp: number;
-    usedXp: number;
-    stats: CharacterStats;
-    baseXp: number;
+  _id: string;
+  name: string;
+  race: string;
+  culture: string;
+  religion: string;
+  gender: string;
+  height: number;
+  weight: number;
+  weaponHand: string;
+  background: string;
+  agility: SkillWithModifier;
+  care: Skill;
+  entertainment: SkillWithModifier;
+  knowledge: SkillWithModifier;
+  vitnerCraft: SkillWithModifier;
+  shadowArts: Skill;
+  fighting: Fighting;
+  faith: SkillWithModifier;
+  wilderness: Skill;
+  availableXp: number;
+  extraXp: number;
+  usedXp: number;
+  stats: CharacterStats;
+  baseXp: number;
 
-    readonly freeKnowledgeSkillsCost: number;
-    readonly freeWildernessSkillsCost: number;
+  readonly freeKnowledgeSkillsCost: number;
+  readonly freeWildernessSkillsCost: number;
 
-    freeCombatPoints: number;
-    attackParriesPoints: number;
-    combatActionsPoints: number;
+  freeCombatPoints: number;
+  attackParriesPoints: number;
+  combatActionsPoints: number;
 
-    unarmedPoints: number;
-    brawlingPoints: number;
-    wrestlingPoints: number;
+  unarmedPoints: number;
+  brawlingPoints: number;
+  wrestlingPoints: number;
 
-    armedPoints: number;
-    bowsSlingsPoints: number;
-    crossbowPoints: number;
-    lightWeaponPoints: number;
-    heavyWeaponPoints: number;
-    shieldBearerPoints: number;
-    throwingWeaponPoints: number;
-    twoHandedPoints: number;
+  armedPoints: number;
+  bowsSlingsPoints: number;
+  crossbowPoints: number;
+  lightWeaponPoints: number;
+  heavyWeaponPoints: number;
+  shieldBearerPoints: number;
+  throwingWeaponPoints: number;
+  twoHandedPoints: number;
 
-    fearResist: number;
-    maximumBodyPoints: number;
-    naturalHealing: number;
-    currentBodyPoints: number;
-    currentFear: number;
-    raud: number;
-    movement: number;
-    persistance: number;
-    initiative: number;
-    currentFearModifier: string;
+  fearResist: number;
+  maximumBodyPoints: number;
+  naturalHealing: number;
+  currentBodyPoints: number;
+  currentFear: number;
+  raud: number;
+  movement: number;
+  persistance: number;
+  initiative: number;
+  currentFearModifier: string;
 
-    weapons: Array<Weapon>;
-    armors: Array<Armore>;
-    items: Array<Item>;
-    ownerId: String;
+  weapons: Array<Weapon>;
+  armors: Array<Armore>;
+  items: Array<Item>;
+  ownerId: String;
 
-    lightlyInjured: number;
-    injured: number;
-    seriouslyInjured: number;
-    criticallyInjured: number;
-    currentInjury: string;
+  lightlyInjured: number;
+  injured: number;
+  seriouslyInjured: number;
+  criticallyInjured: number;
+  currentInjury: string;
 
-    maxVitnerPoints: number;
-    currentVitnerPoints: number;
-    maxHolyPoints: number;
-    currentHolyPoints: number;
-    sharedWith: Array<string>;
-    hasRolledRaud: boolean = false;
+  maxVitnerPoints: number;
+  currentVitnerPoints: number;
+  maxHolyPoints: number;
+  currentHolyPoints: number;
+  sharedWith: Array<string>;
+  hasRolledRaud: boolean = false;
+  spells: Array<Spell>;
+  effects: Array<Effect>;
 
-    constructor() {
-        this.name = 'New character'
+  constructor() {
+    this.name = "New character";
 
-        this.freeKnowledgeSkillsCost = 56;
-        this.freeWildernessSkillsCost = 14;
-        this.currentFear = 0;
-        this.stats = new CharacterStats(0,0,0,0,0,0,0);
-        this.init();
+    this.freeKnowledgeSkillsCost = 56;
+    this.freeWildernessSkillsCost = 14;
+    this.currentFear = 0;
+    this.stats = new CharacterStats(0, 0, 0, 0, 0, 0, 0);
+    this.init();
+  }
+
+  private init() {
+    let skillGenerator = new SkillGenerator();
+    this.agility = skillGenerator.generateAgilityTree(this);
+    this.care = skillGenerator.generateCareTree(this);
+    this.entertainment = skillGenerator.genereateEntertainmentTree(this);
+    this.knowledge = skillGenerator.generateKnowledgeTree(this);
+    this.vitnerCraft = skillGenerator.generateVitnerCraftTree(this);
+    this.shadowArts = skillGenerator.generateShadowArtsTree(this);
+    this.fighting = skillGenerator.generateFightingTree(this);
+    this.faith = skillGenerator.genereateFaithTree(this);
+    this.wilderness = skillGenerator.generateWildernessTree(this);
+    this.baseXp = 350;
+
+    this.availableXp = 0;
+    this.usedXp = 0;
+
+    this.weapons = new Array<Weapon>();
+    this.armors = new Array<Armore>();
+    this.items = new Array<Item>();
+    this.spells = new Array<Spell>();
+    this.effects = new Array<Effect>();
+  }
+
+  doFullRecalc() {
+    this.recalculateSkills();
+    this.recalculateAvailableXp();
+    this.recalculateCombatPoints();
+    this.recalculateBodyAndFear();
+    this.calculateInitiative();
+  }
+
+  copyFrom(character: TrudvangCharacter) {
+    Object.assign(this, character);
+
+    this.stats = new CharacterStats(
+      character.stats.charisma,
+      character.stats.constitution,
+      character.stats.dexterity,
+      character.stats.intelligence,
+      character.stats.perception,
+      character.stats.psyche,
+      character.stats.strength
+    );
+    this.init();
+
+    this.copyItems(character);
+    this.copySpellsAndEffects(character);
+
+    this.resetSkill(this.agility, character.agility);
+    this.resetSkill(this.care, character.care);
+    this.resetSkill(this.fighting, character.fighting);
+    this.resetSkill(this.faith, character.faith);
+    this.resetSkill(this.shadowArts, character.shadowArts);
+    this.resetSkill(this.vitnerCraft, character.vitnerCraft);
+    this.resetSkill(this.entertainment, character.entertainment);
+    this.resetSkill(this.knowledge, character.knowledge);
+    this.resetSkill(this.wilderness, character.wilderness);
+
+    this.updateSkillOwners(this);
+    this.doFullRecalc();
+  }
+
+  copyItems(character: TrudvangCharacter) {
+    character.weapons.forEach(weapon => {
+      if (weapon !== null) {
+        this.weapons.push(weapon);
+      }
+    });
+
+    character.armors.forEach(armor => {
+      if (armor !== null) {
+        this.armors.push(armor);
+      }
+    });
+
+    character.items.forEach(item => {
+      if (item !== null) {
+        this.items.push(item);
+      }
+    });
+  }
+
+  copySpellsAndEffects(character: TrudvangCharacter) {
+    if (character.spells !== undefined) {
+      character.spells.forEach(spell => {
+        if (spell !== null) {
+          this.spells.push(spell);
+        }
+      });
     }
 
-    private init() {
-        let skillGenerator = new SkillGenerator();
-        this.agility = skillGenerator.generateAgilityTree(this);
-        this.care = skillGenerator.generateCareTree(this);
-        this.entertainment = skillGenerator.genereateEntertainmentTree(this);
-        this.knowledge = skillGenerator.generateKnowledgeTree(this);
-        this.vitnerCraft = skillGenerator.generateVitnerCraftTree(this);
-        this.shadowArts = skillGenerator.generateShadowArtsTree(this);
-        this.fighting = skillGenerator.generateFightingTree(this);
-        this.faith = skillGenerator.genereateFaithTree(this);
-        this.wilderness = skillGenerator.generateWildernessTree(this);
-        this.baseXp = 350;
-
-        this.availableXp = 0;
-        this.usedXp = 0;
-
-        this.weapons = new Array<Weapon>();
-        this.armors = new Array<Armore>();
-        this.items = new Array<Item>();
+    if (character.effects !== undefined) {
+      character.effects.forEach(effect => {
+        if (effect !== null) {
+          this.effects.push(effect);
+        }
+      });
     }
+  }
 
-    doFullRecalc() {
-        this.recalculateSkills();
-        this.recalculateAvailableXp();
-        this.recalculateCombatPoints();
-        this.recalculateBodyAndFear();
-        this.calculateInitiative();
+  removeWeapon(weapon: Weapon) {
+    let index = this.weapons.indexOf(weapon);
+    if (index >= 0) {
+      this.weapons.splice(index, 1);
     }
+  }
 
-    copyFrom(character: TrudvangCharacter) {
-        Object.assign(this, character);
+  removeArmor(armor: Armore) {
+    let index = this.armors.indexOf(armor);
+    if (index >= 0) {
+      this.armors.splice(index, 1);
+    }
+  }
 
-        this.stats = new CharacterStats(character.stats.charisma, character.stats.constitution, character.stats.dexterity, character.stats.intelligence,
-            character.stats.perception, character.stats.psyche, character.stats.strength);
-        this.init();
+  removeItem(item: Item) {
+    let index = this.items.indexOf(item);
+    if (index >= 0) {
+      this.items.splice(index, 1);
+    }
+  }
 
-        character.weapons.forEach((weapon) => {
-            if (weapon !== null) {
-                this.weapons.push(weapon);
-            }
+  removeSpell(spell: Spell) {
+    let index = this.spells.indexOf(spell);
+    if (index >= 0) {
+      this.spells.splice(index, 1);
+    }
+  }
+
+  addSpell() {
+    this.spells.push(new Spell());
+  }
+
+  removeEffect(effect: Effect) {
+    let index = this.effects.indexOf(effect);
+    if (index >= 0) {
+      this.effects.splice(index, 1);
+    }
+  }
+
+  addEffect() {
+    this.effects.push(new Effect());
+  }
+
+  resetSkill(skill: Skill, newSkill: Skill) {
+    skill.level = newSkill.level;
+    skill.modifier = newSkill.modifier;
+
+    newSkill.disciplines.forEach(newdiscipline => {
+      let oldDisc = skill.disciplines.find(disc => {
+        return disc.name === newdiscipline.name;
+      });
+      oldDisc.level = newdiscipline.level;
+
+      newdiscipline.specialities.forEach(newSpeciality => {
+        let oldSpec = oldDisc.specialities.find(disc => {
+          return disc.name === newSpeciality.name;
         });
 
-        character.armors.forEach((armor) => {
-            if (armor !== null) {
-                this.armors.push(armor);
-            }            
-        });
-
-        character.items.forEach((item) => {
-            if (item !== null) {
-                this.items.push(item);
-            }
-        });
-
-        this.resetSkill(this.agility, character.agility);
-        this.resetSkill(this.care, character.care);
-        this.resetSkill(this.fighting, character.fighting);
-        this.resetSkill(this.faith, character.faith);
-        this.resetSkill(this.shadowArts, character.shadowArts);
-        this.resetSkill(this.vitnerCraft, character.vitnerCraft);
-        this.resetSkill(this.entertainment, character.entertainment);
-        this.resetSkill(this.knowledge, character.knowledge);
-        this.resetSkill(this.wilderness, character.wilderness);
-
-        this.updateSkillOwners(this);
-        this.doFullRecalc();
-    }
-
-    removeWeapon(weapon: Weapon) {
-        let index = this.weapons.indexOf(weapon);
-        if (index >= 0) {
-            this.weapons.splice(index, 1);
-        }
-    }
-
-    removeArmor(armor: Armore) {
-        let index = this.armors.indexOf(armor);
-        if (index >= 0) {
-            this.armors.splice(index, 1);
-        }
-    }
-
-    removeItem(item: Item) {
-        let index = this.items.indexOf(item);
-        if (index >= 0) {
-            this.items.splice(index, 1);
-        }
-    }
-
-    resetSkill(skill: Skill, newSkill: Skill) {
-        skill.level = newSkill.level;
-        skill.modifier = newSkill.modifier;
-
-        newSkill.disciplines.forEach((newdiscipline) => {
-            let oldDisc = skill.disciplines.find(disc => {
-                return disc.name === newdiscipline.name;
-            });
-            oldDisc.level = newdiscipline.level;
-
-            newdiscipline.specialities.forEach((newSpeciality) => {
-                let oldSpec = oldDisc.specialities.find(disc => {
-                    return disc.name === newSpeciality.name;
-                });
-
-                if (oldSpec !== undefined) {
-                    oldSpec.level = newSpeciality.level;
-                } else {
-                    let speciality = new Specialization(newSpeciality.name, newSpeciality.level, newSpeciality.sv, oldDisc);
-                    oldDisc.specialities.push(speciality);
-                }
-            });
-        });
-    }
-
-    updateSkillOwners(owner) {
-        this.agility.setOwner(owner);
-        this.care.setOwner(owner);
-        this.entertainment.setOwner(owner);
-        this.knowledge.setOwner(owner);
-        this.vitnerCraft.setOwner(owner);
-        this.shadowArts.setOwner(owner);
-        this.fighting.setOwner(owner);
-        this.faith.setOwner(owner);
-        this.wilderness.setOwner(owner);
-    }
-
-    addItem() {
-        this.items.push(new Item());
-    }
-
-    addWeapon() {
-        this.weapons.push(new Weapon());
-    }
-
-    addArmor() {
-        this.armors.push(new Armore());
-    }
-
-    private roundInjury(value: number, level: number) {
-        let damageString = value.toString();
-
-        if (damageString.endsWith('.25')) {
-            if (level === 1) {
-                return value + 0.75;
-            } else {
-                return value - 0.25;
-            }
-        } else if (damageString.endsWith('.5')) {
-            if (level <= 2) {
-                return value + 0.5;
-            } else {
-                return value - 0.5;
-            }
-        } else if (damageString.endsWith('.75')) {
-            if (level <= 3) {
-                return value + 0.25;
-            } else {
-                return value - 0.75;
-            }
-        }
-
-        return value;
-    }
-
-    recalculateBodyAndFear() {
-        this.naturalHealing = 1 + this.stats.constitution > 0 ? this.stats.constitution : 1;
-        this.maximumBodyPoints = this.stats.strength + this.stats.constitution + this.getRaceBaseBodyPoints();
-        this.fearResist = -this.stats.psyche;
-
-        this.lightlyInjured = this.roundInjury(this.maximumBodyPoints / 4, 1);
-        this.injured = this.roundInjury((this.maximumBodyPoints / 4) * 2, 2);
-        this.seriouslyInjured = this.roundInjury((this.maximumBodyPoints / 4) * 3, 3);
-        this.criticallyInjured = this.roundInjury((this.maximumBodyPoints / 4) * 4, 4);
-
-        let damage = this.maximumBodyPoints - this.currentBodyPoints;
-
-        if (damage === 0) {
-            this.currentInjury = "Perfectly healthy";
-        } else if (damage <= this.lightlyInjured) {
-            this.currentInjury = "Lightly injured: 0";
-        } else if (damage <= this.injured) {
-            this.currentInjury = "Injured: -1";
-        } else if (damage <= this.seriouslyInjured) {
-            this.currentInjury = "Seriously injured: -3";
-        } else if (damage <= this.criticallyInjured) {
-            this.currentInjury = "Critically injured: -7";
-        }
-
-        if (this.currentFear <= 10) {
-            this.currentFearModifier = "Not scared";
-        } else if (this.currentFear <= 20) {
-            this.currentFearModifier = "Slightly scared (-1 dice)";
-        } else if (this.currentFear <= 30) {
-            this.currentFearModifier = "Scared (-3 dice)";
-        } else if (this.currentFear <= 40) {
-            this.currentFearModifier = "You think you are dying scared (-5 dice)";
+        if (oldSpec !== undefined) {
+          oldSpec.level = newSpeciality.level;
         } else {
-            this.currentFearModifier = "Holy shit scared (-7 dice)";
+          let speciality = new Specialization(
+            newSpeciality.name,
+            newSpeciality.level,
+            newSpeciality.sv,
+            oldDisc
+          );
+          oldDisc.specialities.push(speciality);
         }
+      });
+    });
+  }
+
+  updateSkillOwners(owner) {
+    this.agility.setOwner(owner);
+    this.care.setOwner(owner);
+    this.entertainment.setOwner(owner);
+    this.knowledge.setOwner(owner);
+    this.vitnerCraft.setOwner(owner);
+    this.shadowArts.setOwner(owner);
+    this.fighting.setOwner(owner);
+    this.faith.setOwner(owner);
+    this.wilderness.setOwner(owner);
+  }
+
+  addItem() {
+    this.items.push(new Item());
+  }
+
+  addWeapon() {
+    this.weapons.push(new Weapon());
+  }
+
+  addArmor() {
+    this.armors.push(new Armore());
+  }
+
+  getExtraVitner() {
+      let vitner = 0;
+
+      this.effects.forEach((effect) => {
+        vitner += effect.MaxVitner;
+      });
+
+      return vitner;
+  }
+
+  getExtraDivine() {
+    let divine = 0;
+
+    this.effects.forEach((effect) => {
+      divine += effect.MaxDivine;
+    });
+
+    return divine;  
+  }
+
+  getExtraNaturalHealing() {
+    let healing = 0;
+
+    this.effects.forEach((effect) => {
+      healing += effect.NaturalHealing;
+    });
+
+    return healing;
+  }
+
+  getExtraCombatPoints() {
+    let combatPoints = 0;
+
+    this.effects.forEach((effect) => {
+      combatPoints += effect.ExtraCP;
+    });
+
+    return combatPoints;
+  }
+
+  getExtraInitative() {
+    let initative = 0;
+
+    this.effects.forEach((effect) => {
+      initative += effect.Initiative;
+    });
+
+    return initative;
+  }
+
+  private roundInjury(value: number, level: number) {
+    let damageString = value.toString();
+
+    if (damageString.endsWith(".25")) {
+      if (level === 1) {
+        return value + 0.75;
+      } else {
+        return value - 0.25;
+      }
+    } else if (damageString.endsWith(".5")) {
+      if (level <= 2) {
+        return value + 0.5;
+      } else {
+        return value - 0.5;
+      }
+    } else if (damageString.endsWith(".75")) {
+      if (level <= 3) {
+        return value + 0.25;
+      } else {
+        return value - 0.75;
+      }
     }
 
-    recalculateAvailableXp() {
-        if (this.extraXp === undefined || this.extraXp === null) {
-            this.extraXp = 0;
-        }
+    return value;
+  }
 
-        this.availableXp = this.baseXp;
-        
-        this.availableXp += -15 * this.stats.charisma;
-        this.availableXp += -15 * this.stats.constitution;
-        this.availableXp += -15 * this.stats.dexterity;
-        this.availableXp += -15 * this.stats.intelligence;
-        this.availableXp += -15 * this.stats.perception;
-        this.availableXp += -15 * this.stats.psyche;
-        this.availableXp += -15 * this.stats.strength;
+  recalculateBodyAndFear() {
+    this.naturalHealing = 1 + (this.stats.constitution > 0 ? this.stats.constitution : 1) + this.getExtraNaturalHealing();
+    this.maximumBodyPoints =
+      this.stats.strength +
+      this.stats.constitution +
+      this.getRaceBaseBodyPoints();
 
-        let totalXp = 0;
-        totalXp += this.agility.calculateTotalCostWithModifier(this.stats.dexterity);
-        totalXp += this.care.calculateTotalCost();
-        totalXp += this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence);
-        totalXp += this.wilderness.calculateTotalCost();
-        totalXp += this.shadowArts.calculateTotalCost();
-        totalXp += this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence);
-        totalXp += this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
-        totalXp += this.fighting.calculateTotalCost();
-        totalXp += this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
+    this.fearResist = -this.stats.psyche;
 
-        totalXp -= this.freeKnowledgeSkillsCost - (this.stats.intelligence * 5);
-        totalXp -= this.freeWildernessSkillsCost;
+    this.lightlyInjured = this.roundInjury(this.maximumBodyPoints / 4, 1);
+    this.injured = this.roundInjury(this.maximumBodyPoints / 4 * 2, 2);
+    this.seriouslyInjured = this.roundInjury(this.maximumBodyPoints / 4 * 3, 3);
+    this.criticallyInjured = this.roundInjury(this.maximumBodyPoints / 4 * 4, 4);
 
-        this.usedXp = totalXp;
-        this.availableXp -= this.usedXp;
-        this.availableXp += this.extraXp;
+    let damage = this.maximumBodyPoints - this.currentBodyPoints;
 
-        this.recalculateCombatPoints();
-        this.recalculateBodyAndFear();
-        this.calculateInitiative();
-
-        this.movement = 10 + this.stats.dexterity;
-        this.persistance = 10 + this.stats.psyche + this.wilderness.level;
-
-        this.maxVitnerPoints = this.vitnerCraft.level;
-        let callOfVitner = this.vitnerCraft.disciplines.find((discipline) => {
-            return discipline.name === 'Call of vitner';
-        });
-
-        this.maxVitnerPoints += callOfVitner.level * 5;
-        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
-            return speciality.name === 'Hwitalja';
-        }).level * 10;
-        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
-            return speciality.name === 'Darkhwitalja';
-        }).level * 20;
-        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
-            return speciality.name === 'Vaagritalja';
-        }).level * 15;
-        this.maxVitnerPoints += callOfVitner.specialities.find((speciality) => {
-            return speciality.name === 'Vitner habit';
-        }).level * 10;
-
-        this.maxHolyPoints = this.faith.level;
-        let divinePower = this.faith.disciplines.find((discipline) => {
-            return discipline.name === 'Divine power';
-        });
-        this.maxHolyPoints += divinePower.level * 3;
-
-        this.maxHolyPoints += divinePower.specialities.find((speciality) => {
-            return speciality.name === 'Faithful';
-        }).level * 7;
-        this.maxHolyPoints += divinePower.specialities.find((speciality) => {
-            return speciality.name === 'Powerful';
-        }).level * 7;
+    if (damage === 0) {
+      this.currentInjury = "Perfectly healthy";
+    } else if (damage <= this.lightlyInjured) {
+      this.currentInjury = "Lightly injured: 0";
+    } else if (damage <= this.injured) {
+      this.currentInjury = "Injured: -1";
+    } else if (damage <= this.seriouslyInjured) {
+      this.currentInjury = "Seriously injured: -3";
+    } else if (damage <= this.criticallyInjured) {
+      this.currentInjury = "Critically injured: -7";
     }
 
-    calculateInitiative() {
-        let battleExperience = this.fighting.getBattleExperience();
+    if (this.currentFear <= 10) {
+      this.currentFearModifier = "Not scared";
+    } else if (this.currentFear <= 20) {
+      this.currentFearModifier = "Slightly scared (-1 dice)";
+    } else if (this.currentFear <= 30) {
+      this.currentFearModifier = "Scared (-3 dice)";
+    } else if (this.currentFear <= 40) {
+      this.currentFearModifier = "You think you are dying scared (-5 dice)";
+    } else {
+      this.currentFearModifier = "Holy shit scared (-7 dice)";
+    }
+  }
 
-        let combatReactions = battleExperience.specialities.find(speciality => {
-            return speciality.name === "Combat reaction";
-        });
-
-        this.initiative = this.stats.dexterity + battleExperience.level + (combatReactions.level * 2);
+  recalculateAvailableXp() {
+    if (this.extraXp === undefined || this.extraXp === null) {
+      this.extraXp = 0;
     }
 
-    recalculateSkills() {
-        this.agility.updateSv();
-        this.care.updateSv();
-        this.entertainment.updateSv();
-        this.knowledge.updateSv();
-        this.faith.updateSv();
-        this.fighting.updateSv();
-        this.vitnerCraft.updateSv();
-        this.shadowArts.updateSv();
-        this.wilderness.updateSv();
-        this.recalculateAvailableXp();
+    this.availableXp = this.baseXp;
+
+    this.availableXp += -15 * this.stats.charisma;
+    this.availableXp += -15 * this.stats.constitution;
+    this.availableXp += -15 * this.stats.dexterity;
+    this.availableXp += -15 * this.stats.intelligence;
+    this.availableXp += -15 * this.stats.perception;
+    this.availableXp += -15 * this.stats.psyche;
+    this.availableXp += -15 * this.stats.strength;
+
+    let totalXp = 0;
+    totalXp += this.agility.calculateTotalCostWithModifier(this.stats.dexterity);
+    totalXp += this.care.calculateTotalCost();
+    totalXp += this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence);
+    totalXp += this.wilderness.calculateTotalCost();
+    totalXp += this.shadowArts.calculateTotalCost();
+    totalXp += this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence);
+    totalXp += this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
+    totalXp += this.fighting.calculateTotalCost();
+    totalXp += this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
+
+    totalXp -= this.freeKnowledgeSkillsCost - this.stats.intelligence * 5;
+    totalXp -= this.freeWildernessSkillsCost;
+
+    this.usedXp = totalXp;
+    this.availableXp -= this.usedXp;
+    this.availableXp += this.extraXp;
+
+    this.recalculateCombatPoints();
+    this.recalculateBodyAndFear();
+    this.calculateInitiative();
+
+    this.movement = 10 + this.stats.dexterity;
+    this.persistance = 10 + this.stats.psyche + this.wilderness.level;
+
+    this.calculateVitnerAndDivine();
+  }
+
+  calculateVitnerAndDivine() {
+    this.maxVitnerPoints = this.vitnerCraft.level;
+    let callOfVitner = this.vitnerCraft.disciplines.find(discipline => {
+      return discipline.name === "Call of vitner";
+    });
+
+    this.maxVitnerPoints += callOfVitner.level * 5;
+    this.maxVitnerPoints +=
+      callOfVitner.specialities.find(speciality => {
+        return speciality.name === "Hwitalja";
+      }).level * 10;
+
+    this.maxVitnerPoints +=
+      callOfVitner.specialities.find(speciality => {
+        return speciality.name === "Darkhwitalja";
+      }).level * 20;
+
+    this.maxVitnerPoints +=
+      callOfVitner.specialities.find(speciality => {
+        return speciality.name === "Vaagritalja";
+      }).level * 15;
+
+    this.maxVitnerPoints +=
+      callOfVitner.specialities.find(speciality => {
+        return speciality.name === "Vitner habit";
+      }).level * 10;
+
+    this.maxVitnerPoints += this.getExtraVitner();
+
+    this.maxHolyPoints = this.faith.level;
+    let divinePower = this.faith.disciplines.find(discipline => {
+      return discipline.name === "Divine power";
+    });
+
+    this.maxHolyPoints += divinePower.level * 3;
+
+    this.maxHolyPoints +=
+      divinePower.specialities.find(speciality => {
+        return speciality.name === "Faithful";
+      }).level * 7;
+      
+    this.maxHolyPoints +=
+      divinePower.specialities.find(speciality => {
+        return speciality.name === "Powerful";
+      }).level * 7;
+
+    this.maxHolyPoints += this.getExtraDivine();
+  }
+
+  calculateInitiative() {
+    let battleExperience = this.fighting.getBattleExperience();
+
+    let combatReactions = battleExperience.specialities.find(speciality => {
+      return speciality.name === "Combat reaction";
+    });
+
+    this.initiative = this.stats.dexterity + battleExperience.level + combatReactions.level * 2 + this.getExtraInitative();
+  }
+
+  recalculateSkills() {
+    this.agility.updateSv();
+    this.care.updateSv();
+    this.entertainment.updateSv();
+    this.knowledge.updateSv();
+    this.faith.updateSv();
+    this.fighting.updateSv();
+    this.vitnerCraft.updateSv();
+    this.shadowArts.updateSv();
+    this.wilderness.updateSv();
+    this.recalculateAvailableXp();
+  }
+
+  recalculateCombatPoints() {
+    let extra = this.getExtraCombatPoints();
+    this.freeCombatPoints = this.fighting.calculateFreeCombatPoints() + extra;
+    this.attackParriesPoints = this.fighting.calculateAttackParries() + extra;
+    this.combatActionsPoints = this.fighting.calculateCombatActions() + extra;
+    this.unarmedPoints = this.fighting.calculateUnarmedFighting() + extra;
+    this.brawlingPoints = this.fighting.calculateBrawling() + extra;
+    this.wrestlingPoints = this.fighting.calculateWrestling() + extra;
+    this.armedPoints = this.fighting.calculateArmedFighting() + extra;
+    this.bowsSlingsPoints = this.fighting.calculateBowsAndSlings() + extra;
+    this.crossbowPoints = this.fighting.calculateCrossbow() + extra;
+    this.lightWeaponPoints = this.fighting.calculateLightWeapons() + extra;
+    this.heavyWeaponPoints = this.fighting.calculateHeavyWeapons() + extra;
+    this.shieldBearerPoints = this.fighting.calculateShieldBearer() + extra;
+    this.throwingWeaponPoints = this.fighting.calculateThrowingWeapons() + extra;
+    this.twoHandedPoints = this.fighting.calculateTwoHanded() + extra;
+  }
+
+  isValueValid(value) {
+    return value.trim() !== "";
+  }
+
+  addForeignTongue() {
+    let input = <HTMLInputElement>document.getElementById("inputForeignTongue");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let language = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Language";
+      });
+
+      language.specialities.push(
+        new Specialization("Foreign tongue (" + value + ")", 0, 0, language)
+      );
+      language.updateSv();
+      input.value = "";
+    }
+  }
+
+  startSharing(user: User) {
+    this.sharedWith.push(user.userName);
+  }
+
+  stopSharing(user: User) {
+    let index = this.sharedWith.indexOf(user.userName);
+    this.sharedWith.splice(index, 1);
+  }
+
+  rollRaud() {
+    let roll = Math.floor(Math.random() * 6 + 1) + this.stats.charisma;
+
+    if (roll < 0) {
+      roll = 0;
     }
 
-    recalculateCombatPoints() {
-        this.freeCombatPoints = this.fighting.calculateFreeCombatPoints();
-        this.attackParriesPoints = this.fighting.calculateAttackParries();
-        this.combatActionsPoints = this.fighting.calculateCombatActions();
-        this.unarmedPoints = this.fighting.calculateUnarmedFighting();
-        this.brawlingPoints = this.fighting.calculateBrawling();
-        this.wrestlingPoints = this.fighting.calculateWrestling();
-        this.armedPoints = this.fighting.calculateArmedFighting();
-        this.bowsSlingsPoints = this.fighting.calculateBowsAndSlings();
-        this.crossbowPoints = this.fighting.calculateCrossbow();
-        this.lightWeaponPoints = this.fighting.calculateLightWeapons();
-        this.heavyWeaponPoints = this.fighting.calculateHeavyWeapons();
-        this.shieldBearerPoints = this.fighting.calculateShieldBearer();
-        this.throwingWeaponPoints = this.fighting.calculateThrowingWeapons();
-        this.twoHandedPoints = this.fighting.calculateTwoHanded();
+    this.raud = roll;
+    this.hasRolledRaud = true;
+  }
+
+  useRaud() {
+    this.raud--;
+  }
+
+  canUseRaud() {
+    return this.hasRolledRaud && this.raud > 0;
+  }
+
+  addMotherTongue() {
+    let input = <HTMLInputElement>document.getElementById("inputMotherTongue");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let language = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Language";
+      });
+
+      language.specialities.push(
+        new Specialization("Mother tongue (" + value + ")", 0, 0, language)
+      );
+      language.updateSv();
+      input.value = "";
     }
+  }
 
-    isValueValid(value) {
-        return value.trim() !== '';
+  addReadingWriting() {
+    let input = <HTMLInputElement>document.getElementById(
+      "inputReadingWriting"
+    );
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let language = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Language";
+      });
+
+      language.specialities.push(
+        new Specialization("Reading & writing (" + value + ")", 0, 0, language)
+      );
+      language.updateSv();
+      input.value = "";
     }
+  }
 
-    addForeignTongue() {
-        let input = (<HTMLInputElement>document.getElementById('inputForeignTongue'));
-        let value = input.value;
+  addCustomsLaw() {
+    let input = <HTMLInputElement>document.getElementById("inputCustomsLaw");
+    let value = input.value;
 
-        if (this.isValueValid(value)) {
-            let language = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Language';
-            });
+    if (this.isValueValid(value)) {
+      let cultureKnowledge = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Culture knowledge";
+      });
 
-            language.specialities.push(new Specialization('Foreign tongue (' + value + ')', 0, 0, language));
-            language.updateSv();
-            input.value = '';
-        }
+      cultureKnowledge.specialities.push(
+        new Specialization(
+          "Customs & law (" + value + ")",
+          0,
+          0,
+          cultureKnowledge
+        )
+      );
+      cultureKnowledge.updateSv();
+      input.value = "";
     }
+  }
 
-    startSharing(user: User) {
-        this.sharedWith.push(user.userName);
+  addLoreLegends() {
+    let input = <HTMLInputElement>document.getElementById("inputLoreLegends");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let cultureKnowledge = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Culture knowledge";
+      });
+
+      cultureKnowledge.specialities.push(
+        new Specialization(
+          "Lore & legends (" + value + ")",
+          0,
+          0,
+          cultureKnowledge
+        )
+      );
+      cultureKnowledge.updateSv();
+      input.value = "";
     }
+  }
 
-    stopSharing(user: User) {
-        let index = this.sharedWith.indexOf(user.userName);
-        this.sharedWith.splice(index, 1);
+  addReligion() {
+    let input = <HTMLInputElement>document.getElementById("inputReligion");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let cultureKnowledge = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Culture knowledge";
+      });
+
+      cultureKnowledge.specialities.push(
+        new Specialization("Religion (" + value + ")", 0, 0, cultureKnowledge)
+      );
+      cultureKnowledge.updateSv();
+      input.value = "";
     }
+  }
 
-    rollRaud() {
-        let roll = Math.floor((Math.random() * 6) + 1) + this.stats.charisma;
+  addInsight() {
+    let input = <HTMLInputElement>document.getElementById("inputInsight");
+    let value = input.value;
 
-        if (roll < 0) {
-            roll = 0;
-        }
+    if (this.isValueValid(value)) {
+      let learning = this.knowledge.disciplines.find(discipline => {
+        return discipline.name === "Learning";
+      });
 
-        this.raud = roll;
-        this.hasRolledRaud = true;
+      learning.specialities.push(
+        new Specialization("Insight (" + value + ")", 0, 0, learning)
+      );
+      learning.updateSv();
+      input.value = "";
     }
+  }
 
-    useRaud() {
-        this.raud--;
+  addCityKnowledge() {
+    let input = <HTMLInputElement>document.getElementById("inputCityKnowledge");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let geography = this.wilderness.disciplines.find(discipline => {
+        return discipline.name === "Geography";
+      });
+
+      geography.specialities.push(
+        new Specialization("City knowledge (" + value + ")", 0, 0, geography)
+      );
+      geography.updateSv();
+      input.value = "";
     }
+  }
 
-    canUseRaud() {
-        return this.hasRolledRaud && this.raud > 0;
+  addLandKnowledge() {
+    let input = <HTMLInputElement>document.getElementById("inputLandKnowledge");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      let geography = this.wilderness.disciplines.find(discipline => {
+        return discipline.name === "Geography";
+      });
+
+      geography.specialities.push(
+        new Specialization("Land knowledge (" + value + ")", 0, 0, geography)
+      );
+      geography.updateSv();
+      input.value = "";
     }
+  }
 
-    addMotherTongue() {
-        let input = (<HTMLInputElement>document.getElementById('inputMotherTongue'));
-        let value = input.value;
+  addSeaKnowledge() {
+    let input = <HTMLInputElement>document.getElementById("inputSeaKnowledge");
+    let value = input.value;
 
-        if (this.isValueValid(value)) {
-            let language = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Language';
-            });
+    if (this.isValueValid(value)) {
+      let geography = this.wilderness.disciplines.find(discipline => {
+        return discipline.name === "Geography";
+      });
 
-            language.specialities.push(new Specialization('Mother tongue (' + value + ')', 0, 0, language));
-            language.updateSv();
-            input.value = '';
-        }
+      geography.specialities.push(
+        new Specialization("Sea knowledge (" + value + ")", 0, 0, geography)
+      );
+      geography.updateSv();
+      input.value = "";
     }
+  }
 
-    addReadingWriting() {
-        let input = (<HTMLInputElement>document.getElementById('inputReadingWriting'));
-        let value = input.value;
+  addSpeciesHunterKnowledge() {
+    let input = <HTMLInputElement>document.getElementById(
+      "inputSpeciesHunterKnowledge"
+    );
+    let value = input.value;
 
-        if (this.isValueValid(value)) {
-            let language = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Language';
-            });
+    if (this.isValueValid(value)) {
+      let huntingExperience = this.wilderness.disciplines.find(discipline => {
+        return discipline.name === "Hunting experience";
+      });
 
-            language.specialities.push(new Specialization('Reading & writing (' + value + ')', 0, 0, language));
-            language.updateSv();
-            input.value = '';
-        }
+      huntingExperience.specialities.push(
+        new Specialization(
+          "Species hunter (" + value + ")",
+          0,
+          0,
+          huntingExperience
+        )
+      );
+      huntingExperience.updateSv();
+      input.value = "";
     }
+  }
 
-    addCustomsLaw() {
-        let input = (<HTMLInputElement>document.getElementById('inputCustomsLaw'));
-        let value = input.value;
+  addTerrainExperience() {
+    let input = <HTMLInputElement>document.getElementById(
+      "inputTerrainExperienceKnowledge"
+    );
+    let value = input.value;
 
-        if (this.isValueValid(value)) {
-            let cultureKnowledge = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Culture knowledge';
-            });
+    if (this.isValueValid(value)) {
+      let survival = this.wilderness.disciplines.find(discipline => {
+        return discipline.name === "Survival";
+      });
 
-            cultureKnowledge.specialities.push(new Specialization('Customs & law (' + value + ')', 0, 0, cultureKnowledge));
-            cultureKnowledge.updateSv();
-            input.value = '';
-        }
+      survival.specialities.push(
+        new PsycheSpecialization(
+          "Terrain experience (" + value + ")",
+          0,
+          0,
+          survival
+        )
+      );
+      survival.updateSv();
+      input.value = "";
     }
+  }
 
-    addLoreLegends() {
-        let input = (<HTMLInputElement>document.getElementById('inputLoreLegends'));
-        let value = input.value;
+  addVitnerTablet() {
+    let input = <HTMLInputElement>document.getElementById(
+      "inputNewVitnerTablet"
+    );
+    let value = input.value;
 
-        if (this.isValueValid(value)) {
-            let cultureKnowledge = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Culture knowledge';
-            });
+    if (this.isValueValid(value)) {
+      let vitnerShaping = this.vitnerCraft.disciplines.find(discipline => {
+        return discipline.name === "Vitner shaping";
+      });
 
-            cultureKnowledge.specialities.push(new Specialization('Lore & legends (' + value + ')', 0, 0, cultureKnowledge));
-            cultureKnowledge.updateSv();
-            input.value = '';
-        }
+      vitnerShaping.specialities.push(
+        new PsycheSpecialization(
+          "Vitner tablet (" + value + ")",
+          0,
+          0,
+          vitnerShaping
+        )
+      );
+      vitnerShaping.updateSv();
+      input.value = "";
     }
+  }
 
-    addReligion() {
-        let input = (<HTMLInputElement>document.getElementById('inputReligion'));
-        let value = input.value;
+  addHolyTablet() {
+    let input = <HTMLInputElement>document.getElementById("inputNewHolyTablet");
+    let value = input.value;
 
-        if (this.isValueValid(value)) {
-            let cultureKnowledge = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Culture knowledge';
-            });
+    if (this.isValueValid(value)) {
+      let invoke = this.faith.disciplines.find(discipline => {
+        return discipline.name === "Invoke";
+      });
 
-            cultureKnowledge.specialities.push(new Specialization('Religion (' + value + ')', 0, 0, cultureKnowledge));
-            cultureKnowledge.updateSv();
-            input.value = '';
-        }
+      invoke.specialities.push(
+        new PsycheSpecialization("Holy tablet (" + value + ")", 0, 0, invoke)
+      );
+      invoke.updateSv();
+      input.value = "";
     }
+  }
 
-    addInsight() {
-        let input = (<HTMLInputElement>document.getElementById('inputInsight'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let learning = this.knowledge.disciplines.find((discipline) => {
-                return discipline.name === 'Learning';
-            });
-
-            learning.specialities.push(new Specialization('Insight (' + value + ')', 0, 0, learning));
-            learning.updateSv();
-            input.value = '';
-        }
+  private getRaceBaseBodyPoints() {
+    switch (this.race) {
+      case "Human":
+        return 32;
+      case "Elf":
+        return 30;
+      case "Dwarf (Buratja)":
+        return 28;
+      case "Dwarf (Borjornikka)":
+        return 30;
+      case "Half-troll":
+        return 30;
+      case "Half-elf":
+        return 30;
+      case "Dwarf-troll":
+        return 34;
     }
-
-    addCityKnowledge() {
-        let input = (<HTMLInputElement>document.getElementById('inputCityKnowledge'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let geography = this.wilderness.disciplines.find((discipline) => {
-                return discipline.name === 'Geography';
-            });
-
-            geography.specialities.push(new Specialization('City knowledge (' + value + ')', 0, 0, geography));
-            geography.updateSv();
-            input.value = '';
-        }
-    }
-
-    addLandKnowledge() {
-        let input = (<HTMLInputElement>document.getElementById('inputLandKnowledge'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let geography = this.wilderness.disciplines.find((discipline) => {
-                return discipline.name === 'Geography';
-            });
-
-            geography.specialities.push(new Specialization('Land knowledge (' + value + ')', 0, 0, geography));
-            geography.updateSv();
-            input.value = '';
-        }
-    }
-
-    addSeaKnowledge() {
-        let input = (<HTMLInputElement>document.getElementById('inputSeaKnowledge'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let geography = this.wilderness.disciplines.find((discipline) => {
-                return discipline.name === 'Geography';
-            });
-
-            geography.specialities.push(new Specialization('Sea knowledge (' + value + ')', 0, 0, geography));
-            geography.updateSv();
-            input.value = '';
-        }
-    }
-
-    addSpeciesHunterKnowledge() {
-        let input = (<HTMLInputElement>document.getElementById('inputSpeciesHunterKnowledge'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let huntingExperience = this.wilderness.disciplines.find((discipline) => {
-                return discipline.name === 'Hunting experience';
-            });
-
-            huntingExperience.specialities.push(new Specialization('Species hunter (' + value + ')', 0, 0, huntingExperience));
-            huntingExperience.updateSv();
-            input.value = '';
-        }
-    }
-
-    addTerrainExperience() {
-        let input = (<HTMLInputElement>document.getElementById('inputTerrainExperienceKnowledge'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let survival = this.wilderness.disciplines.find((discipline) => {
-                return discipline.name === 'Survival';
-            });
-
-            survival.specialities.push(new PsycheSpecialization('Terrain experience (' + value + ')', 0, 0, survival));
-            survival.updateSv();
-            input.value = '';
-        }
-    }
-
-    addVitnerTablet() {
-        let input = (<HTMLInputElement>document.getElementById('inputNewVitnerTablet'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let vitnerShaping = this.vitnerCraft.disciplines.find((discipline) => {
-                return discipline.name === 'Vitner shaping';
-            });
-
-            vitnerShaping.specialities.push(new PsycheSpecialization('Vitner tablet (' + value + ')', 0, 0, vitnerShaping));
-            vitnerShaping.updateSv();
-            input.value = '';
-        }
-    }
-
-    addHolyTablet() {
-        let input = (<HTMLInputElement>document.getElementById('inputNewHolyTablet'));
-        let value = input.value;
-
-        if (this.isValueValid(value)) {
-            let invoke = this.faith.disciplines.find((discipline) => {
-                return discipline.name === 'Invoke';
-            });
-
-            invoke.specialities.push(new PsycheSpecialization('Holy tablet (' + value + ')', 0, 0, invoke));
-            invoke.updateSv();
-            input.value = '';
-        }
-    }
-
-    private getRaceBaseBodyPoints() {
-        switch (this.race) {
-            case 'Human':
-                return 32;
-            case 'Elf':
-                return 30;
-            case 'Dwarf (Buratja)':
-                return 28;
-            case 'Dwarf (Borjornikka)':
-                return 30;
-            case 'Half-troll':
-                return 30;
-            case 'Half-elf':
-                return 30;
-            case 'Dwarf-troll':
-                return 34;
-        }
-    }
+  }
 }
