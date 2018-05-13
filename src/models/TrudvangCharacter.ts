@@ -236,6 +236,8 @@ export class TrudvangCharacter {
     if (index >= 0) {
       this.effects.splice(index, 1);
     }
+
+    this.recalculateAvailableXp();
   }
 
   addEffect() {
