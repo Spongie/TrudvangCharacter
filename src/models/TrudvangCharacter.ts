@@ -294,7 +294,14 @@ export class TrudvangCharacter {
         totalXp += this.fighting.calculateTotalCost();
         totalXp += this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
 
-        totalXp -= this.freeKnowledgeSkillsCost + (this.stats.intelligence * 5);
+        
+        console.log('Knowledge: ' + (this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence) - (this.freeKnowledgeSkillsCost - (this.stats.intelligence * 5))));
+        console.log('Wilderness: ' + (this.wilderness.calculateTotalCost() -  (this.freeWildernessSkillsCost)));
+        console.log('Vitner: ' + (this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence)));
+        console.log('Faith: ' + (this.faith.calculateTotalCostWithModifier(this.stats.intelligence)));
+        console.log('Fighting: ' + (this.fighting.calculateTotalCost()));
+
+        totalXp -= this.freeKnowledgeSkillsCost - (this.stats.intelligence * 5);
         totalXp -= this.freeWildernessSkillsCost;
 
         this.usedXp = totalXp;

@@ -4,11 +4,9 @@ import { TrudvangCharacter } from "./TrudvangCharacter";
 
 export class Skill {
 
-    costTable: Array<number>;
     public modifier: number;
 
     constructor(public owner: TrudvangCharacter, public name: string, public level: number, public disciplines: Array<Discipline>) {
-        this.costTable = [7, 14, 21, 28, 35];
         this.modifier = 0;
     }
 
