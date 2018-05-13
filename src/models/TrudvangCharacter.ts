@@ -83,6 +83,7 @@ export class TrudvangCharacter {
     maxHolyPoints: number;
     currentHolyPoints: number;
     sharedWith: Array<string>;
+    hasRolledRaud: boolean = false;
 
     constructor() {
         this.name = 'New character'
@@ -444,6 +445,15 @@ export class TrudvangCharacter {
         }
 
         this.raud = roll;
+        this.hasRolledRaud = true;
+    }
+
+    useRaud() {
+        this.raud--;
+    }
+
+    canUseRaud() {
+        return this.hasRolledRaud && this.raud > 0;
     }
 
     addMotherTongue() {

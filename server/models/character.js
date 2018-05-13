@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-let skillSchema = new Schema({
-
-});
-
 let characterSchema = new Schema({
     name: String,    
     race: String,
@@ -60,7 +56,8 @@ let characterSchema = new Schema({
     currentVitnerPoints: Number,
     maxHolyPoints: Number,
     currentHolyPoints: Number,
-    sharedWith: [String]
+    sharedWith: [String],
+    hasRolledRaud: Boolean
 });
 
 let Character = mongoose.model('Character', characterSchema);
