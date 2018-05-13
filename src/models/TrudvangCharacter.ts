@@ -131,15 +131,21 @@ export class TrudvangCharacter {
         this.init();
 
         character.weapons.forEach((weapon) => {
-            this.weapons.push(weapon);
+            if (weapon !== null) {
+                this.weapons.push(weapon);
+            }
         });
 
         character.armors.forEach((armor) => {
-            this.armors.push(armor);
+            if (armor !== null) {
+                this.armors.push(armor);
+            }            
         });
 
         character.items.forEach((item) => {
-            this.items.push(item);
+            if (item !== null) {
+                this.items.push(item);
+            }
         });
 
         this.resetSkill(this.agility, character.agility);
@@ -154,6 +160,27 @@ export class TrudvangCharacter {
 
         this.updateSkillOwners(this);
         this.doFullRecalc();
+    }
+
+    removeWeapon(weapon: Weapon) {
+        let index = this.weapons.indexOf(weapon);
+        if (index >= 0) {
+            this.weapons.splice(index, 1);
+        }
+    }
+
+    removeArmor(armor: Armore) {
+        let index = this.armors.indexOf(armor);
+        if (index >= 0) {
+            this.armors.splice(index, 1);
+        }
+    }
+
+    removeItem(item: Item) {
+        let index = this.items.indexOf(item);
+        if (index >= 0) {
+            this.items.splice(index, 1);
+        }
     }
 
     resetSkill(skill: Skill, newSkill: Skill) {
@@ -293,13 +320,6 @@ export class TrudvangCharacter {
         totalXp += this.faith.calculateTotalCostWithModifier(this.stats.intelligence);
         totalXp += this.fighting.calculateTotalCost();
         totalXp += this.entertainment.calculateTotalCostWithModifier(this.stats.charisma);
-
-        
-        console.log('Knowledge: ' + (this.knowledge.calculateTotalCostWithModifier(this.stats.intelligence) - (this.freeKnowledgeSkillsCost - (this.stats.intelligence * 5))));
-        console.log('Wilderness: ' + (this.wilderness.calculateTotalCost() -  (this.freeWildernessSkillsCost)));
-        console.log('Vitner: ' + (this.vitnerCraft.calculateTotalCostWithModifier(this.stats.intelligence)));
-        console.log('Faith: ' + (this.faith.calculateTotalCostWithModifier(this.stats.intelligence)));
-        console.log('Fighting: ' + (this.fighting.calculateTotalCost()));
 
         totalXp -= this.freeKnowledgeSkillsCost - (this.stats.intelligence * 5);
         totalXp -= this.freeWildernessSkillsCost;

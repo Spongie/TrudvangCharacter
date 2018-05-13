@@ -689,6 +689,7 @@
                 <th>Short range</th>
                 <th>Long range</th>
                 <th>Extra</th>
+                <th></th>
               </tr>
               <tr *ngFor="let weapon of model.weapons">
                 <td>
@@ -718,13 +719,16 @@
                 <td>
                   <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.extra">
                 </td>
+                <td>
+                  <button type="button" (click)="model.removeWeapon(weapon)" class="btn btn-danger">Delete</button>
+                </td>
               </tr>
             </table>
             <button type="button" (click)="model.addWeapon()" class="btn btn-success">Add Weapon</button>
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-md-8">
+          <div class="form-group col-md-9">
             <h3>Armors</h3>
             <table class="table table-bordered">
               <tr>
@@ -754,13 +758,16 @@
                 <td>
                   <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.extra">
                 </td>
+                <td>
+                  <button type="button" (click)="model.removeArmor(armor)" class="btn btn-danger">Delete</button>
+                </td>
               </tr>
             </table>
             <button type="button" (click)="model.addArmor()" class="btn btn-success">Add Armor</button>
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-md-8">
+          <div class="form-group col-md-9">
             <h3>Items</h3>
             <table class="table table-bordered">
               <tr>
@@ -777,6 +784,9 @@
                 </td>
                 <td>
                   <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.description">
+                </td>
+                <td>
+                  <button type="button" (click)="model.removeItem(item)" class="btn btn-danger">Delete</button>
                 </td>
               </tr>
             </table>
