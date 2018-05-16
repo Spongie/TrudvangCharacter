@@ -14,6 +14,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { CharacterListComponent } from './character-list/character-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpellsTabComponent } from './spells-tab/spells-tab.component';
+import { CombatTabComponent } from './tabs/combat-tab/combat-tab.component';
+import { GeneralTabComponent } from './tabs/general-tab/general-tab.component';
+import { SkillsTabComponent } from './tabs/skills-tab/skills-tab.component';
+import { ItemsTabComponent } from './tabs/items-tab/items-tab.component';
+import { SharingTabComponent } from './tabs/sharing-tab/sharing-tab.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -30,7 +35,12 @@ const appRoutes: Routes = [
     CharacterComponent,
     RegisterComponent,
     CharacterListComponent,
-    SpellsTabComponent
+    SpellsTabComponent,
+    CombatTabComponent,
+    GeneralTabComponent,
+    SkillsTabComponent,
+    ItemsTabComponent,
+    SharingTabComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

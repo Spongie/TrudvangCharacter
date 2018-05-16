@@ -7,6 +7,8 @@ import { PsycheSpecialization } from "./specialities/psycheSpecialization";
 import { TrudvangCharacter } from "./TrudvangCharacter";
 import { TradesmanDiscipline } from "./disicplines/tradesmanDiscipline";
 import { PerceptionSpecialization } from "./specialities/perceptionSpecialization";
+import { Vitner } from "./vitner";
+import { Faith } from "./faith";
 
 export class SkillGenerator {
 
@@ -104,7 +106,7 @@ export class SkillGenerator {
     }
 
     public genereateFaithTree(player: TrudvangCharacter) {
-        let faith = new SkillWithModifier(player, 'Faith', 1, []);
+        let faith = new Faith(player, 'Faith', 1, []);
 
         faith.disciplines = [
             new Discipline('Divine power', 0, 0, faith, []),
@@ -199,7 +201,7 @@ export class SkillGenerator {
     }
 
     public generateVitnerCraftTree(player: TrudvangCharacter) {
-        let vitnerCraft = new SkillWithModifier(player, 'Vitner craft', 1, []);
+        let vitnerCraft = new Vitner(player, 'Vitner craft', 1, []);
 
         vitnerCraft.disciplines = [
             new Discipline('Call of vitner', 0, 0, vitnerCraft, []),

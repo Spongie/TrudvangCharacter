@@ -5,6 +5,8 @@ export class Effect {
         this.NaturalHealing = 0;
         this.ExtraCP = 0;
         this.Initiative = 0;
+        this.VitnerCasting = 0;
+        this.HolyCasting = 0;
     }
 
     public Name: string;
@@ -13,4 +15,6 @@ export class Effect {
     public NaturalHealing: number;
     public ExtraCP: number;
     public Initiative: number;
+    public VitnerCasting: number;
+    public HolyCasting: number
 }

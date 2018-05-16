@@ -13,14 +13,13 @@ import { User } from "../../models/user";
 })
 export class CharacterComponent implements OnInit {
   model: TrudvangCharacter;
-  searchedUsers: Array<User>;
   canUpdate: boolean;
 
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
     private _router: Router,
-    private CharacterService: CharacterService,
+    private characterService: CharacterService,
     private route: ActivatedRoute
 
   ) {
@@ -28,8 +27,9 @@ export class CharacterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
-      this.CharacterService.getCharacter(params["id"]).then(data => {
+      this.characterService.getCharacter(params["id"]).then(data => {
         let tempCharacter = data as TrudvangCharacter;
         this.model.copyFrom(tempCharacter);
         this.canUpdate = this.model.ownerId === this.userService.User._id;
@@ -39,16 +39,6 @@ export class CharacterComponent implements OnInit {
     if (!this.userService.isAuthenticated()) {
       this._router.navigate(["login"]);
     }
-  }
-
-  onSubmit() {
-    this.model.updateSkillOwners(null);
-    this.CharacterService.updateCharacter(this.model);
-    this.model.updateSkillOwners(this.model);
-  }
-
-  scrollToTop() {
-    window.scrollTo(0, 0);
   }
 
   open(content) {
@@ -65,13 +55,5 @@ export class CharacterComponent implements OnInit {
   onSubmitModal(form) {
     this.model.extraXp += form.value.inputAddExp;
     this.model.recalculateAvailableXp();
-  }
-
-  async onSearch() {
-    let input = <HTMLInputElement>document.getElementById("inputSearchUser");
-    let user = new User();
-    user.userName = input.value;
-    let users = await this.userService.findUsers(user);
-    this.searchedUsers = users;
   }
 }

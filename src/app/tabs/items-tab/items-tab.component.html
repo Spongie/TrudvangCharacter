@@ -1,0 +1,120 @@
+<form>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <h3>Weapons</h3>
+      <table class="table table-bordered">
+        <tr>
+          <th>Type</th>
+          <th>WA</th>
+          <th>IM</th>
+          <th>PV</th>
+          <th>BV</th>
+          <th>Damage</th>
+          <th>Short range</th>
+          <th>Long range</th>
+          <th>Extra</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let weapon of model.weapons">
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.type">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.weaponActions">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.initiativeModifier">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.pv">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.breakValue">
+          </td>
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.damage">
+          </td>
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.shortRange">
+          </td>
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.longRange">
+          </td>
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="weapon.extra">
+          </td>
+          <td>
+            <button type="button" (click)="model.removeWeapon(weapon)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </table>
+      <button type="button" (click)="model.addWeapon()" class="btn btn-success">Add Weapon</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-9">
+      <h3>Armors</h3>
+      <table class="table table-bordered">
+        <tr>
+          <th>Type</th>
+          <th>Heft</th>
+          <th>IM</th>
+          <th>PV</th>
+          <th>BV</th>
+          <th>Extra</th>
+        </tr>
+        <tr *ngFor="let armor of model.armors">
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.type">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.heft">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.initiativeModifier">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.pv">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.breakValue">
+          </td>
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="armor.extra">
+          </td>
+          <td>
+            <button type="button" (click)="model.removeArmor(armor)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </table>
+      <button type="button" (click)="model.addArmor()" class="btn btn-success">Add Armor</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-9">
+      <h3>Items</h3>
+      <table class="table table-bordered">
+        <tr>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Description</th>
+        </tr>
+        <tr *ngFor="let item of model.items">
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.type">
+          </td>
+          <td>
+            <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.quantity">
+          </td>
+          <td>
+            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.description">
+          </td>
+          <td>
+            <button type="button" (click)="model.removeItem(item)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </table>
+      <button type="button" (click)="model.addItem()" class="btn btn-success">Add Item</button>
+    </div>
+  </div>
+</form>
