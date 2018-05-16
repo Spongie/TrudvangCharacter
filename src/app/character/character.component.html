@@ -1,15 +1,3 @@
-<ng-template #addXpPopup let-c="close">
-  <div class="modal-body">
-    <form (ngSubmit)="onSubmitModal(addExpForm)" #addExpForm="ngForm">
-      <div class="form-group">
-        <label for="inputAddExp">XP: </label>
-        <input type="number" id="inputAddExp" ngModel name="inputAddExp">
-        <button type="submit" class="btn btn-success">Add</button>
-        <button type="button" class="btn btn-danger" (click)="c('closing')">Close</button>
-      </div>
-    </form>
-  </div>
-</ng-template>
 <ngb-tabset>
   <ngb-tab title="General">
     <ng-template ngbTabContent>
