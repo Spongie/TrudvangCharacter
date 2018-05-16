@@ -43,15 +43,15 @@
         <li class="list-group-item">{{model.shieldBearerPoints}}</li>
         <li class="list-group-item">{{model.throwingWeaponPoints}}</li>
         <li class="list-group-item">{{model.twoHandedPoints}}</li>
-        <li class="list-group-item">{{model.currentSejding}}</li>
-        <li class="list-group-item">{{model.currentGalding}}</li>
-        <li class="list-group-item">{{model.currentVyrding}}</li>
-        <li class="list-group-item">{{model.currentBruid}}</li>
-        <li class="list-group-item">{{model.currentGavlian}}</li>
-        <li class="list-group-item">{{model.currentIhana}}</li>
-        <li class="list-group-item">{{model.currentNoaj}}</li>
-        <li class="list-group-item">{{model.currentStormkelt}}</li> 
-        <li class="list-group-item">{{model.currentThuulforging}}</li>
+        <li class="list-group-item">{{model.vitnerCraft.currentSejding}}</li>
+        <li class="list-group-item">{{model.vitnerCraft.currentGalding}}</li>
+        <li class="list-group-item">{{model.vitnerCraft.currentVyrding}}</li>
+        <li class="list-group-item">{{model.faith.currentBruid}}</li>
+        <li class="list-group-item">{{model.faith.currentGavlian}}</li>
+        <li class="list-group-item">{{model.faith.currentIhana}}</li>
+        <li class="list-group-item">{{model.faith.currentNoaj}}</li>
+        <li class="list-group-item">{{model.faith.currentStormkelt}}</li> 
+        <li class="list-group-item">{{model.faith.currentThuulforging}}</li>
       </ul>
     </div>
     <div class="col-md-6">
@@ -94,17 +94,17 @@
           </tr>
           <tr>
             <td style="width: 30%">Vitner points</td>
-            <td style="width: 30%">{{model.maxVitnerPoints}}</td>
+            <td style="width: 30%">{{model.vitnerCraft.maxVitnerPoints}}</td>
             <td>
-              <input type="number" id="inputCurrentVitner" max={{model.maxVitnerPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentVitnerPoints"
+              <input type="number" id="inputCurrentVitner" max={{model.vitnerCraft.maxVitnerPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentVitnerPoints"
                 name="currentVitner" (ngModelChange)="model.recalculateAvailableXp()">
             </td>
           </tr>
           <tr>
             <td style="width: 30%">Divine power</td>
-            <td style="width: 30%">{{model.maxHolyPoints}}</td>
+            <td style="width: 30%">{{model.faith.maxHolyPoints}}</td>
             <td>
-              <input type="number" id="inputcurrentHolyPoints" max={{model.maxHolyPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentHolyPoints"
+              <input type="number" id="inputcurrentHolyPoints" max={{model.faith.maxHolyPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentHolyPoints"
                 name="currentHolyPoints" (ngModelChange)="model.recalculateAvailableXp()">
             </td>
           </tr>

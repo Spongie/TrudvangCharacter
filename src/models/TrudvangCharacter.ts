@@ -11,6 +11,8 @@ import { Item } from "./item";
 import { User } from "./user";
 import { Spell } from "./spell";
 import { Effect } from "./effect";
+import { Faith } from "./faith";
+import { Vitner } from "./vitner";
 
 export class TrudvangCharacter {
   _id: string;
@@ -27,10 +29,10 @@ export class TrudvangCharacter {
   care: Skill;
   entertainment: SkillWithModifier;
   knowledge: SkillWithModifier;
-  vitnerCraft: SkillWithModifier;
+  vitnerCraft: Vitner;
   shadowArts: Skill;
   fighting: Fighting;
-  faith: SkillWithModifier;
+  faith: Faith;
   wilderness: Skill;
   availableXp: number;
   extraXp: number;
@@ -80,25 +82,12 @@ export class TrudvangCharacter {
   criticallyInjured: number;
   currentInjury: string;
 
-  maxVitnerPoints: number;
   currentVitnerPoints: number;
-  maxHolyPoints: number;
   currentHolyPoints: number;
   sharedWith: Array<string>;
   hasRolledRaud: boolean = false;
   spells: Array<Spell>;
   effects: Array<Effect>;
-
-  currentSejding: number;
-  currentGalding: number;
-  currentVyrding: number;
-
-  currentBruid: number;
-  currentGavlian: number;
-  currentIhana: number;
-  currentNoaj: number;
-  currentStormkelt: number;
-  currentThuulforging: number;
 
   constructor() {
     this.name = "New character";
@@ -466,94 +455,8 @@ export class TrudvangCharacter {
     this.movement = 10 + this.stats.dexterity;
     this.persistance = 10 + this.stats.psyche + this.wilderness.level;
 
-    this.calculateVitnerAndDivine();
-  }
-
-  calculateVitnerAndDivine() {
-    this.maxVitnerPoints = this.vitnerCraft.level;
-    let callOfVitner = this.vitnerCraft.disciplines.find(discipline => {
-      return discipline.name === "Call of vitner";
-    });
-
-    this.maxVitnerPoints += callOfVitner.level * 5;
-    this.maxVitnerPoints +=
-      callOfVitner.specialities.find(speciality => {
-        return speciality.name === "Hwitalja";
-      }).level * 10;
-
-    this.maxVitnerPoints +=
-      callOfVitner.specialities.find(speciality => {
-        return speciality.name === "Darkhwitalja";
-      }).level * 20;
-
-    this.maxVitnerPoints +=
-      callOfVitner.specialities.find(speciality => {
-        return speciality.name === "Vaagritalja";
-      }).level * 15;
-
-    this.maxVitnerPoints +=
-      callOfVitner.specialities.find(speciality => {
-        return speciality.name === "Vitner habit";
-      }).level * 10;
-
-    this.maxVitnerPoints += this.getExtraVitner();
-
-    this.maxHolyPoints = this.faith.level;
-    let divinePower = this.faith.disciplines.find(discipline => {
-      return discipline.name === "Divine power";
-    });
-
-    this.maxHolyPoints += divinePower.level * 3;
-
-    this.maxHolyPoints +=
-      divinePower.specialities.find(speciality => {
-        return speciality.name === "Faithful";
-      }).level * 7;
-      
-    this.maxHolyPoints +=
-      divinePower.specialities.find(speciality => {
-        return speciality.name === "Powerful";
-      }).level * 7;
-
-    this.maxHolyPoints += this.getExtraDivine();
-
-    let vitnerShaping = this.vitnerCraft.disciplines.find((disc) => {
-      return disc.name === 'Vitner shaping';
-    });
-
-    this.currentGalding = vitnerShaping.specialities.find((spec) => {
-      return spec.name === 'Galding';
-    }).sv + this.getExtraVitnerCasting();
-
-    this.currentSejding = vitnerShaping.specialities.find((spec) => {
-      return spec.name === 'Sejding';
-    }).sv + this.getExtraVitnerCasting();
-    this.currentVyrding = vitnerShaping.specialities.find((spec) => {
-      return spec.name === 'Vyrding';
-    }).sv + this.getExtraVitnerCasting();
-
-    let invoke = this.faith.disciplines.find((disc) => {
-      return disc.name === 'Invoke';
-    });
-
-    this.currentBruid = invoke.specialities.find((spec) => {
-      return spec.name === 'Bruid';
-    }).sv + this.getExtraDivineCasting();
-    this.currentGavlian = invoke.specialities.find((spec) => {
-      return spec.name === 'Gavlian';
-    }).sv + this.getExtraDivineCasting();
-    this.currentIhana = invoke.specialities.find((spec) => {
-      return spec.name === 'Ihana';
-    }).sv + this.getExtraDivineCasting();
-    this.currentNoaj = invoke.specialities.find((spec) => {
-      return spec.name === 'Noaj';
-    }).sv + this.getExtraDivineCasting();
-    this.currentStormkelt = invoke.specialities.find((spec) => {
-      return spec.name === 'Stormkelt';
-    }).sv + this.getExtraDivineCasting();
-    this.currentThuulforging = invoke.specialities.find((spec) => {
-      return spec.name === 'Thuul forging';
-    }).sv + this.getExtraDivineCasting();
+    this.vitnerCraft.calculateVitner(this.getExtraVitnerCasting(), this.getExtraVitner());
+    this.faith.calculateDivinePower(this.getExtraDivineCasting(), this.getExtraDivine());
   }
 
   getExtraVitnerCasting() {
