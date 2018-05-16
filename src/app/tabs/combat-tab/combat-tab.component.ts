@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TrudvangCharacter } from '../../models/TrudvangCharacter';
+import { TrudvangCharacter } from '../../../models/TrudvangCharacter';
 
 @Component({
   selector: 'app-combat-tab',

@@ -1,0 +1,88 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="row" style="margin-left:10px">
+    <div class="form-group col-md-3">
+      <label for="inputName">Name: </label>
+      <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="model.name" placeholder="name...">
+      <label for="inputRace">Race: </label>
+      <select id="inputRace" class="form-control" name="race" [(ngModel)]="model.race" (ngModelChange)="model.recalculateAvailableXp()">
+        <option>Human</option>
+        <option>Elf</option>
+        <option>Dwarf (Buratja)</option>
+        <option>Dwarf (Borjornikka)</option>
+        <option>Half-troll</option>
+        <option>Half-elf</option>
+        <option>Dwarf-troll</option>
+      </select>
+      <label for="inputCulture">Culture: </label>
+      <input type="text" class="form-control" id="inputCulture" name="culture" [(ngModel)]="model.culture" placeholder="culture...">
+      <label for="inputReligion">Religion: </label>
+      <input type="text" class="form-control" id="inputReligion" name="religion" [(ngModel)]="model.religion" placeholder="religion...">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputGender">Gender: </label>
+      <select id="inputGender" class="form-control" name="gender" [(ngModel)]="model.gender">
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+      <label for="inputHeight">Height: </label>
+      <input type="number" class="form-control" id="inputHeight" name="height" [(ngModel)]="model.height" placeholder="height...">
+      <label for="inputWeight">Weight: </label>
+      <input type="number" class="form-control" id="inputWeight" name="weight" [(ngModel)]="model.weight" placeholder="weight...">
+      <label for="inputHand">Weapon hand: </label>
+      <select id="inputHand" class="form-control" name="weaponHand" [(ngModel)]="model.weaponHand">
+        <option>Right</option>
+        <option>Left</option>
+        <option>Dual</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputAvailableXp">Available Xp: </label>
+      <input type="number" class="form-control" id="inputAvailableXp" name="availableXp" [(ngModel)]="model.availableXp" readonly>
+      <label for="inputAvailableXp">Used Xp: </label>
+      <input type="number" class="form-control" id="inputAvailableXp" name="usedXp" [(ngModel)]="model.usedXp" readonly>
+      <button type="button" style="margin-top: 5px" class="btn btn-success" (click)="open(addXpPopup)">Reward Xp</button>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputMovement">Movement:</label>
+      <input type="number" class="form-control" id="inputMovement" name="movement" [(ngModel)]="model.movement" readonly>
+      <label for="inputInitiative">Initiative modifier (not including armor/weapon):</label>
+      <input type="number" class="form-control" id="inputInitiative" name="initiative" [(ngModel)]="model.initiative" readonly>
+      <label for="inputPersistance">Persistance in the wild:</label>
+      <input type="number" class="form-control" id="inputPersistance" name="persistance" [(ngModel)]="model.persistance" readonly>
+      <label for="inputRaud">Raud:</label>
+      <input type="number" class="form-control" id="inputRaud" name="raud" [(ngModel)]="model.raud" readonly>
+      <button *ngIf="!model.hasRolledRaud" type="button" class="btn btn-success" style="margin-top: 5px" readonly (click)="model.rollRaud()">Roll Raud</button>
+      <button *ngIf="model.canUseRaud()" type="button" class="btn btn-warning" style="margin-top: 5px" readonly (click)="model.useRaud()">Use Raud</button>
+    </div>
+  </div>
+  <div class="form-group col-md-12" style="margin-left:10px">
+    <label for="inputCharisma" style="margin-right: 5px">Charisma: </label>
+    <input type="number" id="inputCharisma" style="margin-right: 5px" max="4" min="-4" (ngModelChange)="model.recalculateAvailableXp()"
+      [(ngModel)]="model.stats.charisma" name="inputCharisma">
+    <label for="inputConstitution" style="margin-right: 5px">Constitution: </label>
+    <input type="number" id="inputConstitution" style="margin-right: 5px" max="4" min="-4" [(ngModel)]="model.stats.constitution"
+      name="inputConstitution" (ngModelChange)="model.recalculateAvailableXp()">
+    <label for="inputDexterity" style="margin-right: 5px">Dexterity: </label>
+    <input type="number" id="inputDexterity" style="margin-right: 5px" max="4" min="-4" [(ngModel)]="model.stats.dexterity" name="inputDexterity"
+      (ngModelChange)="model.recalculateAvailableXp()">
+    <label for="inputIntelligence" style="margin-right: 5px">Intelligence: </label>
+    <input type="number" id="inputIntelligence" style="margin-right: 5px" max="4" min="-4" [(ngModel)]="model.stats.intelligence"
+      name="inputIntelligence" (ngModelChange)="model.recalculateAvailableXp()">
+    <label for="inputPerception" style="margin-right: 5px">Perception: </label>
+    <input type="number" id="inputPerception" style="margin-right: 5px" max="4" min="-4" [(ngModel)]="model.stats.perception"
+      name="inputPerception" (ngModelChange)="model.recalculateAvailableXp()">
+    <label for="inputPsyche" style="margin-right: 5px">Psyche: </label>
+    <input type="number" id="inputPsyche" style="margin-right: 5px" max="4" min="-4" [(ngModel)]="model.stats.psyche" name="inputPsyche"
+      (ngModelChange)="model.recalculateAvailableXp()">
+    <label for="inputStrength" style="margin-right: 5px">Strength: </label>
+    <input type="number" id="inputStrength" style="margin-right: 5px" max="4" min="-4" [(ngModel)]="model.stats.strength" name="inputStrength"
+      (ngModelChange)="model.recalculateAvailableXp()">
+  </div>
+  <div class="row" style="margin-left:10px; margin-right:10px">
+    <div class="form-group col-md-12">
+      <label for="inputBackground">Background: </label>
+      <textarea class="form-control" id="inputBackground" rows="20" name="background" [(ngModel)]="model.background"></textarea>
+    </div>
+    <button *ngIf="canUpdate" type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>

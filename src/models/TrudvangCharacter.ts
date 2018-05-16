@@ -525,8 +525,6 @@ export class TrudvangCharacter {
       return spec.name === 'Galding';
     }).sv + this.getExtraVitnerCasting();
 
-    console.log(this.currentGalding);
-
     this.currentSejding = vitnerShaping.specialities.find((spec) => {
       return spec.name === 'Sejding';
     }).sv + this.getExtraVitnerCasting();
