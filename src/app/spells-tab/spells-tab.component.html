@@ -29,7 +29,9 @@
       <tr>
         <th>Name</th>
         <th>Max Vitner</th>
+        <th>Vitnercasting</th>
         <th>Max Divine</th>
+        <th>Holycasting</th>
         <th>Natural Healing</th>
         <th>ExtraCP</th>
         <th>Initiative</th>
@@ -43,7 +45,13 @@
           <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.MaxVitner" (ngModelChange)="model.recalculateAvailableXp()" style="width: 100%">
         </td>
         <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.VitnerCasting" (ngModelChange)="model.recalculateAvailableXp()" style="width: 100%">
+        </td>
+        <td>
           <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.MaxDivine" (ngModelChange)="model.recalculateAvailableXp()" style="width: 100%">
+        </td>
+        <td>
+          <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.HolyCasting" (ngModelChange)="model.recalculateAvailableXp()" style="width: 100%">
         </td>
         <td>
           <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="effect.NaturalHealing" (ngModelChange)="model.recalculateAvailableXp()" style="width: 100%">

@@ -89,6 +89,17 @@ export class TrudvangCharacter {
   spells: Array<Spell>;
   effects: Array<Effect>;
 
+  currentSejding: number;
+  currentGalding: number;
+  currentVyrding: number;
+
+  currentBruid: number;
+  currentGavlian: number;
+  currentIhana: number;
+  currentNoaj: number;
+  currentStormkelt: number;
+  currentThuulforging: number;
+
   constructor() {
     this.name = "New character";
 
@@ -505,6 +516,66 @@ export class TrudvangCharacter {
       }).level * 7;
 
     this.maxHolyPoints += this.getExtraDivine();
+
+    let vitnerShaping = this.vitnerCraft.disciplines.find((disc) => {
+      return disc.name === 'Vitner shaping';
+    });
+
+    this.currentGalding = vitnerShaping.specialities.find((spec) => {
+      return spec.name === 'Galding';
+    }).sv + this.getExtraVitnerCasting();
+
+    console.log(this.currentGalding);
+
+    this.currentSejding = vitnerShaping.specialities.find((spec) => {
+      return spec.name === 'Sejding';
+    }).sv + this.getExtraVitnerCasting();
+    this.currentVyrding = vitnerShaping.specialities.find((spec) => {
+      return spec.name === 'Vyrding';
+    }).sv + this.getExtraVitnerCasting();
+
+    let invoke = this.faith.disciplines.find((disc) => {
+      return disc.name === 'Invoke';
+    });
+
+    this.currentBruid = invoke.specialities.find((spec) => {
+      return spec.name === 'Bruid';
+    }).sv + this.getExtraDivineCasting();
+    this.currentGavlian = invoke.specialities.find((spec) => {
+      return spec.name === 'Gavlian';
+    }).sv + this.getExtraDivineCasting();
+    this.currentIhana = invoke.specialities.find((spec) => {
+      return spec.name === 'Ihana';
+    }).sv + this.getExtraDivineCasting();
+    this.currentNoaj = invoke.specialities.find((spec) => {
+      return spec.name === 'Noaj';
+    }).sv + this.getExtraDivineCasting();
+    this.currentStormkelt = invoke.specialities.find((spec) => {
+      return spec.name === 'Stormkelt';
+    }).sv + this.getExtraDivineCasting();
+    this.currentThuulforging = invoke.specialities.find((spec) => {
+      return spec.name === 'Thuul forging';
+    }).sv + this.getExtraDivineCasting();
+  }
+
+  getExtraVitnerCasting() {
+    let casting = 0;
+
+    this.effects.forEach((effect) => {
+      casting += effect.VitnerCasting;
+    });
+
+    return casting;
+  }
+
+  getExtraDivineCasting() {
+    let casting = 0;
+
+    this.effects.forEach((effect) => {
+      casting += effect.HolyCasting;
+    });
+
+    return casting;
   }
 
   calculateInitiative() {
