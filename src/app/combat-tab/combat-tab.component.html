@@ -1,0 +1,115 @@
+<form>
+  <div class="row">
+    <div class="col-md-2">
+      <ul class="list-group">
+        <li class="list-group-item">Free</li>
+        <li class="list-group-item">Attack &amp; Parries</li>
+        <li class="list-group-item">Combat actions</li>
+        <li class="list-group-item">Unarmed</li>
+        <li class="list-group-item">Wrestling</li>
+        <li class="list-group-item">Brawling</li>
+        <li class="list-group-item">Armed</li>
+        <li class="list-group-item">Bows &amp; Slings</li>
+        <li class="list-group-item">Crossbow</li>
+        <li class="list-group-item">1H Light Weapons</li>
+        <li class="list-group-item">1H Heavy Weapons</li>
+        <li class="list-group-item">Shield Bearer</li>
+        <li class="list-group-item">Throwing Weapons</li>
+        <li class="list-group-item">Two-Handed Weapons</li>
+        <li class="list-group-item">Sejding</li>
+        <li class="list-group-item">Galding</li>
+        <li class="list-group-item">Vyrding</li>
+        <li class="list-group-item">Bruid</li>
+        <li class="list-group-item">Gavlian</li>
+        <li class="list-group-item">Ihana</li>
+        <li class="list-group-item">Noaj</li>
+        <li class="list-group-item">Stormkelt</li> 
+        <li class="list-group-item">Thuulforging</li>
+      </ul>
+    </div>
+    <div class="col-md-2">
+      <ul class="list-group">
+        <li class="list-group-item">{{model.freeCombatPoints}}</li>
+        <li class="list-group-item">{{model.attackParriesPoints}}</li>
+        <li class="list-group-item">{{model.combatActionsPoints}}</li>
+        <li class="list-group-item">{{model.unarmedPoints}}</li>
+        <li class="list-group-item">{{model.wrestlingPoints}}</li>
+        <li class="list-group-item">{{model.brawlingPoints}}</li>
+        <li class="list-group-item">{{model.armedPoints}}</li>
+        <li class="list-group-item">{{model.bowsSlingsPoints}}</li>
+        <li class="list-group-item">{{model.crossbowPoints}}</li>
+        <li class="list-group-item">{{model.lightWeaponPoints}}</li>
+        <li class="list-group-item">{{model.heavyWeaponPoints}}</li>
+        <li class="list-group-item">{{model.shieldBearerPoints}}</li>
+        <li class="list-group-item">{{model.throwingWeaponPoints}}</li>
+        <li class="list-group-item">{{model.twoHandedPoints}}</li>
+        <li class="list-group-item">{{model.currentSejding}}</li>
+        <li class="list-group-item">{{model.currentGalding}}</li>
+        <li class="list-group-item">{{model.currentVyrding}}</li>
+        <li class="list-group-item">{{model.currentBruid}}</li>
+        <li class="list-group-item">{{model.currentGavlian}}</li>
+        <li class="list-group-item">{{model.currentIhana}}</li>
+        <li class="list-group-item">{{model.currentNoaj}}</li>
+        <li class="list-group-item">{{model.currentStormkelt}}</li> 
+        <li class="list-group-item">{{model.currentThuulforging}}</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <table class="table table-hover" style="width: 100%">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width: 30%">Body points</td>
+            <td style="width: 30%">{{model.maximumBodyPoints}}</td>
+            <td>
+              <input type="number" id="currentBodyPoints" max={{model.maximumBodyPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentBodyPoints"
+                name="currentBodyPoints" (ngModelChange)="model.recalculateAvailableXp()">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30%">Natural healing</td>
+            <td colspan="2">{{model.naturalHealing}}</td>
+          </tr>
+          <tr>
+            <td style="width: 30%">Injury</td>
+            <td colspan="2">{{model.currentInjury}}</td>
+          </tr>
+          <tr>
+            <td style="width: 30%">Fear modifier</td>
+            <td style="width: 30%">{{model.fearResist}}</td>
+            <td>
+              <input type="number" id="inputcurrentFear" max="50" min="0" style="margin-right: 5px" [(ngModel)]="model.currentFear" name="currentFear"
+                (ngModelChange)="model.recalculateAvailableXp()">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30%">Fear</td>
+            <td colspan="2">{{model.currentFearModifier}}</td>
+          </tr>
+          <tr>
+            <td style="width: 30%">Vitner points</td>
+            <td style="width: 30%">{{model.maxVitnerPoints}}</td>
+            <td>
+              <input type="number" id="inputCurrentVitner" max={{model.maxVitnerPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentVitnerPoints"
+                name="currentVitner" (ngModelChange)="model.recalculateAvailableXp()">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30%">Divine power</td>
+            <td style="width: 30%">{{model.maxHolyPoints}}</td>
+            <td>
+              <input type="number" id="inputcurrentHolyPoints" max={{model.maxHolyPoints}} min="0" style="margin-right: 5px" [(ngModel)]="model.currentHolyPoints"
+                name="currentHolyPoints" (ngModelChange)="model.recalculateAvailableXp()">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>

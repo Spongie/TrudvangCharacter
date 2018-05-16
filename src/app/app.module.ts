@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CharacterListComponent } from './character-list/character-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpellsTabComponent } from './spells-tab/spells-tab.component';
+import { CombatTabComponent } from './combat-tab/combat-tab.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
     CharacterComponent,
     RegisterComponent,
     CharacterListComponent,
-    SpellsTabComponent
+    SpellsTabComponent,
+    CombatTabComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
