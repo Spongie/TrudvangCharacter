@@ -374,8 +374,18 @@ export class TrudvangCharacter {
     return value;
   }
 
+  private getNaturalHealingFromConstitution() {
+    if (this.stats.constitution <= 0) {
+      return 1;
+    } else if (this.stats.constitution <= 2) {
+      return this.stats.constitution + 1;
+    }
+
+    return this.stats.constitution;
+  }
+
   recalculateBodyAndFear() {
-    this.naturalHealing = 1 + (this.stats.constitution > 0 ? this.stats.constitution : 1) + this.getExtraNaturalHealing();
+    this.naturalHealing = this.getNaturalHealingFromConstitution() + this.getExtraNaturalHealing();
     this.maximumBodyPoints =
       this.stats.strength +
       this.stats.constitution +
