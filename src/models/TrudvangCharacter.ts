@@ -804,7 +804,7 @@ export class TrudvangCharacter {
       });
 
       vitnerShaping.specialities.push(
-        new PsycheSpecialization(
+        new Specialization(
           "Vitner tablet (" + value + ")",
           0,
           0,
@@ -826,7 +826,7 @@ export class TrudvangCharacter {
       });
 
       invoke.specialities.push(
-        new PsycheSpecialization("Holy tablet (" + value + ")", 0, 0, invoke)
+        new Specialization("Holy tablet (" + value + ")", 0, 0, invoke)
       );
       invoke.updateSv();
       input.value = "";
