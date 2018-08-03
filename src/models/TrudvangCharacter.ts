@@ -13,6 +13,7 @@ import { Spell } from "./spell";
 import { Effect } from "./effect";
 import { Faith } from "./faith";
 import { Vitner } from "./vitner";
+import { Discipline } from "./discipline";
 
 export class TrudvangCharacter {
   _id: string;
@@ -633,6 +634,18 @@ export class TrudvangCharacter {
         )
       );
       cultureKnowledge.updateSv();
+      input.value = "";
+    }
+  }
+
+  addCultureKnowledge() {
+    let input = <HTMLInputElement>document.getElementById("inputCultureKnowledge");
+    let value = input.value;
+
+    if (this.isValueValid(value)) {
+      this.knowledge.disciplines.push(new Discipline("Culture Knowledge (" + value + ")", 0, 0, this.knowledge, []));
+
+      this.knowledge.updateSv();
       input.value = "";
     }
   }
