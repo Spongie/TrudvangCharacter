@@ -249,16 +249,20 @@ export class TrudvangCharacter {
     skill.level = newSkill.level;
     skill.modifier = newSkill.modifier;
 
-    if (newSkill.disciplines === undefined) {
-      newSkill.disciplines = [];
-    }
-
     newSkill.disciplines.forEach(newdiscipline => {
       let oldDisc = skill.disciplines.find(disc => {
         return disc.name === newdiscipline.name;
       });
-      oldDisc.level = newdiscipline.level;
 
+      if (oldDisc === undefined) {
+        let discipline = new Discipline(newdiscipline.name, newdiscipline.level, newdiscipline.sv, skill, []);
+        skill.disciplines.push(discipline);
+        oldDisc = discipline;
+      }
+      else {
+        oldDisc.level = newdiscipline.level;
+      }
+      
       newdiscipline.specialities.forEach(newSpeciality => {
         let oldSpec = oldDisc.specialities.find(disc => {
           return disc.name === newSpeciality.name;
