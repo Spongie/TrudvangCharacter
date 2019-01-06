@@ -27,7 +27,7 @@ app.use('/api/character', characterService);
 app.use('/api/user', userService);
 
 
-var mongoDB = 'mongodb://127.0.0.1/trudvang';
+var mongoDB = 'mongodb://127.0.0.1/Trudvang';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;

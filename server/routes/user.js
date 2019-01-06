@@ -13,7 +13,8 @@ router.post('/register', async (req, res) => {
       let result = await user.save();
       return res.send(JSON.stringify(user));
     } catch(error) {
-      return next(error);
+      console.log(error);
+      return res.status(500).send("Error occured");
     }
 });
 
