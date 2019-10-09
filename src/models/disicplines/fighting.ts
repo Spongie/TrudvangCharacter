@@ -105,7 +105,7 @@ export class Fighting extends Skill {
         });
     }
 
-    private getArmedFighting() {
+    getArmedFighting() {
         return this.disciplines.find(discipline => {
             return discipline.name === this.ArmedFighting;
         });

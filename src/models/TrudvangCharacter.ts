@@ -505,7 +505,7 @@ export class TrudvangCharacter {
       return speciality.name === "Combat reaction";
     });
 
-    this.initiative = this.stats.dexterity + battleExperience.level + combatReactions.level * 2 + this.getExtraInitative();
+    this.initiative = this.stats.dexterity + this.fighting.getArmedFighting().level + battleExperience.level + (combatReactions.level * 2) + this.getExtraInitative();
   }
 
   recalculateSkills() {
